@@ -17,8 +17,8 @@ RoxygenNote: 5.0.1
 Collate:
     'namespace.R'
     'placeholders.R'
-    'single_step.R'
     'plan_aggregate.R'
+    'single_step.R'
     'plan_analysis.R'
     'plan_dataset.R'
     'plan_output.R'

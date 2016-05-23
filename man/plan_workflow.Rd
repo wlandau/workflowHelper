@@ -5,7 +5,7 @@
 \title{Function \code{plan_workflow}}
 \usage{
 plan_workflow(sources, datasets = NULL, analyses = NULL, summaries = NULL,
-  aggregates = NULL, output = NULL)
+  output = NULL)
 }
 \arguments{
 \item{sources}{Character vector of paths to the files containing your R code 
@@ -17,10 +17,6 @@ plan_workflow(sources, datasets = NULL, analyses = NULL, summaries = NULL,
 
 \item{summaries}{Named character vector of commands to condense the data and 
 analyses into small summaries.}
-
-\item{aggregates}{Character vector stating commands to generate aggregates files
-from the summaries. Using the datasets and analyses is also possible, but it
-may be slow. Execution of the commands may be in parallel.}
 
 \item{output}{Named character vector, commands for general output. Unlike the 
 other command vectors, the names here need not denote rds files. However, they 

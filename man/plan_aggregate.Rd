@@ -4,18 +4,16 @@
 \alias{plan_aggregate}
 \title{Function \code{plan_aggregate}}
 \usage{
-plan_aggregate(sources, packages, command, aggregate, summaries)
+plan_aggregate(sources, packages, type, summaries)
 }
 \arguments{
 \item{sources}{Character vector of paths to the files containing your R code.}
 
 \item{packages}{Character vector of packages that your code depends on.}
 
-\item{command}{Character string, command to run}
+\item{type}{Character string, type of summary to aggregate}
 
-\item{aggregate}{Character string, aggretation method}
-
-\item{summaries}{Character vector, methods of summarizing analysis}
+\item{summaries}{Names of summaries}
 }
 \description{
 Internal function to aggregate summaries

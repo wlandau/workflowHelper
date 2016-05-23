@@ -12,10 +12,9 @@ NULL
 #' @param analysis Character string, analysis method
 plan_analysis = function(sources, packages, command, dataset, analysis){
   save = paste(dataset, analysis, sep = "_")
-  place = placeholders()["dataset"]
   depends = dataset
-  names(depends) = replacements = paste0(depends, place)
-  names(replacements) = place
+  names(depends) = replacements = paste0(depends, placeholders()["load"])
+  names(replacements) = placeholders()["dataset"]
   single_step(sources, packages, command, save, depends, replacements)
   save
 }

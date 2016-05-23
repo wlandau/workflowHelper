@@ -5,14 +5,12 @@
 #' for files, and they are for 
 #' situations where the program can infer the correct file to
 #' load, the correct file to save, etc. 
-#' The dataset and analysis placeholders are for the user, and the
-#' others are only used internally.
-#' @export
+#' The save and load macros are for internal use only.
 placeholders = function(){
   c(
     dataset = "..DATASET..",
     analysis = "..ANALYSIS..",
     save = "..SAVE..",
-    summaries = "..SUMMARIES.."
+    load = "..LOAD.."
   )
 }

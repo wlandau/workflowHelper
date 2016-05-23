@@ -19,6 +19,9 @@ plan_summary(sources, packages, command, dataset, analysis, summary)
 
 \item{summary}{Character string, summary method}
 }
+\value{
+name of summary
+}
 \description{
 Internal function to summarize an analysis
 }

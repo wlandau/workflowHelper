@@ -25,8 +25,8 @@ summaries = c(
 
 # Final output.
 output = c(
-  mse.csv = "mse_as_csv()",
-  coef.pdf = "plot_coef()"
+  mse.csv = "mse_as_csv(\"mse.rds\")",
+  coef.pdf = "plot_coef(\"coef.rds\")"
 )
 
 plan_workflow(sources, datasets, analyses, summaries, output)

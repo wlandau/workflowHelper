@@ -20,6 +20,9 @@ single_step(sources, packages, command, save, depends = NULL,
 
 \item{replacements}{Named character vector, substitutions to make in command placeholders}
 }
+\value{
+list of fields for the YAML file
+}
 \description{
 Internal function to plan a stage of the workflow. 
 Utility function of \code{plan_workflow}.

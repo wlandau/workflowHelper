@@ -42,14 +42,14 @@ aggregate_coef = function(save, ...){
 }
 
 # Final output
-mse_as_csv = function(){
-  mse = readRDS("mse.rds")
+mse_as_csv = function(file){
+  mse = matrix(readRDS(file), ncol = 1)
   write.csv(mse, "mse.csv", row.names = FALSE)
 }
 
 # You may hard-code an output file for final output.
-plot_coef = function(){
-  coef = readRDS("coef.rds")
+plot_coef = function(file){
+  coef = do.call(rbind, readRDS(file))
   pdf("coef.pdf")
   plot(coef)
   dev.off()

@@ -15,6 +15,9 @@ plan_dataset(sources, packages, command, dataset)
 
 \item{dataset}{Character string, dataset to generate}
 }
+\value{
+name of dataset
+}
 \description{
 Internal function to plan dataset generation
 }

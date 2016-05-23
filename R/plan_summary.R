@@ -14,10 +14,9 @@ NULL
 plan_summary = function(sources, packages, command, dataset, analysis, summary){
   save = paste(dataset, analysis, summary, sep = "_")
   analysis = paste(dataset, analysis, sep = "_")
-  place = placeholders()[c("dataset", "analysis")]
   depends = c(dataset, analysis)
-  names(depends) = replacements = paste0(depends, place)
-  names(replacements) = place
+  names(depends) = replacements = paste0(depends, placeholders()["load"])
+  names(replacements) = placeholders()[c("dataset", "analysis")]
   single_step(sources, packages, command, save, depends, replacements)
   save
 }

@@ -17,6 +17,9 @@ plan_analysis(sources, packages, command, dataset, analysis)
 
 \item{analysis}{Character string, analysis method}
 }
+\value{
+name of analysis
+}
 \description{
 Internal function to plan analysis
 }
