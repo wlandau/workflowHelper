@@ -37,7 +37,7 @@ datasets = c(
 )
 ```
 
-Some data are generated from Poisson distributions while others are generated from normal distributions. The RDS files on the left will be generated using the commands on the right. For example, the first command says to run `poisson_dataset("poisson10.rds", n = 100)` and save the result as `poisson10.rds`. All three of my datasets are generated similarly.
+Some data are generated from Poisson distributions while others are generated from normal distributions. The RDS files on the left will be generated using the commands on the right. For example, the first command says to run `poisson_dataset(n = 100)` and save the object returned from the function as `poisson10.rds`. All three of my datasets are generated similarly.
 
 Next, I specify how to analyze each dataset
 
@@ -61,7 +61,7 @@ summaries = c(
 
 Each analysis will be summarized with the mean squared error of model predictions (MSE) and the model coefficients from the `lm` and `glm` fits. Here, the `..ANALYSIS..` placeholder stands for the fitted model object returned by `lm_analysis` or `glm_analysis`. 
 
-The names of the `summaries` vector are `mse` and `coef` so RDS files `mse.rds` and `coef.rds` will be produced. Each is a list containing the summary (MSE or coefficients) on each analysis of each dataset.
+The names of the `summaries` vector are `mse` and `coef`, so RDS files `mse.rds` and `coef.rds` will be produced. Each is a list containing the given summary (MSE or coefficients) of each analysis of each dataset.
 
 
 Finally, I spedicify how to generate output.
@@ -78,8 +78,8 @@ Unlike the previous commands, the names on the left stand for regular files with
 The stages of my workflow are now planned. To put them all together, I use `plan_workflow`, which calls `parallelRemake::write_makefile`.
 
 ```{r}
-plan_workflow(sources, packages = NULL, datasets = datasets, analyses = analyses, 
-  summaries = summaries, aggregates = aggregates, output = output)
+plan_workflow(sources, datasets, analyses, 
+  summaries, output)
 ```
 
 Now, there is a [Makefile](https://www.gnu.org/software/make/) in my current working directory. There are also a bunch of  [YAML](http://yaml.org/) files, all of which are necessary to the [Makefile](https://www.gnu.org/software/make/). 
