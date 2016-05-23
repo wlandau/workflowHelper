@@ -10,9 +10,9 @@ NULL
 #' @param output Character string, output to compute
 plan_output = function(sources, packages, command, output){
   out = output
-  file = out
+  save = out
   yaml = paste0(out, ".yml")
-  command = gsub(placeholders()["file"], paste0("\"", file, "\""), command)
-  single_step(sources, packages, command, file, yaml)
+  command = gsub(placeholders()["save"], paste0("\"", save, "\""), command)
+  single_step(sources, packages, command, save, yaml)
   out
 }

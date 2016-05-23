@@ -6,16 +6,16 @@
 #' @param sources Character vector of paths to the files containing your R code.
 #' @param packages Character vector of packages that your code depends on.
 #' @param command dependsd character vector of commands to run.
-#' @param file target file to make
+#' @param save target file to save
 #' @param yaml YAML/remake file to use
-single_step = function(sources, packages, command, file, yaml){
+single_step = function(sources, packages, command, save, yaml){
   fields = list(
     sources = sources,
     packages = packages,
     targets = list(
-      all = list(depends = file)
+      all = list(depends = save)
     )
   )
-  fields$targets[[file]] = list(command = command)
+  fields$targets[[save]] = list(command = command)
   write_yaml(fields, yaml)
 }

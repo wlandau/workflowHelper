@@ -12,13 +12,13 @@ NULL
 #' @param summary Character string, summary method
 plan_summary = function(sources, packages, command, dataset, analysis, summary){
   out = paste(dataset, analysis, summary, sep = "_")
-  file = out
+  save = out
   yaml = paste0(out, ".yml")
   analysis = paste(dataset, analysis, sep = "_")
-  for(item in c("file", "dataset", "analysis")){
+  for(item in c("save", "dataset", "analysis")){
     assign(item, paste0(get(item), ".rds"))
     command = gsub(placeholders()[item], paste0("\"", get(item), "\""), command)
   }
-  single_step(sources, packages, command, file, yaml)
+  single_step(sources, packages, command, save, yaml)
   out
 }

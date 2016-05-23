@@ -4,7 +4,7 @@
 \alias{single_step}
 \title{Function \code{single_step}}
 \usage{
-single_step(sources, packages, command, file, yaml)
+single_step(sources, packages, command, save, yaml)
 }
 \arguments{
 \item{sources}{Character vector of paths to the files containing your R code.}
@@ -13,7 +13,7 @@ single_step(sources, packages, command, file, yaml)
 
 \item{command}{dependsd character vector of commands to run.}
 
-\item{file}{target file to make}
+\item{save}{target file to save}
 
 \item{yaml}{YAML/remake file to use}
 }
