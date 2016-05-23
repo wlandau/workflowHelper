@@ -4,6 +4,8 @@ With this package, you can
 - rerun updated parts of a reproducible workflow doing redundant computation.
 - distribute your workflow over multiple parallel processes.
 
+Check out the [example](https://github.com/wlandau/workflowOrganizer/tree/master/example).
+
 
 # Installation
 
@@ -25,13 +27,4 @@ R CMD INSTALL ...
 where `...` is replaced by the name of the tarball produced by `R CMD build`.
 
 
-# Example
-
-Suppose I want to 
-
-1. Generate some datasets.
-2. Analyze each dataset with multiple statistical methods.
-3. Compute summary statistics of each analysis of each dataset.
-4. Aggregate the summary statistics together in convenient data frames.
-5. Generate some tables and figures using those agregated summaries.
 
