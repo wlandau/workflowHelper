@@ -13,9 +13,8 @@ Suppose I want to
 
 1. Generate some datasets.
 2. Analyze each dataset with multiple statistical methods (`lm` and `glm`).
-3. Compute summary statistics of each analysis of each dataset (model coefficients and mean squared error).
-4. Aggregate the summary statistics together in convenient data frames.
-5. Generate some tables and figures using those agregated summaries.
+3. Compute summary statistics of each analysis of each dataset (model coefficients and mean squared error) and aggregate the summaries together.
+4. Generate some tables and figures using those agregated summaries.
 
 All the pieces of this workflow are in [code.R]("https://github.com/wlandau/workflowHelper/blob/master/example/code.R"): i.e., functions for generating datasets, analyzing datsets, etc. All I need to do is put these pieces together.
 
