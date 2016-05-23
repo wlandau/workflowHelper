@@ -4,13 +4,12 @@
 \alias{plan_workflow}
 \title{Function \code{plan_workflow}}
 \usage{
-plan_workflow(sources, packages = NULL, datasets = NULL, analyses = NULL,
-  summaries = NULL, aggregates = NULL, output = NULL)
+plan_workflow(sources, datasets = NULL, analyses = NULL, summaries = NULL,
+  aggregates = NULL, output = NULL)
 }
 \arguments{
-\item{sources}{Character vector of paths to the files containing your R code.}
-
-\item{packages}{Character vector of packages that your code depends on.}
+\item{sources}{Character vector of paths to the files containing your R code 
+(*.R and *.r files) along with external packages (no file extension).}
 
 \item{datasets}{Named character vector of commands to generate datasets.}
 

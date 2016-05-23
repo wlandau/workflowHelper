@@ -1,10 +1,8 @@
 library(workflowHelper)
+library(parallelRemake)
 
-# R files with your code
-sources = "code.R"
-
-# External packages that your code relies on.
-packages = NULL
+# R files with your code (ending in .R or .r) and packages
+sources = c("code.R", "MASS")
 
 # Generate the data
 datasets = c(
@@ -37,6 +35,5 @@ output = c(
   coef.pdf = "plot_coef()"
 )
 
-plan_workflow(sources, packages = NULL, datasets = datasets, analyses = analyses, 
-  summaries = summaries, aggregates = aggregates, output = output)
+plan_workflow(sources, datasets, analyses, summaries, aggregates, output)
 

@@ -4,8 +4,7 @@
 \alias{single_step}
 \title{Function \code{single_step}}
 \usage{
-single_step(sources, packages, command, root, dataset = "", analysis = "",
-  summaries = "", append_rds = TRUE)
+single_step(sources, packages, command, file, yaml)
 }
 \arguments{
 \item{sources}{Character vector of paths to the files containing your R code.}
@@ -14,18 +13,13 @@ single_step(sources, packages, command, root, dataset = "", analysis = "",
 
 \item{command}{dependsd character vector of commands to run.}
 
-\item{root}{root of file}
+\item{file}{target file to make}
 
-\item{dataset}{name of RDS dataset file}
-
-\item{analysis}{name of RDS analysis file}
-
-\item{summaries}{Character vector, names of RDS summary files}
-
-\item{append_rds}{logical, whether to append a \code{.rds} file extension to the output}
+\item{yaml}{YAML/remake file to use}
 }
 \description{
-Plans a stage of the workflow. Utility function of \code{plan_workflow}.
+Internal function to plan a stage of the workflow. 
+Utility function of \code{plan_workflow}.
 }
 \seealso{
 \code{plan_workflow}

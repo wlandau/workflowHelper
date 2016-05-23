@@ -19,13 +19,13 @@ Suppose I want to
 
 All the pieces of this workflow are in [code.R]("https://github.com/wlandau/workflowHelper/blob/master/example/code.R"): i.e., functions for generating datasets, analyzing datsets, etc. All I need to do is put these pieces together.
 
-I will need to tell `workflowHelper` where my code is stored.
+I will need to tell `workflowHelper` where my code is stored and what packages it uses.
 
 ```{r}
-sources = "code.R"
+sources = c("code.R", "MASS")
 ```
 
-I can also specify the external packages that my code relies on. In this case, there are none.
+The package uses the `.r` and `.R` extensions to distinguish packages from source files. I can also specify the external packages that my code relies on. In this case, there are none.
 
 ```{r}
 packages = NULL
