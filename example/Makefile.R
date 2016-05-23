@@ -3,6 +3,9 @@ library(workflowOrganizer)
 # R files with your code
 sources = "code.R"
 
+# External packages that your code relies on.
+packages = NULL
+
 # Generate the data
 datasets = c(
   poisson10 = "poisson_dataset(__FILE__, n = 100)",
@@ -34,6 +37,6 @@ output = c(
   coef.pdf = "plot_coef()"
 )
 
-plan_workflow(sources, datasets = datasets, analyses = analyses, 
+plan_workflow(sources, packages = NULL, datasets = datasets, analyses = analyses, 
   summaries = summaries, aggregates = aggregates, output = output)
 
