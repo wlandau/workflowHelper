@@ -4,7 +4,7 @@ With this package, you can
 - rerun updated parts of a reproducible workflow doing redundant computation.
 - distribute your workflow over multiple parallel processes.
 
-Check out the [example](https://github.com/wlandau/workflowOrganizer/tree/master/example).
+Check out the [example](https://github.com/wlandau/workflowHelper/tree/master/example).
 
 
 # Installation
@@ -13,14 +13,14 @@ Ensure that [R](https://www.r-project.org/), the [`storr`](https://github.com/ri
 
 ```
 library(devtools)
-install_github("wlandau/workflowOrganizer")
+install_github("wlandau/workflowHelper")
 ```
 
 Alternatively, you can build the package from the source and install it by hand. First, ensure that [git](https://git-scm.com/) is installed. Next, open a [command line program](http://linuxcommand.org/) such as [Terminal](https://en.wikipedia.org/wiki/Terminal_%28OS_X%29) and enter the following commands.
 
 ```
-git clone git@github.com:wlandau/workflowOrganizer.git
-R CMD build workflowOrganizer
+git clone git@github.com:wlandau/workflowHelper.git
+R CMD build workflowHelper
 R CMD INSTALL ...
 ```
 

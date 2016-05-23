@@ -1,4 +1,4 @@
-library(workflowOrganizer)
+library(workflowHelper)
 
 # R files with your code
 sources = "code.R"

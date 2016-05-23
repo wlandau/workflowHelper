@@ -1,6 +1,6 @@
 # Run the example
 
-- Ensure that [R](https://www.r-project.org/), the [`parallelRemake`](https://github.com/wlandau/parallelRemake/) package, the [workflowOrganizer/README.md](https://github.com/wlandau/workflowOrganizer/blob/master/README.md) package, and [GNU make](https://www.gnu.org/software/make/) are installed.
+- Ensure that [R](https://www.r-project.org/), the [`parallelRemake`](https://github.com/wlandau/parallelRemake/) package, the [workflowHelper/README.md](https://github.com/wlandau/workflowHelper/blob/master/README.md) package, and [GNU make](https://www.gnu.org/software/make/) are installed.
 - Run Makefile.R in an R session to generate the [Makefile](https://www.gnu.org/software/make/) and its constituent [`remake`](https://github.com/richfitz/remake)/[YAML](http://yaml.org/) files.
 - Open a [command line program](http://linuxcommand.org/) such as [Terminal](https://en.wikipedia.org/wiki/Terminal_%28OS_X%29) and point to the [current working directory](http://www.linfo.org/cd.html).
 - Enter `make` into the command line to run the full workflow. To distribute the work over multiple parallel process, you can instead type `make -j <n>` where `<n>` is the number of processes.
@@ -17,9 +17,9 @@ Suppose I want to
 4. Aggregate the summary statistics together in convenient data frames.
 5. Generate some tables and figures using those agregated summaries.
 
-All the pieces of this workflow are in [code.R]("https://github.com/wlandau/workflowOrganizer/blob/master/example/code.R"): i.e., functions for generating datasets, analyzing datsets, etc. All I need to do is put these pieces together.
+All the pieces of this workflow are in [code.R]("https://github.com/wlandau/workflowHelper/blob/master/example/code.R"): i.e., functions for generating datasets, analyzing datsets, etc. All I need to do is put these pieces together.
 
-I will need to tell `workflowOrganizer` where my code is stored.
+I will need to tell `workflowHelper` where my code is stored.
 
 ```{r}
 sources = "code.R"
