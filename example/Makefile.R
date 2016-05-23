@@ -8,9 +8,9 @@ packages = NULL
 
 # Generate the data
 datasets = c(
-  poisson10 = "poisson_dataset(__FILE__, n = 100)",
-  normal10 = "normal_dataset(__FILE__, n = 100)",
-  normal100 = "normal_dataset(__FILE__, n = 1000)"
+  poisson100 = "poisson_dataset(__FILE__, n = 100)",
+  normal100 = "normal_dataset(__FILE__, n = 100)",
+  normal1000 = "normal_dataset(__FILE__, n = 1000)"
 )
 
 # Analyze each dataset

@@ -12,8 +12,8 @@
 Suppose I want to 
 
 1. Generate some datasets.
-2. Analyze each dataset with multiple statistical methods.
-3. Compute summary statistics of each analysis of each dataset.
+2. Analyze each dataset with multiple statistical methods (`lm` and `glm`).
+3. Compute summary statistics of each analysis of each dataset (model coefficients and mean squared error).
 4. Aggregate the summary statistics together in convenient data frames.
 5. Generate some tables and figures using those agregated summaries.
 
@@ -35,13 +35,13 @@ Next, I list the commands to generate the datasets I want.
 
 ```{r}
 datasets = c(
-  poisson10 = "poisson_dataset(__FILE__, n = 100)",
-  normal10 = "normal_dataset(__FILE__, n = 100)",
-  normal100 = "normal_dataset(__FILE__, n = 1000)"
+  poisson100 = "poisson_dataset(__FILE__, n = 100)",
+  normal100 = "normal_dataset(__FILE__, n = 100)",
+  normal1000 = "normal_dataset(__FILE__, n = 1000)"
 )
 ```
 
-The RDS files on the left will be generated using the commands on the right. For example, the first command says to run `poisson_dataset("poisson10.rds", n = 100)` and save the result as `poisson10.rds`. All three of my datasets are generated this way.
+Some data are generated from Poisson distributions while others are generated from normal distributions. The RDS files on the left will be generated using the commands on the right. For example, the first command says to run `poisson_dataset("poisson10.rds", n = 100)` and save the result as `poisson10.rds`. All three of my datasets are generated this way.
 
 Next, I specify how to analyze each dataset
 
@@ -52,7 +52,7 @@ analyses = c(
 )
 ```
 
-Each dataset will be analyzed with both a `lm` method and a `glm` method, so there will be six analyses in all. Since I'm iterating over datasets, the `__DATASET__` placeholder just stands for the RDS file containing my data (for example, `poisson.rds`). 
+These methods just run regressions with `lm` and `glm`, respectively. Each dataset will be analyzed with both methods, so there will be six analyses in all. Since I'm iterating over datasets, the `__DATASET__` placeholder just stands for the RDS file containing my data (for example, `poisson.rds`). 
 
 Next, I specify the summary statistics I want for each analysis of each dataset. 
 
@@ -63,7 +63,7 @@ summaries = c(
 )
 ```
 
-Here, the `__ANALYSIS__` placeholder is similar to the `__DATASET__`, and it is specific to both the method of analysis and dataset analyzed.
+Each analysis will be summarized with the mean squared error of model predictions (MSE) and the model coefficients from the `lm` and `glm` fits. Here, the `__ANALYSIS__` placeholder stands for the RDS file containing the output of `lm` or `glm`, and it is specific to both the method of analysis and dataset analyzed.
 
 With 3 datasets, 2 methods of analysis, and 2 types of summary statistics, our summary statistics are spread over 12 different RDS files. To aggregate them back together, I issue the following.
 
@@ -75,7 +75,7 @@ aggregates = c(
 )
 ```
 
-Finally, I plan to generate some output on the aggregated summaries.
+This ensures that there will be a data frame `mse.rds` of mean squared errors and another data frame `coef.rds` of model coefficients.  Finally, I plan to generate the summaries.
 
 ```{r}
 output = c(
@@ -84,6 +84,8 @@ output = c(
 )
 ```
 
+This will convert `mse.rds` to `mse.csv` and plot the model coefficients of `coef.rds` in `coef.pdf`.
+
 The stages of my workflow are now planned. To put them all together, I use `plan_workflow`, which calls `parallelRemake::write_makefile`.
 
 ```{r}
@@ -91,4 +93,6 @@ plan_workflow(sources, packages = NULL, datasets = datasets, analyses = analyses
   summaries = summaries, aggregates = aggregates, output = output)
 ```
 
-Now, there is a [Makefile](https://www.gnu.org/software/make/) in my current working directory. There are also a bunch of  [YAML](http://yaml.org/) files, all of which are necessary to the [Makefile](https://www.gnu.org/software/make/). To actually run the workflow, just open a [command line program](http://linuxcommand.org/) and enter `make`. To distribute your workflow over multiple parallel processes, run `make -j <n>`, where <n> is the number of processes. This will generate all the datasets in parallel, then run all the analyses in parallel, etc.
+Now, there is a [Makefile](https://www.gnu.org/software/make/) in my current working directory. There are also a bunch of  [YAML](http://yaml.org/) files, all of which are necessary to the [Makefile](https://www.gnu.org/software/make/). 
+
+To actually run the workflow, just open a [command line program](http://linuxcommand.org/) and enter `make`. To distribute your workflow over multiple parallel processes, run `make -j <n>`, where <n> is the number of processes. This will generate all the datasets in parallel, then run all the analyses in parallel, etc.
