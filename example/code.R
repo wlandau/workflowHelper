@@ -44,7 +44,7 @@ aggregate_coef = function(save, ...){
 # Final output
 mse_as_csv = function(){
   mse = readRDS("mse.rds")
-  write.csv(mse, save, row.names = FALSE)
+  write.csv(mse, "mse.csv", row.names = FALSE)
 }
 
 # You may hard-code an output file for final output.

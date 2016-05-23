@@ -4,6 +4,7 @@ NULL
 #' @title Function \code{plan_dataset}
 #' @description Internal function to plan dataset generation
 #' @export
+#' @return name of dataset
 #' @param sources Character vector of paths to the files containing your R code.
 #' @param packages Character vector of packages that your code depends on.
 #' @param command Character string, command to run.

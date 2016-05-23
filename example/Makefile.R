@@ -17,16 +17,10 @@ analyses = c(
   glm = "glm_analysis(..DATASET..)"
 )
 
-# Summarize each analysis
+# Summarize each analysis and aggregate the summaries together
 summaries = c(
   mse = "mse_summary(..DATASET.., ..ANALYSIS..)",
   coef = "coef_summary(..ANALYSIS..)"
-)
-
-# Aggregate the summaries together
-aggregates = c(
-  mse = "aggregate_mse(..SUMMARIES..)",
-  coef = "aggregate_coef(..SUMMARIES..)"
 )
 
 # Final output.
@@ -35,5 +29,5 @@ output = c(
   coef.pdf = "plot_coef()"
 )
 
-plan_workflow(sources, datasets, analyses, summaries, aggregates, output)
+plan_workflow(sources, datasets, analyses, summaries, output)
 

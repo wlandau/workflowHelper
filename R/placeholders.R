@@ -5,17 +5,14 @@
 #' for files, and they are for 
 #' situations where the program can infer the correct file to
 #' load, the correct file to save, etc. 
-#' The save placeholder is always available, and it stands for the
-#' file to be saved. Similarly, there is a dataset placeholder for when
-#' you are analyzing data or summarizing analyses, an analysis placeholder
-#' for summarizing analyses, and a summaries placeholder for aggregating
-#' summaries of analyses
+#' The dataset and analysis placeholders are for the user, and the
+#' others are only used internally.
 #' @export
 placeholders = function(){
   c(
-    save = "..SAVE..",
     dataset = "..DATASET..",
     analysis = "..ANALYSIS..",
+    save = "..SAVE..",
     summaries = "..SUMMARIES.."
   )
 }

@@ -4,6 +4,7 @@ NULL
 #' @title Function \code{plan_analysis}
 #' @description Internal function to plan analysis
 #' @export
+#' @return name of analysis
 #' @param sources Character vector of paths to the files containing your R code.
 #' @param packages Character vector of packages that your code depends on.
 #' @param command Character string of command to run.
@@ -13,7 +14,7 @@ plan_analysis = function(sources, packages, command, dataset, analysis){
   save = paste(dataset, analysis, sep = "_")
   place = placeholders()["dataset"]
   depends = dataset
-  names(depends) = replacements = paste0(place, depends)
+  names(depends) = replacements = paste0(depends, place)
   names(replacements) = place
   single_step(sources, packages, command, save, depends, replacements)
   save

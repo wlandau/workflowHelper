@@ -4,7 +4,7 @@
 \alias{plan_output}
 \title{Function \code{plan_output}}
 \usage{
-plan_output(sources, packages, command, output)
+plan_output(sources, packages, command, output, summaries)
 }
 \arguments{
 \item{sources}{Character vector of paths to the files containing your R code.}
@@ -14,6 +14,8 @@ plan_output(sources, packages, command, output)
 \item{command}{Character vector of commands to run.}
 
 \item{output}{Character string, output to compute}
+
+\item{summaries}{Character string, names of summaries of analyses}
 }
 \description{
 Internal function to compute final output

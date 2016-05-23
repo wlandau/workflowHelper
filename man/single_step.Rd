@@ -4,18 +4,21 @@
 \alias{single_step}
 \title{Function \code{single_step}}
 \usage{
-single_step(sources, packages, command, save, yaml)
+single_step(sources, packages, command, save, depends = NULL,
+  replacements = NULL)
 }
 \arguments{
 \item{sources}{Character vector of paths to the files containing your R code.}
 
 \item{packages}{Character vector of packages that your code depends on.}
 
-\item{command}{dependsd character vector of commands to run.}
+\item{command}{Character, command to run.}
 
-\item{save}{target file to save}
+\item{save}{Character, target file to save}
 
-\item{yaml}{YAML/remake file to use}
+\item{depends}{named character vector of file dependencies}
+
+\item{replacements}{Named character vector, substitutions to make in command placeholders}
 }
 \description{
 Internal function to plan a stage of the workflow. 

@@ -12,13 +12,10 @@ NULL
 #' @param analyses Named character vector of commands to analyze the datasets.
 #' @param summaries Named character vector of commands to condense the data and 
 #' analyses into small summaries.
-#' @param aggregates Character vector stating commands to generate aggregates files
-#' from the summaries. Using the datasets and analyses is also possible, but it
-#' may be slow. Execution of the commands may be in parallel.
 #' @param output Named character vector, commands for general output. Unlike the 
 #' other command vectors, the names here need not denote rds files. However, they 
 #' should have the appropriate file extensions.
-plan_workflow = function(sources, datasets = NULL, analyses = NULL, summaries = NULL, aggregates = NULL, output = NULL){
+plan_workflow = function(sources, datasets = NULL, analyses = NULL, summaries = NULL, output = NULL){
 
   isSource = grepl("\\.[rR]$", sources)
   packages = sources[!isSource]
@@ -39,11 +36,9 @@ plan_workflow = function(sources, datasets = NULL, analyses = NULL, summaries = 
     }
   }
 
-  if(length(aggregates)) for(i in 1:length(aggregates)){
-    step = plan_aggregate(sources, packages, aggregates[i], names(aggregates)[i], 
-      summaries = stages$summaries)
-    stages[["aggregates"]] = c(stages[["aggregates"]], step)
-  }
+  stages[["aggregates"]] = names(summaries)
+  for(i in 1:length(summaries))
+    plan_aggregate(sources, packages, names(summaries)[i], stages[["summaries"]])
 
   if(length(output)) for(i in 1:length(output)){
     step = plan_output(sources, packages, output[i], names(output)[i], stages$summaries)
