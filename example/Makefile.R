@@ -1,5 +1,4 @@
 library(workflowHelper)
-library(parallelRemake)
 
 # R files with your code (ending in .R or .r) and packages
 sources = c("code.R", "MASS")

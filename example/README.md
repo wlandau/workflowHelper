@@ -21,6 +21,7 @@ All the pieces of this workflow are in [code.R]("https://github.com/wlandau/work
 I will need to tell `workflowHelper` where my code is stored and what packages it uses.
 
 ```{r}
+library(workflowHelper)
 sources = c("code.R", "MASS")
 ```
 
