@@ -1,0 +1,21 @@
+Package: workflowOrganizer
+Title: workflowOrganizer
+Type: Package
+Version: 0.0
+Date: 2016-05-17
+Author: Will Landau
+Maintainer: <will.landau@gmail.com>
+Description: This package easily organizes and deploys big simulation studies
+    and other similar workflows.
+License: GPL (>= 3)
+Depends:
+    R (>= 3.0.0)
+Imports:
+    remake,
+    parallelRemake
+RoxygenNote: 5.0.1
+Collate:
+    'namespace.R'
+    'new_dir.R'
+    'single_step.R'
+    'plan_workflow.R'
