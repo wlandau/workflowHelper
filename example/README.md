@@ -78,8 +78,7 @@ Unlike the previous commands, the names on the left stand for regular files with
 The stages of my workflow are now planned. To put them all together, I use `plan_workflow`, which calls `parallelRemake::write_makefile`.
 
 ```{r}
-plan_workflow(sources, datasets, analyses, 
-  summaries, output)
+plan_workflow(sources, datasets, analyses, summaries, output)
 ```
 
 Now, there is a [Makefile](https://www.gnu.org/software/make/) in my current working directory. There are also a bunch of  [YAML](http://yaml.org/) files, all of which are necessary to the [Makefile](https://www.gnu.org/software/make/). 
