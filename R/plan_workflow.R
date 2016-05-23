@@ -46,7 +46,7 @@ plan_workflow = function(sources, datasets = NULL, analyses = NULL, summaries = 
   }
 
   if(length(output)) for(i in 1:length(output)){
-    step = plan_output(sources, packages, output[i], names(output)[i])
+    step = plan_output(sources, packages, output[i], names(output)[i], stages$summaries)
     stages[["output"]] = c(stages[["output"]], step)
   }
 

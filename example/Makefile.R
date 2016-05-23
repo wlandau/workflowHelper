@@ -6,32 +6,32 @@ sources = c("code.R", "MASS")
 
 # Generate the data
 datasets = c(
-  poisson100 = "poisson_dataset(__SAVE__, n = 100)",
-  normal100 = "normal_dataset(__SAVE__, n = 100)",
-  normal1000 = "normal_dataset(__SAVE__, n = 1000)"
+  poisson100 = "poisson_dataset(n = 100)",
+  normal100 = "normal_dataset(n = 100)",
+  normal1000 = "normal_dataset(n = 1000)"
 )
 
 # Analyze each dataset
 analyses = c(
-  lm = "lm_analysis(__SAVE__, __DATASET__)",
-  glm = "glm_analysis(__SAVE__, __DATASET__)"
+  lm = "lm_analysis(..DATASET..)",
+  glm = "glm_analysis(..DATASET..)"
 )
 
 # Summarize each analysis
 summaries = c(
-  mse = "mse_summary(__SAVE__, __DATASET__, __ANALYSIS__)",
-  coef = "coef_summary(__SAVE__, __ANALYSIS__)"
+  mse = "mse_summary(..DATASET.., ..ANALYSIS..)",
+  coef = "coef_summary(..ANALYSIS..)"
 )
 
 # Aggregate the summaries together
 aggregates = c(
-  mse = "aggregate_mse(__SAVE__, __SUMMARIES__)",
-  coef = "aggregate_coef(__SAVE__, __SUMMARIES__)"
+  mse = "aggregate_mse(..SUMMARIES..)",
+  coef = "aggregate_coef(..SUMMARIES..)"
 )
 
 # Final output.
 output = c(
-  mse.csv = "mse_as_csv(__SAVE__)",
+  mse.csv = "mse_as_csv()",
   coef.pdf = "plot_coef()"
 )
 

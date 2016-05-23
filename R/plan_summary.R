@@ -11,14 +11,12 @@ NULL
 #' @param analysis Character string, analysis method
 #' @param summary Character string, summary method
 plan_summary = function(sources, packages, command, dataset, analysis, summary){
-  out = paste(dataset, analysis, summary, sep = "_")
-  save = out
-  yaml = paste0(out, ".yml")
+  save = paste(dataset, analysis, summary, sep = "_")
   analysis = paste(dataset, analysis, sep = "_")
-  for(item in c("save", "dataset", "analysis")){
-    assign(item, paste0(get(item), ".rds"))
-    command = gsub(placeholders()[item], paste0("\"", get(item), "\""), command)
-  }
-  single_step(sources, packages, command, save, yaml)
-  out
+  place = placeholders()[c("dataset", "analysis")]
+  depends = c(dataset, analysis)
+  names(depends) = replacements = paste0(place, depends)
+  names(replacements) = place
+  single_step(sources, packages, command, save, depends, replacements)
+  save
 }

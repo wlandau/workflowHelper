@@ -1,63 +1,48 @@
 # Code for each component of the analysis
 
 # Generate datasets
-poisson_dataset = function(save, n = 100){
-  out = data.frame(x = rpois(n, 1), y = rpois(n, 5))
-  saveRDS(out, save)
+poisson_dataset = function(n = 100){
+  data.frame(x = rpois(n, 1), y = rpois(n, 5))
 }
 
-normal_dataset = function(save, n = 100){
-  out = data.frame(x = rnorm(n, 1), y = rnorm(n, 5))
-  saveRDS(out, save)
+normal_dataset = function(n = 100){
+  data.frame(x = rnorm(n, 1), y = rnorm(n, 5))
 }
 
 # Analyze each dataset
-lm_analysis = function(save, dataset){
-  dataset = readRDS(dataset)
+lm_analysis = function(dataset){
   out = lm(y ~ x, data = dataset)
-  saveRDS(out, save)
 }
 
-glm_analysis = function(save, dataset){
-  dataset = readRDS(dataset)
-  out = glm(y ~ x, data = dataset)
-  saveRDS(out, save)
+glm_analysis = function(dataset){
+  glm(y ~ x, data = dataset)
 }
 
 # Compute summaries
-mse_summary = function(save, dataset, analysis){
-  dataset = readRDS(dataset)
-  analysis = readRDS(analysis)
+mse_summary = function(dataset, analysis){
   pred = predict(analysis)
-  out = mean((pred - dataset$y)^2)
-  saveRDS(out, save)
+  mean((pred - dataset$y)^2)
 }
 
-coef_summary = function(save, analysis){
-  analysis = readRDS(analysis)
-  out = coef(analysis)
-  saveRDS(out, save)
+coef_summary = function(analysis){
+  coef(analysis)
 }
 
 # Aggregate the summaries together
-aggregate_mse = function(save, ...){
-  summaries = unlist(list(...))
-  summaries = summaries[grep("_mse.rds$", summaries)]
-  mse = sapply(summaries, readRDS)
-  out = data.frame(save = summaries, mse = mse)
-  saveRDS(out, save)
+aggregate_mse = function(...){
+  summaries = list(...)
+  is_mse = sapply(summaries, length) == 1
+  unlist(summaries[is_mse])
 }
 
 aggregate_coef = function(save, ...){
-  summaries = unlist(list(...))
-  summaries = summaries[grep("_coef.rds$", summaries)]
-  coef = do.call(rbind, lapply(summaries, readRDS))
-  out = data.frame(save = summaries, coef)
-  saveRDS(out, save)
+  summaries = list(...)
+  is_coef = sapply(summaries, length) > 1
+  do.call(rbind, summaries[is_coef])
 }
 
 # Final output
-mse_as_csv = function(save){
+mse_as_csv = function(){
   mse = readRDS("mse.rds")
   write.csv(mse, save, row.names = FALSE)
 }
@@ -66,6 +51,6 @@ mse_as_csv = function(save){
 plot_coef = function(){
   coef = readRDS("coef.rds")
   pdf("coef.pdf")
-  plot(coef[,2:3])
+  plot(coef)
   dev.off()
 }

@@ -13,9 +13,9 @@
 #' @export
 placeholders = function(){
   c(
-    save = "__SAVE__",
-    dataset = "__DATASET__",
-    analysis = "__ANALYSIS__",
-    summaries = "__SUMMARIES__"
+    save = "..SAVE..",
+    dataset = "..DATASET..",
+    analysis = "..ANALYSIS..",
+    summaries = "..SUMMARIES.."
   )
 }

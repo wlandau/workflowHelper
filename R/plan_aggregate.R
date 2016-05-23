@@ -10,13 +10,11 @@ NULL
 #' @param aggregate Character string, aggretation method
 #' @param summaries Character vector, methods of summarizing analysis
 plan_aggregate = function(sources, packages, command, aggregate, summaries){
-  out = aggregate
-  save = paste0(out, ".rds")
-  yaml = paste0(out, ".yml")
-  summaries = paste0("\"", summaries, ".rds\"")
-  summaries = paste(summaries, collapse = ", ")
-  command = gsub(placeholders()["save"], paste0("\"", save, "\""), command)
-  command = gsub(placeholders()["summaries"], summaries, command)
-  single_step(sources, packages, command, save, yaml)
-  out
+  depends = summaries
+  place = placeholders()["summaries"]
+  names(depends) = paste0(place, summaries)
+  replacements = paste(names(depends), collapse = ", ")
+  names(replacements) = place
+  single_step(sources, packages, command, aggregate, depends, replacements)
+  aggregate
 }

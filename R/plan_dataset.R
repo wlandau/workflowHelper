@@ -9,10 +9,6 @@ NULL
 #' @param command Character string, command to run.
 #' @param dataset Character string, dataset to generate
 plan_dataset = function(sources, packages, command, dataset){
-  out = dataset
-  save = paste0(out, ".rds")
-  yaml = paste0(out, ".yml")
-  command = gsub(placeholders()["save"], paste0("\"", save, "\""), command)
-  single_step(sources, packages, command, save, yaml)
-  out
+  single_step(sources, packages, command, dataset)
+  dataset
 }
