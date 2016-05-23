@@ -41,7 +41,7 @@ datasets = c(
 )
 ```
 
-Some data are generated from Poisson distributions while others are generated from normal distributions. The RDS files on the left will be generated using the commands on the right. For example, the first command says to run `poisson_dataset("poisson10.rds", n = 100)` and save the result as `poisson10.rds`. All three of my datasets are generated similarly. `__SAVE__` is a placeholder for the saved RDS file, and its counterparts are returned by the `placeholders` function. You will be able to use the `__SAVE__` placeholder.
+Some data are generated from Poisson distributions while others are generated from normal distributions. The RDS files on the left will be generated using the commands on the right. For example, the first command says to run `poisson_dataset("poisson10.rds", n = 100)` and save the result as `poisson10.rds`. All three of my datasets are generated similarly. `__SAVE__` is a placeholder for the file to save in the given command, and its counterparts are returned by the `placeholders` function. You will always be able to use the `__SAVE__` placeholder.
 
 Next, I specify how to analyze each dataset
 
@@ -63,7 +63,7 @@ summaries = c(
 )
 ```
 
-Each analysis will be summarized with the mean squared error of model predictions (MSE) and the model coefficients from the `lm` and `glm` fits. Here, the `__ANALYSIS__` placeholder stands for the RDS file containing the output of `lm` or `glm`, and it is specific to both the method of analysis and dataset analyzed.
+Each analysis will be summarized with the mean squared error of model predictions (MSE) and the model coefficients from the `lm` and `glm` fits. Here, the `__ANALYSIS__` placeholder stands for the RDS file containing the output of `lm` or `glm`, and it is specific to both the method of analysis and dataset analyzed. You may use the `__SAVE__`, `__DATASET__`, or `__ANALYSIS__` placeholders.
 
 With 3 datasets, 2 methods of analysis, and 2 types of summary statistics, our summary statistics are spread over 12 different RDS files. To aggregate them back together, I issue the following.
 
@@ -75,7 +75,7 @@ aggregates = c(
 )
 ```
 
-This ensures that there will be a data frame `mse.rds` of mean squared errors and another data frame `coef.rds` of model coefficients.  Finally, I plan to generate the summaries.
+This ensures that there will be a data frame `mse.rds` of mean squared errors and another data frame `coef.rds` of model coefficients. Only the `__SAVE__` and `__SUMMARIES__` placeholders are valid here. Finally, I plan to generate the summaries.
 
 ```{r}
 output = c(
@@ -84,7 +84,7 @@ output = c(
 )
 ```
 
-This will convert `mse.rds` to `mse.csv` and plot the model coefficients of `coef.rds` in `coef.pdf`.
+This will convert `mse.rds` to `mse.csv` and plot the model coefficients of `coef.rds` in `coef.pdf`. Only the `__SAVE__` placeholder is valid here.
 
 The stages of my workflow are now planned. To put them all together, I use `plan_workflow`, which calls `parallelRemake::write_makefile`.
 
