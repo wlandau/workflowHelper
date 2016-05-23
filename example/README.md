@@ -25,7 +25,7 @@ I will need to tell `workflowHelper` where my code is stored.
 sources = "code.R"
 ```
 
-I can also specify the external packages that your code relies on. In this case, there are none.
+I can also specify the external packages that my code relies on. In this case, there are none.
 
 ```{r}
 packages = NULL
@@ -95,4 +95,4 @@ plan_workflow(sources, packages = NULL, datasets = datasets, analyses = analyses
 
 Now, there is a [Makefile](https://www.gnu.org/software/make/) in my current working directory. There are also a bunch of  [YAML](http://yaml.org/) files, all of which are necessary to the [Makefile](https://www.gnu.org/software/make/). 
 
-To actually run the workflow, just open a [command line program](http://linuxcommand.org/) and enter `make`. To distribute your workflow over multiple parallel processes, run `make -j <n>`, where <n> is the number of processes. This will generate all the datasets in parallel, then run all the analyses in parallel, etc.
+To actually run the workflow, just open a [command line program](http://linuxcommand.org/) and enter `make`. To distribute the workflow over multiple parallel processes, run `make -j <n>`, where <n> is the number of processes. This will generate all the datasets in parallel, then run all the analyses in parallel, etc.
