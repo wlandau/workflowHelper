@@ -1,11 +1,11 @@
 # Run the example
 
 - Ensure that [R](https://www.r-project.org/), the [`parallelRemake`](https://github.com/wlandau/parallelRemake/) package, the [workflowHelper/README.md](https://github.com/wlandau/workflowHelper/blob/master/README.md) package, and [GNU make](https://www.gnu.org/software/make/) are installed.
-- Run Makefile.R in an R session to generate the [Makefile](https://www.gnu.org/software/make/) and its constituent [`remake`](https://github.com/richfitz/remake)/[YAML](http://yaml.org/) files.
+- Run `Makefile.R` in an R session to generate the [Makefile](https://www.gnu.org/software/make/) and its constituent [`remake`](https://github.com/richfitz/remake)/[YAML](http://yaml.org/) files.
 - Open a [command line program](http://linuxcommand.org/) such as [Terminal](https://en.wikipedia.org/wiki/Terminal_%28OS_X%29) and point to the [current working directory](http://www.linfo.org/cd.html).
 - Enter `make` into the command line to run the full workflow. To distribute the work over multiple parallel process, you can instead type `make -j <n>` where `<n>` is the number of processes.
 - Optionally, inspect the final output files `coef.pdf` and `mse.csv`. Additionally, you can inspect the second-to-last files `coef.rds` and `mse.rds`.
-- Optionally, clean up the output. Typing `make clean` removes the files produced by `make`. Similarly, `make clean_yaml` removes the [YAML](http://yaml.org/) files produced by `write_yaml`, `make clean_makefile` removes the [Makefile](https://www.gnu.org/software/make/), and `make clean_all` is equivalent to `make clean clean_yaml clean_makefile`.
+- Optionally, clean up the output. Typing `make clean` removes all the files since the call to `Makefile.R`. There are also other intermediate targets for `clean` and the main workflow.
 
 # Details
 
@@ -95,4 +95,4 @@ plan_workflow(sources, packages = NULL, datasets = datasets, analyses = analyses
 
 Now, there is a [Makefile](https://www.gnu.org/software/make/) in my current working directory. There are also a bunch of  [YAML](http://yaml.org/) files, all of which are necessary to the [Makefile](https://www.gnu.org/software/make/). 
 
-To actually run the workflow, just open a [command line program](http://linuxcommand.org/) and enter `make`. To distribute the workflow over multiple parallel processes, run `make -j <n>`, where <n> is the number of processes. This will generate all the datasets in parallel, then run all the analyses in parallel, etc.
+To actually run the workflow, just open a [command line program](http://linuxcommand.org/) and enter `make`. To distribute the workflow over multiple parallel processes, run `make -j <n>`, where <n> is the number of processes. This will generate all the datasets in parallel, then run all the analyses in parallel, etc. Optionally, I can clean up the output at the point. Typing `make clean` removes all the files since the call to `Makefile.R`. There are also other intermediate targets for `clean` and the main workflow.

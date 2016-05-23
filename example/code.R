@@ -1,65 +1,65 @@
 # Code for each component of the analysis
 
 # Generate datasets
-poisson_dataset = function(file, n = 100){
+poisson_dataset = function(save, n = 100){
   out = data.frame(x = rpois(n, 1), y = rpois(n, 5))
-  saveRDS(out, file)
+  saveRDS(out, save)
 }
 
-normal_dataset = function(file, n = 100){
+normal_dataset = function(save, n = 100){
   out = data.frame(x = rnorm(n, 1), y = rnorm(n, 5))
-  saveRDS(out, file)
+  saveRDS(out, save)
 }
 
 # Analyze each dataset
-lm_analysis = function(file, dataset){
+lm_analysis = function(save, dataset){
   dataset = readRDS(dataset)
   out = lm(y ~ x, data = dataset)
-  saveRDS(out, file)
+  saveRDS(out, save)
 }
 
-glm_analysis = function(file, dataset){
+glm_analysis = function(save, dataset){
   dataset = readRDS(dataset)
   out = glm(y ~ x, data = dataset)
-  saveRDS(out, file)
+  saveRDS(out, save)
 }
 
 # Compute summaries
-mse_summary = function(file, dataset, analysis){
+mse_summary = function(save, dataset, analysis){
   dataset = readRDS(dataset)
   analysis = readRDS(analysis)
   pred = predict(analysis)
   out = mean((pred - dataset$y)^2)
-  saveRDS(out, file)
+  saveRDS(out, save)
 }
 
-coef_summary = function(file, analysis){
+coef_summary = function(save, analysis){
   analysis = readRDS(analysis)
   out = coef(analysis)
-  saveRDS(out, file)
+  saveRDS(out, save)
 }
 
 # Aggregate the summaries together
-aggregate_mse = function(file, ...){
+aggregate_mse = function(save, ...){
   summaries = unlist(list(...))
   summaries = summaries[grep("_mse.rds$", summaries)]
   mse = sapply(summaries, readRDS)
-  out = data.frame(file = summaries, mse = mse)
-  saveRDS(out, file)
+  out = data.frame(save = summaries, mse = mse)
+  saveRDS(out, save)
 }
 
-aggregate_coef = function(file, ...){
+aggregate_coef = function(save, ...){
   summaries = unlist(list(...))
   summaries = summaries[grep("_coef.rds$", summaries)]
   coef = do.call(rbind, lapply(summaries, readRDS))
-  out = data.frame(file = summaries, coef)
-  saveRDS(out, file)
+  out = data.frame(save = summaries, coef)
+  saveRDS(out, save)
 }
 
 # Final output
-mse_as_csv = function(file){
+mse_as_csv = function(save){
   mse = readRDS("mse.rds")
-  write.csv(mse, file, row.names = FALSE)
+  write.csv(mse, save, row.names = FALSE)
 }
 
 # You may hard-code an output file for final output.
