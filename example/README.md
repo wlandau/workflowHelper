@@ -25,11 +25,7 @@ I will need to tell `workflowHelper` where my code is stored and what packages i
 sources = c("code.R", "MASS")
 ```
 
-The package uses the `.r` and `.R` extensions to distinguish packages from source files. I can also specify the external packages that my code relies on. In this case, there are none.
-
-```{r}
-packages = NULL
-```
+The package uses the `.r` and `.R` extensions to distinguish packages from source files. 
 
 Next, I list the commands to generate the datasets I want.
 
