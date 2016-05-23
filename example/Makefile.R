@@ -31,7 +31,7 @@ aggregates = c(
 
 # Final output.
 output = c(
-  mse.csv = "mse_as_csv()",
+  mse.csv = "mse_as_csv(__FILE__)",
   coef.pdf = "plot_coef()"
 )
 

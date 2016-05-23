@@ -15,8 +15,8 @@ Imports:
     parallelRemake
 RoxygenNote: 5.0.1
 Collate:
-    'macros.R'
     'namespace.R'
+    'placeholders.R'
     'single_step.R'
     'plan_aggregate.R'
     'plan_analysis.R'

@@ -1,4 +1,4 @@
-#' @include macros.R single_step.R
+#' @include placeholders.R single_step.R
 NULL
 
 #' @title Function \code{plan_summary}
@@ -17,7 +17,7 @@ plan_summary = function(sources, packages, command, dataset, analysis, summary){
   analysis = paste(dataset, analysis, sep = "_")
   for(item in c("file", "dataset", "analysis")){
     assign(item, paste0(get(item), ".rds"))
-    command = gsub(macros()[item], paste0("\"", get(item), "\""), command)
+    command = gsub(placeholders()[item], paste0("\"", get(item), "\""), command)
   }
   single_step(sources, packages, command, file, yaml)
   out

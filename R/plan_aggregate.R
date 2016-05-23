@@ -1,4 +1,4 @@
-#' @include macros.R single_step.R
+#' @include placeholders.R single_step.R
 NULL
 
 #' @title Function \code{plan_aggregate}
@@ -15,8 +15,8 @@ plan_aggregate = function(sources, packages, command, aggregate, summaries){
   yaml = paste0(out, ".yml")
   summaries = paste0("\"", summaries, ".rds\"")
   summaries = paste(summaries, collapse = ", ")
-  command = gsub(macros()["file"], paste0("\"", file, "\""), command)
-  command = gsub(macros()["summaries"], summaries, command)
+  command = gsub(placeholders()["file"], paste0("\"", file, "\""), command)
+  command = gsub(placeholders()["summaries"], summaries, command)
   single_step(sources, packages, command, file, yaml)
   out
 }

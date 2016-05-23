@@ -1,7 +1,7 @@
-#' @title Function \code{macros}
-#' @description Placeholder macros for commands.
+#' @title Function \code{placeholders}
+#' @description Placeholder placeholders for commands.
 #' @export
-macros = function(){
+placeholders = function(){
   c(
     file = "__FILE__",
     dataset = "__DATASET__",

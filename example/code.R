@@ -57,11 +57,12 @@ aggregate_coef = function(file, ...){
 }
 
 # Final output
-mse_as_csv = function(){
+mse_as_csv = function(file){
   mse = readRDS("mse.rds")
-  write.csv(mse, "mse.csv", row.names = FALSE)
+  write.csv(mse, file, row.names = FALSE)
 }
 
+# You may hard-code an output file for final output.
 plot_coef = function(){
   coef = readRDS("coef.rds")
   pdf("coef.pdf")

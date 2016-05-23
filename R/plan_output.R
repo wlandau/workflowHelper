@@ -1,4 +1,4 @@
-#' @include macros.R single_step.R
+#' @include placeholders.R single_step.R
 NULL
 
 #' @title Function \code{plan_output}
@@ -12,6 +12,7 @@ plan_output = function(sources, packages, command, output){
   out = output
   file = out
   yaml = paste0(out, ".yml")
+  command = gsub(placeholders()["file"], paste0("\"", file, "\""), command)
   single_step(sources, packages, command, file, yaml)
   out
 }

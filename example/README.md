@@ -41,7 +41,7 @@ datasets = c(
 )
 ```
 
-Some data are generated from Poisson distributions while others are generated from normal distributions. The RDS files on the left will be generated using the commands on the right. For example, the first command says to run `poisson_dataset("poisson10.rds", n = 100)` and save the result as `poisson10.rds`. All three of my datasets are generated this way.
+Some data are generated from Poisson distributions while others are generated from normal distributions. The RDS files on the left will be generated using the commands on the right. For example, the first command says to run `poisson_dataset("poisson10.rds", n = 100)` and save the result as `poisson10.rds`. All three of my datasets are generated similarly. `__FILE__` is a placeholder for the saved RDS file, and its counterparts are returned by the `placeholders` function. You will be able to use the `__FILE__` placeholder.
 
 Next, I specify how to analyze each dataset
 
@@ -79,7 +79,7 @@ This ensures that there will be a data frame `mse.rds` of mean squared errors an
 
 ```{r}
 output = c(
-  mse.csv = "mse_as_csv()",
+  mse.csv = "mse_as_csv(__FILE__)",
   coef.pdf = "plot_coef()"
 )
 ```

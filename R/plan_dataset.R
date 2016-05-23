@@ -1,4 +1,4 @@
-#' @include macros.R single_step.R
+#' @include placeholders.R single_step.R
 NULL
 
 #' @title Function \code{plan_dataset}
@@ -12,7 +12,7 @@ plan_dataset = function(sources, packages, command, dataset){
   out = dataset
   file = paste0(out, ".rds")
   yaml = paste0(out, ".yml")
-  command = gsub(macros()["file"], paste0("\"", file, "\""), command)
+  command = gsub(placeholders()["file"], paste0("\"", file, "\""), command)
   single_step(sources, packages, command, file, yaml)
   out
 }
