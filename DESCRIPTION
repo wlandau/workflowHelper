@@ -16,6 +16,5 @@ Imports:
 RoxygenNote: 5.0.1
 Collate:
     'namespace.R'
-    'new_dir.R'
     'single_step.R'
     'plan_workflow.R'

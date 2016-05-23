@@ -21,16 +21,16 @@ NULL
 plan_workflow = function(sources, packages = NULL, datasets = NULL, analyses = NULL, summaries = NULL, aggregates = NULL, output = NULL){
 
   dataset_files = analysis_files = summary_files = c()
-  for(i in 1:length(datasets)){
+  if(length(datasets)) for(i in 1:length(datasets)){
     dataset = paste0(names(datasets)[i], ".rds")
     dataset_files = c(dataset_files, dataset)
     single_step(sources, packages, datasets[i], names(datasets)[i])
-    for(j in 1:length(analyses)){
+    if(length(analyses)) for(j in 1:length(analyses)){
       root = paste(names(datasets)[i], names(analyses)[j], sep = "_")
       analysis = paste0(root, ".rds")
       analysis_files = c(analysis, analysis_files)
       single_step(sources, packages, analyses[j], root, dataset)
-      for(k in 1:length(summaries)){
+      if(length(summaries)) for(k in 1:length(summaries)){
         root = paste(names(datasets)[i], names(analyses)[j], names(summaries)[k], sep = "_")
         summary_files = c(summary_files, paste0("", root, ".rds"))
         single_step(sources, packages, summaries[k], root, dataset, analysis)
@@ -38,10 +38,10 @@ plan_workflow = function(sources, packages = NULL, datasets = NULL, analyses = N
     }
   }
 
-  for(i in 1:length(aggregates))
+  if(length(aggregates)) for(i in 1:length(aggregates))
     single_step(sources, packages, aggregates[i], names(aggregates)[i], summaries = summary_files)
 
-  for(i in 1:length(output))
+  if(length(output)) for(i in 1:length(output))
     single_step(sources, packages, output[i], names(output)[i], append_rds = FALSE)
 
   stages = list(
@@ -53,5 +53,10 @@ plan_workflow = function(sources, packages = NULL, datasets = NULL, analyses = N
   )
 
   stages = stages[!sapply(stages, is.null)]
-  write_makefile(stages)
+  stages = stages[sapply(stages, function(x){any(nchar(x) > 0)})]
+  if(length(stages)){
+    write_makefile(stages)
+  } else {
+    message("Nothing to do. No Makefile written.")
+  }
 }
