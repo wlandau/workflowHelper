@@ -61,7 +61,7 @@ summaries = c(
 
 Each analysis will be summarized with the mean squared error of model predictions (MSE) and the model coefficients from the `lm` and `glm` fits. Here, the `..ANALYSIS..` placeholder stands for the fitted model object returned by `lm_analysis` or `glm_analysis`. 
 
-The names of the `summaries` vector are `mse` and `coef`, so RDS files `mse.rds` and `coef.rds` will be produced. Each is a list containing the given summary (MSE or coefficients) of each analysis of each dataset.
+The names of the `summaries` vector are `mse` and `coef`, so RDS files `mse.rds` and `coef.rds` will be produced. Each is a named list containing the given summary (MSE or coefficients) of each analysis of each dataset, where the names are the RDS files containing the individual summaries.
 
 
 Finally, I spedicify how to generate output.
