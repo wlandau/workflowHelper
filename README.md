@@ -9,7 +9,7 @@ Check out the [example](https://github.com/wlandau/workflowHelper/tree/master/ex
 
 # Installation
 
-Ensure that [R](https://www.r-project.org/), the [`storr`](https://github.com/richfitz/storr) package, [`remake`](https://github.com/richfitz/remake) package, the [`parallelRemake`](https://github.com/wlandau/parallelRemake) package, and [GNU make](https://www.gnu.org/software/make/) are installed. Open an R session and run 
+Ensure that [R](https://www.r-project.org/) and [GNU make](https://www.gnu.org/software/make/) are installed, as well as the dependencies in the [`DESCRIPTION`](https://github.com/wlandau/workflowHelper/blob/master/DESCRIPTION). Open an R session and run 
 
 ```
 library(devtools)
