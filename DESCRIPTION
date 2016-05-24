@@ -17,6 +17,8 @@ Imports:
 RoxygenNote: 5.0.1
 Collate:
     'aggregate_summaries.R'
+    'commands.R'
+    'expr.R'
     'namespace.R'
     'utils.R'
     'parse_analyses.R'

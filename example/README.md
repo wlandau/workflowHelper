@@ -22,29 +22,29 @@ I will need to tell `workflowHelper` where my code is stored and what packages i
 
 ```{r}
 library(workflowHelper)
-sources = c("code.R", "MASS")
+sources = expr(code.R, MASS)
 ```
 
-The package uses the `.r` and `.R` extensions to distinguish packages from source files. 
+The package uses the `.r` and `.R` extensions to distinguish packages from source files. Above, `expr` converts R expressions into character strings, so `sources = expr("code.R", "MASS")` would be equivalent.
 
-Next, I list the commands to generate the datasets I want.
+Next, I list the commands to generate the datasets I want,
 
 ```{r}
-datasets = c(
-  poisson100 = "poisson_dataset(n = 100)",
-  normal100 = "normal_dataset(n = 100)",
-  normal1000 = "normal_dataset(n = 1000)"
+datasets = commands(
+  poisson100 = poisson_dataset(n = 100),
+  normal100 = normal_dataset(n = 100),
+  normal1000 = normal_dataset(n = 1000)
 )
 ```
 
-Some data are generated from Poisson distributions while others are generated from normal distributions. The RDS files on the left will be generated using the commands on the right. For example, the first command says to run `poisson_dataset(n = 100)` and save the object returned from the function as `CACHE/poisson100.rds`. All three of my datasets are generated similarly.
+where the `commands` function parses named expressions (equivalent to `datasets = c(poisson100 = "poisson_dataset(n = 100)",...)`). Some data are generated from Poisson distributions while others are generated from normal distributions. The RDS files on the left will be generated using the commands on the right. For example, the first command says to run `poisson_dataset(n = 100)` and save the object returned from the function as `CACHE/poisson100.rds`. All three of my datasets are generated similarly.
 
 Next, I specify how to analyze each dataset
 
 ```{r}
-analyses = c(
-  lm = "lm_analysis(..DATASET..)",
-  glm = "glm_analysis(..DATASET..)"
+analyses = commands(
+  lm = lm_analysis(..DATASET..),
+  glm = glm_analysis(..DATASET..)
 )
 ```
 
@@ -53,9 +53,9 @@ These methods just run regressions with `lm` and `glm`, respectively. Each datas
 Next, I specify the summary statistics I want for each analysis of each dataset. 
 
 ```{r}
-summaries = c(
-  mse = "mse_summary(..DATASET.., ..ANALYSIS..)",
-  coef = "coef_summary(..ANALYSIS..)"
+summaries = commands(
+  mse = mse_summary(..DATASET.., ..ANALYSIS..),
+  coef = coef_summary(..ANALYSIS..)
 )
 ```
 
@@ -67,9 +67,9 @@ The names of the `summaries` vector are `mse` and `coef`, so RDS files `mse.rds`
 Finally, I spedicify how to generate output.
 
 ```{r}
-output = c(
-  mse.csv = "mse_as_csv(\"mse.rds\")",
-  coef.pdf = "plot_coef(\"coef.rds\")"
+output = commands(
+  mse.csv = mse_as_csv("mse.rds"),
+  coef.pdf = plot_coef("coef.rds")
 )
 ```
 
