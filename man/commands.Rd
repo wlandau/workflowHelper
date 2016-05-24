@@ -16,7 +16,7 @@ or \code{output} argument to \code{plan_workflow}
 \description{
 Turn a collection of R expressions into 
 a named character vector of R commands readable by \code{plan_workflow}. 
-These commands to generate datasets, analyze
+These commands are to generate datasets, analyze
 datasets, etc. You must specify the names of the fields.
 For example, write \code{commands(x = data(y), z = 3)} instead of 
 \code{commands(x, z)} or \code{commands(data(y), 3)}
