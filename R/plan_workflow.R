@@ -1,53 +1,42 @@
-#' @include single_step.R
+#' @include parse_analyses.R parse_summaries.R plan_aggregates.R plan_output.R plan_stage.R
 NULL
 
 #' @title Function \code{plan_workflow}
-#' @description Plan a simulation study workflow or something similar. Produces a makefile 
-#' so that you can run or resume you workflow with `make` or `make -j <whatever>` for
-#' parallelization.
+#' @description Main function of the package. Produces a Makefile to run an workflow.
 #' @export
-#' @param sources Character vector of paths to the files containing your R code 
-#' (*.R and *.r files) along with external packages (no file extension).
-#' @param datasets Named character vector of commands to generate datasets.
-#' @param analyses Named character vector of commands to analyze the datasets.
-#' @param summaries Named character vector of commands to condense the data and 
-#' analyses into small summaries.
-#' @param output Named character vector, commands for general output. Unlike the 
-#' other command vectors, the names here need not denote rds files. However, they 
-#' should have the appropriate file extensions.
+#' @param sources Named character vector, code files and packages to load.
+#' Code files should end in \code{.r} or \code{.R}. Otherwise, they will
+#' be assumed to be packages.
+#' @param datasets Named character vector of commands to make targets.
+#' Names stand for RDS target files without their extensions.
+#' @param analyses Named character vector of commands to make targets.
+#' Names stand for RDS target files without their extensions.
+#' @param summaries Named character vector of commands to make targets.
+#' Names stand for RDS target files without their extensions.
+#' @param output Named character vector of commands to make targets.
+#' Names stand for files (possible non-RDS files) WITH their extensions.
 plan_workflow = function(sources, datasets = NULL, analyses = NULL, summaries = NULL, output = NULL){
+  is_source = grepl("\\.[rR]$", sources)
+  packages = sources[!is_source]
+  sources = sources[is_source]
+  aggregates = summaries
 
-  isSource = grepl("\\.[rR]$", sources)
-  packages = sources[!isSource]
-  sources = sources[isSource]
-  stages = list()
+  args = c("datasets", "analyses", "summaries", "aggregates", "output")
+  args = args[sapply(args, function(x){!is.null(get(x))})]
 
-  if(length(datasets)) for(i in 1:length(datasets)){
-    step = plan_dataset(sources, packages, datasets[i], names(datasets)[i])
-    stages[["datasets"]] = c(stages[["datasets"]], step)
-    if(length(analyses)) for(j in 1:length(analyses)){
-      step = plan_analysis(sources, packages, analyses[j], names(datasets)[i], names(analyses)[j])
-      stages[["analyses"]] = c(stages[["analyses"]], step)
-      if(length(summaries)) for(k in 1:length(summaries)){
-        step = plan_summary(sources, packages, summaries[k], 
-          names(datasets)[i], names(analyses)[j], names(summaries)[k])
-        stages[["summaries"]] = c(stages[["summaries"]], step)
-      }
-    }
+  for(item in args){
+    if(anyDuplicated(names(get(item)))) stop("argument vectors cannot have duplicate names.")
+    assign(item, data.frame(save = names(get(item)), command = get(item), stringsAsFactors = F))
   }
 
-  stages[["aggregates"]] = names(summaries)
-  for(i in 1:length(summaries))
-    plan_aggregate(sources, packages, names(summaries)[i], stages[["summaries"]])
+  summaries = parse_summaries(datasets, analyses, summaries)
+  analyses = parse_analyses(datasets, analyses)
 
-  if(length(output)) for(i in 1:length(output)){
-    step = plan_output(sources, packages, output[i], names(output)[i])
-    stages[["output"]] = c(stages[["output"]], step)
-  }
+  args0 = args[args != "aggregates" & args != "output"]
+  for(item in args0) plan_stage(get(item), sources, packages)
+  if(!is.null(aggregates)) plan_aggregates(summaries, aggregates, sources, packages)
+  if(!is.null(output)) plan_output(output, sources, packages)
 
-  if(length(stages)){
-    write_makefile(stages)
-  } else {
-    message("Nothing to do. No Makefile written.")
-  }
+  stages = lapply(args, function(x) get(x)$save)  
+  write_makefile(stages)
 }

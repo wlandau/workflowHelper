@@ -12,15 +12,17 @@ Depends:
     R (>= 3.0.0)
 Imports:
     remake,
-    parallelRemake
+    parallelRemake,
+    plyr
 RoxygenNote: 5.0.1
 Collate:
+    'aggregate_summaries.R'
+    'expand_grid_df.R'
+    'macro.R'
     'namespace.R'
-    'placeholders.R'
-    'plan_aggregate.R'
-    'single_step.R'
-    'plan_analysis.R'
-    'plan_dataset.R'
+    'parse_analyses.R'
+    'parse_summaries.R'
+    'plan_aggregates.R'
     'plan_output.R'
-    'plan_summary.R'
+    'plan_stage.R'
     'plan_workflow.R'

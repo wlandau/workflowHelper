@@ -8,23 +8,23 @@ plan_workflow(sources, datasets = NULL, analyses = NULL, summaries = NULL,
   output = NULL)
 }
 \arguments{
-\item{sources}{Character vector of paths to the files containing your R code 
-(*.R and *.r files) along with external packages (no file extension).}
+\item{sources}{Named character vector, code files and packages to load.
+Code files should end in \code{.r} or \code{.R}. Otherwise, they will
+be assumed to be packages.}
 
-\item{datasets}{Named character vector of commands to generate datasets.}
+\item{datasets}{Named character vector of commands to make targets.
+Names stand for RDS target files without their extensions.}
 
-\item{analyses}{Named character vector of commands to analyze the datasets.}
+\item{analyses}{Named character vector of commands to make targets.
+Names stand for RDS target files without their extensions.}
 
-\item{summaries}{Named character vector of commands to condense the data and 
-analyses into small summaries.}
+\item{summaries}{Named character vector of commands to make targets.
+Names stand for RDS target files without their extensions.}
 
-\item{output}{Named character vector, commands for general output. Unlike the 
-other command vectors, the names here need not denote rds files. However, they 
-should have the appropriate file extensions.}
+\item{output}{Named character vector of commands to make targets.
+Names stand for files (possible non-RDS files) WITH their extensions.}
 }
 \description{
-Plan a simulation study workflow or something similar. Produces a makefile 
-so that you can run or resume you workflow with `make` or `make -j <whatever>` for
-parallelization.
+Main function of the package. Produces a Makefile to run an workflow.
 }
 

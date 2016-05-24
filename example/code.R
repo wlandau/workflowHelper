@@ -28,29 +28,15 @@ coef_summary = function(analysis){
   coef(analysis)
 }
 
-# Aggregate the summaries together
-aggregate_mse = function(...){
-  summaries = list(...)
-  is_mse = sapply(summaries, length) == 1
-  unlist(summaries[is_mse])
-}
-
-aggregate_coef = function(save, ...){
-  summaries = list(...)
-  is_coef = sapply(summaries, length) > 1
-  do.call(rbind, summaries[is_coef])
-}
-
 # Final output
 mse_as_csv = function(file){
-  mse = matrix(readRDS(file), ncol = 1)
-  write.csv(mse, "mse.csv", row.names = FALSE)
+ mse = unlist(readRDS(file))
+ write.csv(data.frame(file = names(mse), mse = mse), "mse.csv", row.names = F)
 }
 
-# You may hard-code an output file for final output.
 plot_coef = function(file){
-  coef = do.call(rbind, readRDS(file))
   pdf("coef.pdf")
+  coef = do.call(rbind, readRDS("coef.rds"))
   plot(coef)
   dev.off()
 }
