@@ -38,5 +38,5 @@ plan_workflow = function(sources, datasets = NULL, analyses = NULL, summaries = 
   if(!is.null(output)) plan_output(output, sources, packages)
 
   stages = lapply(args, function(x) get(x)$save)  
-  write_makefile(stages)
+  write_makefile(stages, clean = paste0("rm -rf ", macro("cache")))
 }
