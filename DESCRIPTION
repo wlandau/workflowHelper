@@ -18,7 +18,6 @@ RoxygenNote: 5.0.1
 Collate:
     'aggregate_summaries.R'
     'commands.R'
-    'expr.R'
     'namespace.R'
     'utils.R'
     'parse_analyses.R'
@@ -27,3 +26,4 @@ Collate:
     'plan_output.R'
     'plan_stage.R'
     'plan_workflow.R'
+    'strings.R'

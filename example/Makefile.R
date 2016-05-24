@@ -1,7 +1,7 @@
 library(workflowHelper)
 
 # R files with your code (ending in .R or .r) and packages
-sources = expr(code.R, MASS)
+sources = strings(code.R, MASS)
 
 # Generate the data
 datasets = commands(

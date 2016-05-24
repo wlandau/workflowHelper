@@ -22,10 +22,10 @@ I will need to tell `workflowHelper` where my code is stored and what packages i
 
 ```{r}
 library(workflowHelper)
-sources = expr(code.R, MASS)
+sources = strings(code.R, MASS)
 ```
 
-The package uses the `.r` and `.R` extensions to distinguish packages from source files. Above, `expr` converts R expressions into character strings, so `sources = expr("code.R", "MASS")` would be equivalent.
+The package uses the `.r` and `.R` extensions to distinguish packages from source files. Above, `strings` converts R expressions into named character strings, so `sources = strings("code.R", "MASS")` would be equivalent.
 
 Next, I list the commands to generate the datasets I want,
 
@@ -37,7 +37,7 @@ datasets = commands(
 )
 ```
 
-where the `commands` function parses named expressions (equivalent to `datasets = c(poisson100 = "poisson_dataset(n = 100)",...)`). Some data are generated from Poisson distributions while others are generated from normal distributions. The RDS files on the left will be generated using the commands on the right. For example, the first command says to run `poisson_dataset(n = 100)` and save the object returned from the function as `CACHE/poisson100.rds`. All three of my datasets are generated similarly.
+where the `commands` function parses named expressions (equivalent to `datasets = c(poisson100 = "poisson_dataset(n = 100)",...)`. `commands` like `strings`, but it checks user input for errors.) Some data are generated from Poisson distributions while others are generated from normal distributions. The RDS files on the left will be generated using the commands on the right. For example, the first command says to run `poisson_dataset(n = 100)` and save the object returned from the function as `CACHE/poisson100.rds`. All three of my datasets are generated similarly.
 
 Next, I specify how to analyze each dataset
 
