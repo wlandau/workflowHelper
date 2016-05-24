@@ -21,10 +21,10 @@ plan_workflow = function(sources, datasets = NULL, analyses = NULL, summaries = 
   sources = sources[is_source]
   aggregates = summaries
 
-  args = c("datasets", "analyses", "summaries", "aggregates", "output")
-  args = args[sapply(args, function(x){!is.null(get(x))})]
+  stage_names = c("datasets", "analyses", "summaries", "aggregates", "output")
+  stage_names = stage_names[sapply(stage_names, function(x){!is.null(get(x))})]
 
-  for(item in args){
+  for(item in stage_names){
     if(anyDuplicated(names(get(item)))) stop("argument vectors cannot have duplicate names.")
     assign(item, data.frame(save = names(get(item)), command = get(item), stringsAsFactors = F))
   }
@@ -32,11 +32,12 @@ plan_workflow = function(sources, datasets = NULL, analyses = NULL, summaries = 
   summaries = parse_summaries(datasets, analyses, summaries)
   analyses = parse_analyses(datasets, analyses)
 
-  args0 = args[args != "aggregates" & args != "output"]
-  for(item in args0) plan_stage(get(item), sources, packages)
+  initial_stage_names = stage_names[stage_names != "aggregates" & stage_names != "output"]
+  for(item in initial_stage_names) plan_stage(get(item), sources, packages)
   if(!is.null(aggregates)) plan_aggregates(summaries, aggregates, sources, packages)
   if(!is.null(output)) plan_output(output, sources, packages)
 
-  stages = lapply(args, function(x) name_yml(get(x)$save))
+  stages = lapply(stage_names, function(x) name_yml(get(x)$save))
+  names(stages) = stage_names
   write_makefile(stages, clean = paste0("rm -rf ", macro("cache")))
 }

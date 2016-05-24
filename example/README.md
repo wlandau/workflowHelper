@@ -37,7 +37,7 @@ datasets = c(
 )
 ```
 
-Some data are generated from Poisson distributions while others are generated from normal distributions. The RDS files on the left will be generated using the commands on the right. For example, the first command says to run `poisson_dataset(n = 100)` and save the object returned from the function as `CACHE/poisson10.rds`. All three of my datasets are generated similarly.
+Some data are generated from Poisson distributions while others are generated from normal distributions. The RDS files on the left will be generated using the commands on the right. For example, the first command says to run `poisson_dataset(n = 100)` and save the object returned from the function as `CACHE/poisson100.rds`. All three of my datasets are generated similarly.
 
 Next, I specify how to analyze each dataset
 
@@ -48,7 +48,7 @@ analyses = c(
 )
 ```
 
-These methods just run regressions with `lm` and `glm`, respectively. Each dataset will be analyzed with both methods, so there will be six analyses in all. Since I'm iterating over datasets, the `..DATASET..` placeholder is used in place of the dataset to be passed to the function.
+These methods just run regressions with `lm` and `glm`, respectively. Each dataset will be analyzed with both methods, so there will be six analyses in all. Since I'm iterating over datasets, the `..DATASET..` placeholder is used in place of the dataset to be passed to the function. The analyses will be saved in files `CACHE/poisson100_lm.rds`, `CACHE/poisson100_glm.rds`, `CACHE/normal100_lm.rds`, etc.
 
 Next, I specify the summary statistics I want for each analysis of each dataset. 
 
@@ -59,7 +59,7 @@ summaries = c(
 )
 ```
 
-Each analysis will be summarized with the mean squared error of model predictions (MSE) and the model coefficients from the `lm` and `glm` fits. Here, the `..ANALYSIS..` placeholder stands for the fitted model object returned by `lm_analysis` or `glm_analysis`. 
+Each analysis will be summarized with the mean squared error of model predictions (MSE) and the model coefficients from the `lm` and `glm` fits. Here, the `..ANALYSIS..` placeholder stands for the fitted model object returned by `lm_analysis` or `glm_analysis`. The individual summaries are saved in `CACHE/poisson100_lm_mse.rds`, `CACHE/poisson100_lm_coef.rds`, etc.
 
 The names of the `summaries` vector are `mse` and `coef`, so RDS files `mse.rds` and `coef.rds` will be produced. (Unlike the previous RDS files, the aggregated summaries are not stored in the `CACHE` folder.) Each is a named list containing the given summary (MSE or coefficients) of each analysis of each dataset. The names of the lists in `mse.rds` and `coef.rds` are the relative paths to the RDS files containing the individual summaries.
 
@@ -81,6 +81,17 @@ The stages of my workflow are now planned. To put them all together, I use `plan
 plan_workflow(sources, datasets, analyses, summaries, output)
 ```
 
-Now, there is a [Makefile](https://www.gnu.org/software/make/) in my current working directory. There are also several hidden [YAML](http://yaml.org/) files in the same directory, all of which are necessary to the [Makefile](https://www.gnu.org/software/make/). 
+Now, there is a [Makefile](https://www.gnu.org/software/make/) in my current working directory. There are also several hidden [YAML](http://yaml.org/) files in the same directory, all of which are necessary to the [Makefile](https://www.gnu.org/software/make/). To actually run or manage the workflow, just open a [command line program](http://linuxcommand.org/) and enter one of the following.
 
-To actually run the workflow, just open a [command line program](http://linuxcommand.org/) and enter `make`. To distribute the workflow over multiple parallel processes, run `make -j <n>`, where <n> is the number of processes. This will generate all the datasets in parallel, then run all the analyses in parallel, etc. Optionally, I can clean up the output at the point. Typing `make clean` removes all the files since the call to `Makefile.R`. There are also other intermediate targets for `clean` and the main workflow.
+- `make` runs the full workflow, only building targets that are out of date.
+- `make -j <n>` is the same as above with the workflow distributed over `<n>` parallel processes. Similarly, you can append `-j <n>` to any of the commands below to activate parallelism.
+- `make datasets` just makes the datasets.
+- `make analyses` just runs the analyses of all the datasets after ensuring that the datasets are up to date.
+- `make summaries` just makes the individual summary of each analysis of each dataset after ensuring that the datasets and analyses are up to date. However, the summaries are not aggregated. In this example, that means that `mse.rds` and `coef.rds` are not made.
+- `make aggregates` makes the aggregates of the summaries (`mse.rds` and `coef.rds` in this example) after ensuring the datasets, analyses, and summaries are up to date.
+- `make output` makes the final output of the workflow after ensuring all the previous results are up to date.
+- `make clean` removes all the files generated by `make`. If some of your files are produced by side effects, `make clean` might not remove them. In that case, use the `clean` argument of `write_makefile` to add to the `clean` rule.
+```{r}
+write_makefile(stages, clean = c("rm -f myfile1", "rm -f myfile2"))
+```
+- `make reset` runs `make clean` and then removes the [Makefile](https://www.gnu.org/software/make/) and all its constituent [YAML](http://yaml.org/) files.
