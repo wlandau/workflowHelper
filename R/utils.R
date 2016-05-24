@@ -22,7 +22,7 @@ macro = function(arg){
     analysis = "..ANALYSIS..",
     save = "..SAVE..",
     load = "..LOAD..",
-    cache = "cache"
+    cache = "CACHE"
   )[arg]
 }
 
@@ -41,8 +41,8 @@ name_readRDS = function(file){
 }
 
 name_rds = function(items, cache = T){
-  folder = ifelse(cache, new_dir(macro("cache")), "")
-  paste0(folder, items, ".rds")
+  prefix = ifelse(cache, new_dir(macro("cache")), "")
+  paste0(prefix, items, ".rds")
 }
 
 name_save = function(items){
@@ -54,8 +54,7 @@ name_saveRDS = function(object, file){
 }
 
 name_yml = function(items){
-  folder = "" # new_dir("yaml")
-  paste0(folder, items, ".yml")
+  paste0(".", items, ".yml")
 }
 
 new_dir = function(path){

@@ -37,6 +37,6 @@ plan_workflow = function(sources, datasets = NULL, analyses = NULL, summaries = 
   if(!is.null(aggregates)) plan_aggregates(summaries, aggregates, sources, packages)
   if(!is.null(output)) plan_output(output, sources, packages)
 
-  stages = lapply(args, function(x) get(x)$save)  
+  stages = lapply(args, function(x) name_yml(get(x)$save))
   write_makefile(stages, clean = paste0("rm -rf ", macro("cache")))
 }
