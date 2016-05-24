@@ -1,4 +1,4 @@
-#' @include expand_grid_df.R
+#' @include utils.R
 NULL
 
 #' @title Internal function
@@ -19,7 +19,7 @@ parse_summaries = function(datasets = NULL, analyses = NULL, summaries = NULL){
   summaries$analysis = apply(summaries[,1:2], 1, paste, collapse = "_")
   summaries$command = apply(summaries, 1, function(x){
     for(item in c("dataset", "analysis"))
-      x["command"] = gsub(macro(item), paste0(x[item], macro("load")), x["command"])
+      x["command"] = gsub(macro(item), name_load(x[item]), x["command"])
     x["command"]
   })
   summaries

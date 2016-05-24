@@ -1,3 +1,6 @@
+#' @include utils.R
+NULL
+
 #' @title Internal function
 #' @description Internal function
 #' @export
@@ -6,26 +9,13 @@
 #' @param packages Character vector of R packages to load.
 plan_stage = function(df, sources, packages){
   ddply(df, colnames(df), function(x){
-    save_file = paste0(x$save, ".rds")
-    save_object = paste0(x$save, macro("save"))
-
-    fields = list(
-      sources = sources,
-      packages = packages,
-      targets = list(
-        all = list(depends = save_file)
-      )
-    )
-
-    fields$targets[[save_file]] = 
-      list(command = paste0("saveRDS(", save_object, ", \"", save_file, "\")"))
-    fields$targets[[save_object]] = list(command = x$command)
-
-    for(item in c("dataset", "analysis", "summary")) if(item %in% colnames(x)){
-      depends = paste0(x[[item]], macro("load"))
-      fields$targets[[depends]] = list(command = paste0("readRDS(\"", x[[item]], ".rds\")"))
-    }
-
-    write_yaml(fields, paste0(x$save, ".yml"))
+    save_file = name_rds(x$save)
+    save_object = name_save(x$save)
+    fields = init_fields(sources, packages, save_file)
+    fields = add_rule(fields, save_file, name_saveRDS(save_object, save_file))
+    fields = add_rule(fields, save_object, x$command)
+    for(item in c("dataset", "analysis", "summary")) if(item %in% colnames(x))
+      fields = add_rule(fields, name_load(x[[item]]), name_readRDS(name_rds(x[[item]])))
+    write_yaml(fields, name_yml(x$save))
   })
 }

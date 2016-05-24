@@ -2,19 +2,16 @@
 % Please edit documentation in R/aggregate_summaries.R
 \name{aggregate_summaries}
 \alias{aggregate_summaries}
-\title{Internal function}
+\title{Utility function to aggregate summaries}
 \usage{
 aggregate_summaries(names, values)
 }
 \arguments{
-\item{names}{Names of the output list.}
+\item{names}{Names of files that the summaries came from}
 
-\item{values}{Values of the output list}
-}
-\value{
-A named list
+\item{values}{Summaries to collect.}
 }
 \description{
-Internal function
+Utility function to aggregate summaries
 }
 

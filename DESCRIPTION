@@ -17,9 +17,8 @@ Imports:
 RoxygenNote: 5.0.1
 Collate:
     'aggregate_summaries.R'
-    'expand_grid_df.R'
-    'macro.R'
     'namespace.R'
+    'utils.R'
     'parse_analyses.R'
     'parse_summaries.R'
     'plan_aggregates.R'

@@ -1,9 +1,8 @@
-#' @title Internal function
-#' @description Internal function
-#' @export 
-#' @return A named list
-#' @param names Names of the output list.
-#' @param values Values of the output list
+#' @title Utility function to aggregate summaries
+#' @description Utility function to aggregate summaries
+#' @export
+#' @param names Names of files that the summaries came from
+#' @param values Summaries to collect.
 aggregate_summaries = function(names, values){
   names(values) = names
   values

@@ -1,3 +1,6 @@
+#' @include aggregate_summaries.R utils.R
+NULL
+
 #' @title Internal function
 #' @description Internal function
 #' @export
@@ -7,35 +10,24 @@
 #' @param packages Character vector of R packages to load.
 plan_aggregates = function(summaries, aggregates, sources, packages){
   ddply(aggregates, colnames(aggregates), function(x){
-    save_file = paste0(x$save, ".rds")
-    save_object = paste0(x$save, macro("save"))
+    save_file = name_rds(x$save, cache = F)
+    save_object = name_save(x$save)
     depends = summaries$save[grep(paste0("_", x$save, "$"), summaries$save)]
-    values = names(depends) = paste0(depends, macro("load"))
-    values = paste(values, collapse = ", ")
-    names = paste0("\"", depends, ".rds\"")
-    names = paste(names, collapse = ", ")
-    values_object = paste("values", x$save, sep = "_")
-    names_object = paste("names", x$save, sep = "_")
-    
-    fields = list(
-      sources = sources,
-      packages = c(packages, "workflowHelper"),
-      targets = list(
-        all = list(depends = save_file)
-      )
-    )
+    names(depends) = name_load(depends)
+    values = paste0("values_", x$save)
+    names = paste0("names_", x$save)
+    values_command = name_list(names(depends))
+    names_command = name_list(name_rds(depends), quoted = T)
+    aggregate_command = paste0("aggregate_summaries(", names, ", ", values, ")")
 
-    fields$targets[[save_file]] = 
-      list(command = paste0("saveRDS(", save_object, ", \"", save_file, "\"", ")"))
-    fields$targets[[save_object]] = 
-      list(command = paste0("aggregate_summaries(", names_object, ", ", values_object, ")"))
-    fields$targets[[names_object]] = list(command = paste0("list(", names,")"))
-    fields$targets[[values_object]] = list(command = paste0("list(", values,")"))
-
+    fields = init_fields(sources, c(packages, "workflowHelper"), save_file)
+    fields = add_rule(fields, save_file, name_saveRDS(save_object, save_file))
+    fields = add_rule(fields, save_object, aggregate_command)
+    fields = add_rule(fields, names, names_command)
+    fields = add_rule(fields, values, values_command)
     for(i in 1:length(depends))
-      fields$targets[[names(depends)[i]]] = 
-        list(command = paste0("readRDS(\"", depends[i], ".rds\")"))
+      fields = add_rule(fields, names(depends)[i], name_readRDS(name_rds(depends[i])))
   
-    write_yaml(fields, paste0(x$save, ".yml"))
+    write_yaml(fields, name_yml(x$save))
   })
 }

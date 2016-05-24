@@ -1,4 +1,4 @@
-#' @include expand_grid_df.R
+#' @include utils.R
 NULL
 
 #' @title Internal function
@@ -12,7 +12,7 @@ parse_analyses = function(datasets = NULL, analyses = NULL){
   analyses = expand_grid_df(data.frame(dataset = datasets$save), analyses)
   analyses$save = paste(datasets$save, analyses$save, sep = "_")
   analyses$command = apply(analyses, 1, function(x){
-    replacement = paste0(x["dataset"], macro("load"))
+    replacement = name_load(x["dataset"])
     gsub(macro("dataset"), replacement, x["command"])
   })
   analyses
