@@ -37,7 +37,7 @@ datasets = commands(
 )
 ```
 
-where the `commands` function parses named expressions (equivalent to `datasets = c(poisson100 = "poisson_dataset(n = 100)",...)`. `commands` like `strings`, but it checks user input for errors.) Some data are generated from Poisson distributions while others are generated from normal distributions. The RDS files on the left will be generated using the commands on the right. For example, the first command says to run `poisson_dataset(n = 100)` and save the object returned from the function as `CACHE/poisson100.rds`. All three of my datasets are generated similarly.
+where the `commands` function parses named expressions (equivalent to `datasets = c(poisson100 = "poisson_dataset(n = 100)",...)`. The `commands` function is like `strings`, but it checks the user's input for errors.) Some data are generated from Poisson distributions while others are generated from normal distributions. The RDS files on the left will be generated using the commands on the right. For example, the first command says to run `poisson_dataset(n = 100)` and save the object returned from the function as `CACHE/poisson100.rds`. All three of my datasets are generated similarly.
 
 Next, I specify how to analyze each dataset
 
