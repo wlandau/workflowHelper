@@ -25,7 +25,7 @@ library(workflowHelper)
 sources = strings(code.R, MASS)
 ```
 
-The package uses the `.r` and `.R` extensions to distinguish packages from source files. Above, `strings` converts R expressions into named character strings, so `sources = strings("code.R", "MASS")` would be equivalent.
+The package uses the `.r` and `.R` extensions to distinguish packages from source files. Above, `parallelRemake::strings` converts R expressions into named character strings, so `sources = c("code.R", "MASS")` is equivalent.
 
 Next, I list the commands to generate the datasets I want,
 
