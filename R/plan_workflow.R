@@ -39,9 +39,10 @@ plan_workflow = function(sources, datasets = NULL, analyses = NULL, summaries = 
   initial_stage_names = stage_names[stage_names != "aggregates" & stage_names != "output"]
   for(item in initial_stage_names) plan_stage(get(item), sources, packages)
   if(!is.null(aggregates)) plan_aggregates(summaries, aggregates, sources, packages)
-  if(!is.null(output)) plan_output(output, sources, packages)
+  depends = unlist(lapply(stage_names, function(item) get(item)$save))
+  if(!is.null(output)) plan_output(output, sources, packages, depends)
 
   stages = lapply(stage_names, function(x) name_yml(get(x)$save))
   names(stages) = stage_names
-  write_makefile(stages, file = makefile, clean = c(paste0("rm -rf ", macro("cache")), clean))
+  write_makefile(stages, file = makefile, clean = clean)
 }

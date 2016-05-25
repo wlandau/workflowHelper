@@ -4,7 +4,7 @@
 \alias{plan_output}
 \title{Internal function}
 \usage{
-plan_output(output, sources, packages)
+plan_output(output, sources, packages, depends)
 }
 \arguments{
 \item{output}{Data frame about output to generate.}
@@ -12,6 +12,8 @@ plan_output(output, sources, packages)
 \item{sources}{Character vector of R code files to load.}
 
 \item{packages}{Character vector of R packages to load.}
+
+\item{depends}{Character vector of possible dependencies}
 }
 \description{
 Internal function
