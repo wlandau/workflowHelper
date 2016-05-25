@@ -2,7 +2,7 @@
 NULL
 
 #' @title Function \code{plan_workflow}
-#' @description Main function of the package. Produces a Makefile to run an workflow.
+#' @description Main function of the package. Produces a Makefile to run a workflow.
 #' @export
 #' @param sources Named character vector, code files and packages to load.
 #' Code files should end in \code{.r} or \code{.R}. Otherwise, they will
@@ -17,8 +17,8 @@ NULL
 #' Names stand for files (possible non-RDS files) WITH their extensions.
 #' @param clean Character vector of extra shell commands for \code{make clean}.
 #' @param makefile Character, name of the Makefile. Should be in the current
-#' working directory. Otherwise, the \code{YAML} files will not be found
-#' and the \code{make} will not work.
+#' working directory. Otherwise, the needed \code{YAML} files will not be found
+#' and \code{make} will not work.
 plan_workflow = function(sources, datasets = NULL, analyses = NULL, summaries = NULL, output = NULL, clean = NULL, makefile = "Makefile"){
   is_source = grepl("\\.[rR]$", sources)
   packages = sources[!is_source]

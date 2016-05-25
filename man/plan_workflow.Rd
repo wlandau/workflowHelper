@@ -27,10 +27,10 @@ Names stand for files (possible non-RDS files) WITH their extensions.}
 \item{clean}{Character vector of extra shell commands for \code{make clean}.}
 
 \item{makefile}{Character, name of the Makefile. Should be in the current
-working directory. Otherwise, the \code{YAML} files will not be found
-and the \code{make} will not work.}
+working directory. Otherwise, the needed \code{YAML} files will not be found
+and \code{make} will not work.}
 }
 \description{
-Main function of the package. Produces a Makefile to run an workflow.
+Main function of the package. Produces a Makefile to run a workflow.
 }
 
