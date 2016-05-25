@@ -6,6 +6,13 @@ add_rule = function(fields, name, command){
 expand_grid_df = function(...) 
   Reduce(function(...) merge(..., by = NULL), list(...))
 
+get_depends = function(datasets, analyses, summaries, aggregates){
+  out = c(datasets$save, analyses$save, summaries$save)
+  out = paste0(macro("cache"), "/", out)
+  out = c(out, aggregates$save)
+  name_rds(out, cache = F)
+}
+
 init_fields = function(sources, packages, save){
   list(
     sources = sources,
