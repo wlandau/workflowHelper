@@ -1,6 +1,3 @@
-#' @include utils.R
-NULL
-
 #' @title Internal function
 #' @description Internal function
 #' @export

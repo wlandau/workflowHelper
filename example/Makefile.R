@@ -24,8 +24,8 @@ summaries = commands(
 
 # Final output.
 output = commands(
-  mse.csv = mse_as_csv("mse.rds"),
-  coef.pdf = plot_coef("coef.rds")
+  mse.pdf = plot_mse(),
+  coef.csv = save_coef()
 )
 
 plan_workflow(sources, datasets, analyses, summaries, output)

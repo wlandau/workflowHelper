@@ -29,14 +29,14 @@ coef_summary = function(analysis){
 }
 
 # Final output
-mse_as_csv = function(file){
- mse = unlist(readRDS(file))
- write.csv(data.frame(file = names(mse), mse = mse), "mse.csv", row.names = F)
+plot_mse = function(){
+ mse = unlist(recall(mse))
+ pdf("mse.pdf")
+ hist(mse, col = "black")
+ dev.off()
 }
 
-plot_coef = function(file){
-  pdf("coef.pdf")
-  coef = do.call(rbind, readRDS("coef.rds"))
-  plot(coef)
-  dev.off()
+save_coef = function(){
+  coef = do.call(rbind, recall(coef))
+  write.csv(coef, "coef.csv")
 }

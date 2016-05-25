@@ -16,7 +16,6 @@ Imports:
     plyr
 RoxygenNote: 5.0.1
 Collate:
-    'aggregate_summaries.R'
     'commands.R'
     'namespace.R'
     'utils.R'

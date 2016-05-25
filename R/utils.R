@@ -9,20 +9,24 @@ expand_grid_df = function(...)
 init_fields = function(sources, packages, save){
   list(
     sources = sources,
-    packages = packages,
+    packages = c(packages, "workflowHelper"),
     targets = list(
       all = list(depends = save)
     )
   )
 }
 
+name_recall = function(x){
+  out = paste0("I(\"", x, "\")")
+  out = paste(out, collapse = ", ")
+  paste0("recall(", out, ")")
+}
+
 macro = function(arg){
   c(
     dataset = "..DATASET..",
     analysis = "..ANALYSIS..",
-    save = "..SAVE..",
-    load = "..LOAD..",
-    cache = "CACHE"
+    load = "..LOAD.."
   )[arg]
 }
 
@@ -54,7 +58,7 @@ name_saveRDS = function(object, file){
 }
 
 name_yml = function(items){
-  paste0(".", items, ".yml")
+  paste0(items, ".yml")
 }
 
 new_dir = function(path){
