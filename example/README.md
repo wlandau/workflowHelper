@@ -121,7 +121,7 @@ and the summaries are
 
 The aggregates of the summaries are `mse.rds` and `coef.rds`, and they are store in the same directory as the [Makefile](https://www.gnu.org/software/make/). `mse.rds` contains a named list of mean squared errors, where the names are the 12 file paths above. `coef.rds` is similar for model coefficients.
 
-All the above RDS files are treated as dependencies for the `output` commands, so changes will trigger the correct rebuilds. Other external files are included as dependencies only if their file names are directly specified in the commands. For example, to make sure rebuilds are triggered by changes to `other_file.csv`, write
+All the above RDS files are treated as dependencies for the `output` commands, so changes to the generating code will trigger the correct rebuilds. Other external files are included as dependencies only if their file names are directly specified in the commands. For example, to make sure rebuilds are triggered by the code that produces `other_file.csv`, write
 
 ```{r}
 output = commands(
