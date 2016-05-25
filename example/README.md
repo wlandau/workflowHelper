@@ -37,7 +37,9 @@ datasets = commands(
 )
 ```
 
-where the `commands` function parses and checks expressions for commands. (I could have alternatively written `datasets = c(poisson100 = "poisson_dataset(n = 100)", normal100 = "normal_dataset(n = 100)", normal1000 = "normal_dataset(n = 1000)")`. Be sure that all elements of `datasets` are named.) In accordance with the listed commands, some datasets are generated from Poisson distributions, while others are generated from normal distributions. The RDS files on the left will be generated using the commands on the right. For example, the first command says to run `poisson_dataset(n = 100)` and save the object returned from the function as `CACHE/poisson100.rds`. All three of my datasets are generated similarly.
+where all elements of `datasets` should be named and the `commands` function parses and checks named expressions that encode commands. (It's like `parallelRemake::strings`, but with error checking.) I could have alternatively written `datasets = c(poisson100 = "poisson_dataset(n = 100)", normal100 = "normal_dataset(n = 100)", normal1000 = "normal_dataset(n = 1000)")`. Try `commands(one = readRDS("mse.rds"), two = y <- x + 1)`.
+
+In accordance with the listed commands in `datasets`, some datasets are generated from Poisson distributions, while others are generated from normal distributions. The RDS files on the left will be generated using the commands on the right. For example, the first command says to run `poisson_dataset(n = 100)` and save the object returned from the function as `CACHE/poisson100.rds`. All three of my datasets are generated similarly.
 
 Next, I specify how to analyze each dataset
 
