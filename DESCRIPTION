@@ -9,10 +9,10 @@ Description: This package easily organizes and deploys big simulation studies
     and other similar workflows.
 License: GPL (>= 3)
 Depends:
-    R (>= 3.0.0)
+    R (>= 3.0.0),
+    parallelRemake
 Imports:
     remake,
-    parallelRemake,
     plyr
 RoxygenNote: 5.0.1
 Collate:
@@ -26,4 +26,3 @@ Collate:
     'plan_output.R'
     'plan_stage.R'
     'plan_workflow.R'
-    'strings.R'
