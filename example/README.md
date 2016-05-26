@@ -119,9 +119,7 @@ and the summaries are
 - `CACHE/normal1000_glm_coef.rds`
 - `CACHE/normal1000_glm_mse.rds`
 
-The aggregates of the summaries are `mse.rds` and `coef.rds`, and they are store in the same directory as the [Makefile](https://www.gnu.org/software/make/). `mse.rds` contains a named list of mean squared errors, where the names identify the datasets and analyses to which they pertain. `coef.rds` is similar for model coefficients.
-
-All the above RDS files are treated as dependencies for the `output` commands, so changes to the generating code will trigger the correct rebuilds. Other external files are included as dependencies only if their file names are directly specified in the commands. For example, to make sure rebuilds are triggered by the code that produces `other_file.csv`, write
+The aggregates of the summaries are `mse.rds` and `coef.rds`, and they are stored in the same directory as the [Makefile](https://www.gnu.org/software/make/). `mse.rds` contains a named list of mean squared errors, where the names identify the datasets and analyses to which they pertain. `coef.rds` is similar for model coefficients. The commands in `output` to produce `mse.pdf` and `coef.csv` read in `mse.rds` and `coef.rds`, respectively. However, these RDS files are not listed as arguments to `mse_plot` or `coef_table`. `workflowHelper` already treats all the above 23 RDS files as dependencies for the commands in `output`, and calling `mse_plot("mse.rds")` rather than `mse_plot()` would cause "mse.rds" to be listed as a dependency twice, which would cause [`remake`](https://github.com/richfitz/remake) to throw an error. However, this dependency structure triggers the correct rebuilds for `coef.csv` and `mse.pdf`. If you require dependencies other than these RDS files, write them as arguments to your commands. For example, to make sure forward rebuilds are triggered by changes to  `other_file.csv`, write
 
 ```{r}
 output = commands(
