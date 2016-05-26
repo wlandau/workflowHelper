@@ -60,7 +60,7 @@ summaries = commands(
 )
 ```
 
-Finally, I spedicify how to generate output.
+Next, I spedicify how to generate output at the end.
 
 ```{r}
 output = commands(
@@ -69,10 +69,16 @@ output = commands(
 )
 ```
 
-The stages of my workflow are now planned. To put them all together, I use `plan_workflow`, which calls `parallelRemake::write_makefile`.
+Optionally, I can prepend some lines to the overarching [Makefile](https://www.gnu.org/software/make/) for the workflow. In this way, I can configure my workflow for a [Slurm](https://en.wikipedia.org/wiki/Slurm_Workload_Manager) or [PBS](https://en.wikipedia.org/wiki/Portable_Batch_System) cluster, or simply add comments.
 
 ```{r}
-plan_workflow(sources, datasets, analyses, summaries, output)
+begin = c("# This is my Makefile", "# Variables...")
+```
+
+The stages and elements of my workflow are now planned. To put them all together, I use `plan_workflow`, which calls `parallelRemake::write_makefile`.
+
+```{r}
+plan_workflow(sources, datasets, analyses, summaries, output, begin)
 ```
 
 Now, there is a [Makefile](https://www.gnu.org/software/make/) in my current working directory. There are also several hidden [YAML](http://yaml.org/) files in the same directory, all of which are necessary to the [Makefile](https://www.gnu.org/software/make/). To actually run or manage the workflow, just open a [command line program](http://linuxcommand.org/) and enter one of the following.

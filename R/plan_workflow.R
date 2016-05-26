@@ -12,11 +12,12 @@
 #' Names stand for RDS target files without their extensions.
 #' @param output Named character vector of commands to make targets.
 #' Names stand for files (possible non-RDS files) WITH their extensions.
+#' @param begin Character vector of lines to prepend to the Makefile.
 #' @param clean Character vector of extra shell commands for \code{make clean}.
 #' @param makefile Character, name of the Makefile. Should be in the current
 #' working directory. Otherwise, the needed \code{YAML} files will not be found
 #' and \code{make} will not work.
-plan_workflow = function(sources, datasets = NULL, analyses = NULL, summaries = NULL, output = NULL, clean = NULL, makefile = "Makefile"){
+plan_workflow = function(sources, datasets = NULL, analyses = NULL, summaries = NULL, output = NULL, begin = NULL, clean = NULL, makefile = "Makefile"){
   is_source = grepl("\\.[rR]$", sources)
   packages = sources[!is_source]
   sources = sources[is_source]
@@ -43,5 +44,5 @@ plan_workflow = function(sources, datasets = NULL, analyses = NULL, summaries = 
 
   stages = lapply(stage_names, function(x) name_yml(get(x)$save))
   names(stages) = stage_names
-  write_makefile(stages, file = makefile, clean = c(paste0("rm -rf ", macro("cache")), clean))
+  write_makefile(stages, begin = begin, clean = c(paste0("rm -rf ", macro("cache")), clean), file = makefile)
 }

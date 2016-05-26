@@ -5,7 +5,7 @@
 \title{Function \code{plan_workflow}}
 \usage{
 plan_workflow(sources, datasets = NULL, analyses = NULL, summaries = NULL,
-  output = NULL, clean = NULL, makefile = "Makefile")
+  output = NULL, begin = NULL, clean = NULL, makefile = "Makefile")
 }
 \arguments{
 \item{sources}{Named character vector, code files and packages to load.
@@ -23,6 +23,8 @@ Names stand for RDS target files without their extensions.}
 
 \item{output}{Named character vector of commands to make targets.
 Names stand for files (possible non-RDS files) WITH their extensions.}
+
+\item{begin}{Character vector of lines to prepend to the Makefile.}
 
 \item{clean}{Character vector of extra shell commands for \code{make clean}.}
 

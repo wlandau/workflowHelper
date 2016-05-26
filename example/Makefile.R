@@ -28,4 +28,6 @@ output = commands(
   coef.csv = coef_table()
 )
 
-plan_workflow(sources, datasets, analyses, summaries, output)
+begin = c("# This is my Makefile", "# Variables...")
+
+plan_workflow(sources, datasets, analyses, summaries, output, begin)
