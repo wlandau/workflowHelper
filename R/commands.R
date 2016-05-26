@@ -18,5 +18,6 @@ commands = function(...) {
   names(out) = keys
   if(is.null(keys) | any(!nchar(keys)) | any(!nchar(out))) 
     stop("All commands and their names/keys must be given. For example, write commands(x = data(y), z = 3) instead of commands(x, z) or commands(data(y), 3).")
+  if(anyDuplicated(keys)) stop("Commands must be given unique names. No duplicates allowed.")
   out
 }
