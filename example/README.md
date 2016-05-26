@@ -47,7 +47,7 @@ Similarly, I specify the commands to analyze each dataset.
 ```{r}
 analyses = commands(
   lm = lm_analysis(..DATASET..), # Just apply `lm`
-  glm = glm_analysis(..DATASET..) # Just apply `glm`
+  glm = glm_analysis(..DATASET..) # Modify dataset, then apply `glm`
 )
 ```
 

@@ -15,6 +15,7 @@ lm_analysis = function(dataset){
 }
 
 glm_analysis = function(dataset){
+  dataset$y = dataset$y + 1 # force a difference between glm and lm
   glm(y ~ x, data = dataset)
 }
 
