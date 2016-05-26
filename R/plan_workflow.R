@@ -1,6 +1,3 @@
- #' @include parse_analyses.R parse_summaries.R plan_aggregates.R plan_output.R plan_stage.R
-NULL
-
 #' @title Function \code{plan_workflow}
 #' @description Main function of the package. Produces a Makefile to run a workflow.
 #' @export
