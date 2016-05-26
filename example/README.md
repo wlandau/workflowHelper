@@ -69,7 +69,7 @@ output = commands(
 )
 ```
 
-Optionally, I can prepend some lines to the overarching [Makefile](https://www.gnu.org/software/make/) for the workflow. In this way, I can configure my workflow for a [Slurm](https://en.wikipedia.org/wiki/Slurm_Workload_Manager) or [PBS](https://en.wikipedia.org/wiki/Portable_Batch_System) cluster, or simply add comments.
+Optionally, I can prepend some lines to the overarching [Makefile](https://www.gnu.org/software/make/) for the workflow. In this way, I can configure my workflow for a [Slurm](https://en.wikipedia.org/wiki/Slurm_Workload_Manager) or [PBS](https://en.wikipedia.org/wiki/Portable_Batch_System) cluster or simply add comments.
 
 ```{r}
 begin = c("# This is my Makefile", "# Variables...")
