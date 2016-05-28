@@ -1,6 +1,6 @@
 With this package, you can
 
-- deploy massive simulation studies with ease. 
+- deploy massive simulation studies with minimal code. 
 - update your reproducible workflow while avoiding redundant computation (thanks to [remake](https://github.com/richfitz/remake)).
 - distribute your workflow over multiple parallel processes (see [parallelRemake](https://github.com/wlandau/parallelRemake)).
 
