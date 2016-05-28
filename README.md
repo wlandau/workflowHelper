@@ -1,8 +1,8 @@
 With this package, you can
 
 - deploy massive simulation studies with ease. 
-- update your reproducible workflow while avoiding redundant computation.
-- distribute your workflow over multiple parallel processes.
+- update your reproducible workflow while avoiding redundant computation (thanks to [remake](https://github.com/richfitz/remake)).
+- distribute your workflow over multiple parallel processes (see [parallelRemake](https://github.com/wlandau/parallelRemake)).
 
 Check out the [example](https://github.com/wlandau/workflowHelper/tree/master/example).
 
