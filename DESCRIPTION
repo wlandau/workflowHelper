@@ -25,3 +25,4 @@ Collate:
     'plan_output.R'
     'plan_stage.R'
     'plan_workflow.R'
+    'reps.R'

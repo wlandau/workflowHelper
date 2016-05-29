@@ -10,6 +10,9 @@ datasets = commands(
   normal1000 = normal_dataset(n = 1000)
 )
 
+# For 4 replicates of each dataset, 
+# assign datasets = reps(datasets, 4)
+
 # Analyze each dataset
 analyses = commands(
   lm = lm_analysis(..DATASET..),
