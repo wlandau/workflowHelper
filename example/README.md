@@ -40,7 +40,7 @@ datasets = commands(
 )
 ```
 
-Be sure to give a name to each command (for example, `poisson_dataset(n = 100)` has the name `poisson100`). The `command` function checks for names and returns a named character vector, so I could have simply written `datasets = c(poisson100 = "poisson_dataset(n = 100)", normal100 = "normal_dataset(n = 100)", normal1000 = "normal_dataset(n = 1000)")`. For 4 replicates of each dataset, assign `datasets = reps(datasets, 4)`.
+Be sure to give a name to each command (for example, `poisson_dataset(n = 100)` has the name `poisson100`). The `command` function checks for names and returns a named character vector, so I could have simply written `datasets = c(poisson100 = "poisson_dataset(n = 100)", normal100 = "normal_dataset(n = 100)", normal1000 = "normal_dataset(n = 1000)")`. For 4 replicates of each kind of dataset, assign `datasets = reps(datasets, 4)`.
 
 Similarly, I specify the commands to analyze each dataset.
 
