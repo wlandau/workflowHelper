@@ -51,7 +51,9 @@ analyses = commands(
 )
 ```
 
-The `..DATASET..` wildcard stands for the current dataset being analyzed, which will be an object returned by `poisson_dataset` or `normal_dataset`. When I list the methods of summarizing analyses, there is an additional `..ANALYSIS..` wildcard that similary stands for the appropriate object returned by `lm_analysis` or `glm_analysis`.
+The `..DATASET..` wildcard stands for the current dataset being analyzed, which will be an object returned by `poisson_dataset` or `normal_dataset`. For 3 replicates per dataset of each kind of analysis, assign `analyses = reps(analyses, 3)`. The `reps` function works on any character vector of commands.
+
+When I list the methods of summarizing analyses, there is an additional `..ANALYSIS..` wildcard that similary stands for the appropriate object returned by `lm_analysis` or `glm_analysis`.
 
 ```{r}
 summaries = commands(

@@ -19,6 +19,11 @@ analyses = commands(
   glm = glm_analysis(..DATASET..)
 )
 
+# For 3 replicates per dataset of each kind of analysis, 
+# assign analyses = reps(analyses, 3). The
+# reps function works on any character vector of 
+# commands.
+
 # Summarize each analysis and aggregate the summaries together
 summaries = commands(
   mse = mse_summary(..DATASET.., ..ANALYSIS..),
