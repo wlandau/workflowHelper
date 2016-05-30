@@ -10,7 +10,7 @@ plan_aggregates = function(summaries, aggregates, sources, packages){
     save_file = name_rds(x$save, cache = F)
     save_object = name_save(x$save)
     pattern = paste0("_", x$save, "$")
-    depends = summaries$save[grep(pattern, summaries$save)]
+    depends = sort(summaries$save[grep(pattern, summaries$save)])
     list_names = gsub(pattern, "", depends)
     command = name_list(paste(list_names, "=", name_load(depends)))
     fields = init_fields(sources, packages, save_file)
