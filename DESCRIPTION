@@ -15,7 +15,7 @@ Imports:
     remake,
     plyr
 Remotes:
-    richfitz/remake
+    richfitz/remake,
     wlandau/parallelRemake
 RoxygenNote: 5.0.1
 Collate:
