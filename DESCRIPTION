@@ -9,12 +9,13 @@ Description: This package easily organizes and deploys big simulation studies
     and other similar workflows.
 License: GPL (>= 3)
 Depends:
-    R (>= 3.0.0)
+    R (>= 3.0.0),
+    parallelRemake
 Imports:
     storr,
     remake,
-    parallelRemake,
-    plyr
+    plyr,
+    yaml
 Remotes: richfitz/remake,
     wlandau/parallelRemake
 RoxygenNote: 5.0.1
