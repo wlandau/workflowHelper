@@ -30,5 +30,5 @@ setup_example_workflow = function(){
 #' @export
 run_example_workflow = function(){
   setup_example_workflow()
-  system("make -j")
+  system("make -j 64 2>&1")
 }

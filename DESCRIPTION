@@ -19,3 +19,4 @@ Imports:
 Remotes: richfitz/remake,
     wlandau/parallelRemake
 RoxygenNote: 5.0.1
+Suggests: testthat

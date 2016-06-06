@@ -50,6 +50,7 @@ macro = function(arg){
 
 name_list = function(items, quoted = F){
   if(quoted) items = paste0("\"", items, "\"")
+  items = sort(items)
   items = paste(items, collapse = ", ")
   paste0("list(", items, ")")
 }
