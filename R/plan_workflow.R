@@ -12,12 +12,12 @@
 #' Names stand for RDS target files without their extensions.
 #' @param output Named character vector of commands to make targets.
 #' Names stand for files (possible non-RDS files) WITH their extensions.
+#' @param makefile Character, name of the Makefile. Should be in the current
+#' working directory.
+#' @param remakefile Character, name of the \code{remake} file to generate. Should be in the current working directory.
 #' @param begin Character vector of lines to prepend to the Makefile.
 #' @param clean Character vector of extra shell commands for \code{make clean}.
-#' @param makefile Character, name of the Makefile. Should be in the current
-#' working directory. Otherwise, the needed \code{YAML} files will not be found
-#' and \code{make} will not work.
-plan_workflow = function(sources, datasets = NULL, analyses = NULL, summaries = NULL, output = NULL, begin = NULL, clean = NULL, makefile = "Makefile"){
+plan_workflow = function(sources, datasets = NULL, analyses = NULL, summaries = NULL, output = NULL, makefile = "Makefile", remakefile = "remake.yml", begin = NULL, clean = NULL){
   is_source = grepl("\\.[rR]$", sources)
   packages = sources[!is_source]
   sources = sources[is_source]
@@ -33,16 +33,15 @@ plan_workflow = function(sources, datasets = NULL, analyses = NULL, summaries = 
 
   summaries = parse_summaries(datasets, analyses, summaries)
   analyses = parse_analyses(datasets, analyses)
+  aggregates = parse_aggregates(aggregates, summaries)
 
-  initial_stage_names = stage_names[stage_names != "aggregates" & stage_names != "output"]
-  for(item in initial_stage_names) plan_stage(get(item), sources, packages)
-  if(!is.null(aggregates)) plan_aggregates(summaries, aggregates, sources, packages)
-  if(!is.null(output)){
-    depends = get_depends(datasets, analyses, summaries, aggregates)
-    plan_output(output, sources, packages, depends)
+  fields = init_fields(sources, packages, output$save)
+  for(item in stage_names){
+    df = get(item)
+    fields = add_rule(fields, item, df$save, "depends")
+    for(i in 1:nrow(df))
+      fields = add_rule(fields, df[i, "save"], df[i, "command"])
   }
-
-  stages = lapply(stage_names, function(x) name_yml(get(x)$save))
-  names(stages) = stage_names
-  write_makefile(stages, begin = begin, clean = c(paste0("rm -rf ", macro("cache")), clean), file = makefile)
+  write_yaml(fields, remakefile)
+  write_makefile(makefile, remakefile, begin, c(clean, "rm -rf .remake"))
 }

@@ -1,0 +1,34 @@
+write_example_code = function(){
+  write("# Code for each component of the example analysis\n\n# Generate datasets\npoisson_dataset = function(n = 100){\n  data.frame(x = rpois(n, 1), y = rpois(n, 5))\n}\n\nnormal_dataset = function(n = 100){\n  data.frame(x = rnorm(n, 1), y = rnorm(n, 5))\n}\n\n# Analyze each dataset\nlm_analysis = function(dataset){\n  out = lm(y ~ x, data = dataset)\n}\n\nglm_analysis = function(dataset){\n  dataset$y = dataset$y + 1 # force a difference between glm and lm\n  glm(y ~ x, data = dataset)\n}\n\n# Compute summaries\nmse_summary = function(dataset, analysis){\n  pred = predict(analysis)\n  mean((pred - dataset$y)^2)\n}\n\ncoef_summary = function(analysis){\n  coef(analysis)\n}\n\n# Final output\nmse_plot = function(x){\n  mse = unlist(x)\n  pdf(\"mse.pdf\")\n  hist(mse, col = \"black\")\n  dev.off()\n}\n\ncoef_table = function(x){\n  tab = do.call(rbind, x)\n  write.csv(tab, \"coef.csv\")\n}", "code.R")
+}
+
+write_example_workflow_planner = function(){
+  write("library(workflowHelper)\n\nsources = strings(code.R, MASS)\n\n# Generate the data\ndatasets = commands(\n  poisson100 = poisson_dataset(n = 100),\n  normal100 = normal_dataset(n = 100),\n  normal1000 = normal_dataset(n = 1000) \n)\n\n# For 4 replicates of each kind of dataset, \n# assign datasets = reps(datasets, 4)\n\n# Analyze each dataset\nanalyses = commands(\n  lm = lm_analysis(..DATASET..),\n  glm = glm_analysis(..DATASET..)\n)\n\n# Summarize each analysis and aggregate the summaries together\nsummaries = commands(\n  mse = mse_summary(..DATASET.., ..ANALYSIS..),\n  coef = coef_summary(..ANALYSIS..)\n)\n\n# Final output.\noutput = commands(\n  mse.pdf = mse_plot(mse),\n  coef.csv = coef_table(coef)\n)\n\nbegin = c(\"# This is my Makefile\", \"# Variables...\")\nplan_workflow(sources, datasets, analyses, summaries, output, begin = begin)", file = "workflow.R")
+}
+
+#' @title Function \code{write_example_workflow}
+#' @description Write files to generate the example workflow: i.e., 
+#' produce \code{code.R} and \code{Makefile.R}
+#' @export
+write_example_workflow = function(){
+  write_example_code()
+  write_example_workflow_planner()
+}
+
+#' @title Function \code{setup_example_workflow}
+#' @description Set up and run the package example: i.e., generate
+#' the \code{remake} file and Makefile and run \code{make}.
+#' @export
+setup_example_workflow = function(){
+  write_example_workflow()
+  source("workflow.R")
+}
+
+#' @title Function \code{run_example_workflow}
+#' @description Set up and run the package example: i.e., generate
+#' the \code{remake} file and Makefile and run \code{make}.
+#' @export
+run_example_workflow = function(){
+  setup_example_workflow()
+  system("make -j")
+}

@@ -5,7 +5,8 @@
 \title{Function \code{plan_workflow}}
 \usage{
 plan_workflow(sources, datasets = NULL, analyses = NULL, summaries = NULL,
-  output = NULL, begin = NULL, clean = NULL, makefile = "Makefile")
+  output = NULL, makefile = "Makefile", remakefile = "remake.yml",
+  begin = NULL, clean = NULL)
 }
 \arguments{
 \item{sources}{Named character vector, code files and packages to load.
@@ -24,13 +25,14 @@ Names stand for RDS target files without their extensions.}
 \item{output}{Named character vector of commands to make targets.
 Names stand for files (possible non-RDS files) WITH their extensions.}
 
+\item{makefile}{Character, name of the Makefile. Should be in the current
+working directory.}
+
+\item{remakefile}{Character, name of the \code{remake} file to generate. Should be in the current working directory.}
+
 \item{begin}{Character vector of lines to prepend to the Makefile.}
 
 \item{clean}{Character vector of extra shell commands for \code{make clean}.}
-
-\item{makefile}{Character, name of the Makefile. Should be in the current
-working directory. Otherwise, the needed \code{YAML} files will not be found
-and \code{make} will not work.}
 }
 \description{
 Main function of the package. Produces a Makefile to run a workflow.
