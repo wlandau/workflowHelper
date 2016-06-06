@@ -35,7 +35,7 @@ Suppose I want to
 3. Compute summary statistics of each analysis of each dataset (model coefficients and mean squared error) and aggregate the summaries together.
 4. Generate some tables and figures using those aggregated summaries.
 
-I keep the functions to generate data, analyze data, etc. in `code.R`, and I have a sketch of the whole workflow in `workflow.R`. You can generate both these files with the `write_example_workflow` function. 
+I keep the functions to generate data, analyze data, etc. in `code.R`, and I have a sketch of the whole workflow in `workflow.R`. You can generate both these files with the `write_example_workflow` function. Typically, in your own workflows, you will write similar R scripts by hand.
 
 ## A walk through `workflow.R`
 
