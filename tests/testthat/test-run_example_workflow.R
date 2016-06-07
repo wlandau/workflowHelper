@@ -1,11 +1,13 @@
-# library(testthat); library(workflowHelper); 
+# library(testthat); library(workflowHelper);
+context("run_example_workflow")
 source("utils.R")
 
 test_that("Example runs as expected", {
   files = c("code.R", "coef.csv", "Makefile", "mse.pdf", "remake.yml", "workflow.R")
-  run_example_workflow()
+  out = run_example_workflow(T)
   expect_true(all(files %in% list.files()))
-  good_recallable = scan(paste0(IO, "recallable-run_example_workflow.txt"), "character")
+  good_recallable = scan(paste0(IO, "recallable-run_example_workflow.txt"), 
+    what = "character", quiet = T)
   expect_true(all(sort(recallable()) == sort(good_recallable)))
   for(item in c("coef", "mse")){
     x = recall(item)

@@ -28,7 +28,8 @@ setup_example_workflow = function(){
 #' @description Set up and run the package example: i.e., generate
 #' the \code{remake} file and Makefile and run \code{make}.
 #' @export
-run_example_workflow = function(){
+#' @param intern TRUE/FALSE Argument to system to output to console or not.
+run_example_workflow = function(intern = F){
   setup_example_workflow()
-  system("make -j 64 2>&1")
+  system("make -j 64 2>&1", intern = intern)
 }

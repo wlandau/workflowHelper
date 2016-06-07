@@ -4,7 +4,10 @@
 \alias{run_example_workflow}
 \title{Function \code{run_example_workflow}}
 \usage{
-run_example_workflow()
+run_example_workflow(intern = F)
+}
+\arguments{
+\item{intern}{TRUE/FALSE Argument to system to output to console or not.}
 }
 \description{
 Set up and run the package example: i.e., generate
