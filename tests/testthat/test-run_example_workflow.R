@@ -3,6 +3,7 @@ context("run_example_workflow")
 source("utils.R")
 
 test_that("Example runs as expected", {
+  initial_files = list.files()
   files = c("code.R", "coef.csv", "Makefile", "mse.pdf", "remake.yml", "workflow.R")
   out = run_example_workflow(T)
   expect_true(all(files %in% list.files()))
@@ -22,7 +23,7 @@ test_that("Example runs as expected", {
     expect_true(all(is.numeric(do.call(rbind, x))))
   }
   expect_true(file.exists(".remake"))
-  out = system("make clean 2>&1", intern = T)
+  out = clean_example_workflow(T)
   expect_false(file.exists(".remake"))
-  cleanup(files)
+  expect_equal(list.files(), initial_files)
 })
