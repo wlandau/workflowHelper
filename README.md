@@ -105,7 +105,7 @@ The stages and elements of my workflow are now planned. To put them all together
 plan_workflow(sources, packages, datasets, analyses, summaries, output, begin)
 ```
 
-Optionally, I can pass additional arguments to `remake::make` using the `remake_args` argument to `plan_workflow`. For example, `plan_workflow(..., remake_args = list(verbose = FALSE))` is equivalent to `remake::make(..., verbose = F)` for each target. I cannot set `target_names` or `remake_file` this way.
+Optionally, I can pass additional arguments to `remake::make` using the `remake_args` argument to `plan_workflow`. For example, `plan_workflow(..., remake_args = list(verbose = FALSE))` is equivalent to `remake::make(..., verbose = F)` for each target. I cannot set `target_names` or `remake_file` this way. Also, if I want to suppress the writing of the Makefile, I can call `plan_workflow(..., makefile = NULL)`.
 
 ## Running the workflow
 

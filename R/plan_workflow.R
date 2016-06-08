@@ -12,7 +12,7 @@
 #' @param output Named character vector of commands to make targets.
 #' Names stand for files (possible non-RDS files) WITH their extensions.
 #' @param makefile Character, name of the Makefile. Should be in the current
-#' working directory.
+#' working directory. Set to \code{NULL} to suppress the writing of the Makefile.
 #' @param remakefile Character, name of the \code{remake} file to generate. Should be in the current working directory.
 #' @param begin Character vector of lines to prepend to the Makefile.
 #' @param clean Character vector of extra shell commands for \code{make clean}.
