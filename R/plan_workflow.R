@@ -18,6 +18,7 @@
 #' @param begin Character vector of lines to prepend to the Makefile.
 #' @param clean Character vector of extra shell commands for \code{make clean}.
 #' @param remake_args Fully-named list of additional arguments to \code{remake::make}.
+#' You cannot set \code{target_names} or \code{remake_file} this way.
 plan_workflow = function(sources, datasets = NULL, analyses = NULL, summaries = NULL, output = NULL, makefile = "Makefile", remakefile = "remake.yml", begin = NULL, clean = NULL, remake_args = list()){
   is_source = grepl("\\.[rR]$", sources)
   packages = sources[!is_source]

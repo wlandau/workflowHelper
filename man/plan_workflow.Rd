@@ -34,7 +34,8 @@ working directory.}
 
 \item{clean}{Character vector of extra shell commands for \code{make clean}.}
 
-\item{remake_args}{Fully-named list of additional arguments to \code{remake::make}.}
+\item{remake_args}{Fully-named list of additional arguments to \code{remake::make}.
+You cannot set \code{target_names} or \code{remake_file} this way.}
 }
 \description{
 Main function of the package. Produces a Makefile to run a workflow.
