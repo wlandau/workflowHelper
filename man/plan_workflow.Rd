@@ -4,14 +4,15 @@
 \alias{plan_workflow}
 \title{Function \code{plan_workflow}}
 \usage{
-plan_workflow(sources, datasets = NULL, analyses = NULL, summaries = NULL,
-  output = NULL, makefile = "Makefile", remakefile = "remake.yml",
-  begin = NULL, clean = NULL, remake_args = list())
+plan_workflow(sources, packages = NULL, datasets = NULL, analyses = NULL,
+  summaries = NULL, output = NULL, makefile = "Makefile",
+  remakefile = "remake.yml", begin = NULL, clean = NULL,
+  remake_args = list())
 }
 \arguments{
-\item{sources}{Named character vector, code files and packages to load.
-Code files should end in \code{.r} or \code{.R}. Otherwise, they will
-be assumed to be packages.}
+\item{sources}{Character vector of code files to load or folders containing code.}
+
+\item{packages}{Character vector of packages to load.}
 
 \item{datasets}{Named character vector of commands to make targets.
 Names stand for RDS target files without their extensions.}

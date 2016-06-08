@@ -46,10 +46,11 @@ First, I list the R scripts with my code and the packages it depends on.
 
 ```{r}
 library(workflowHelper)
-sources = strings(code.R, MASS)
+sources = strings(code.R)
+packages = "MASS"
 ```
 
-The `.r` and `.R` extensions distinguish packages from source files. Also, `strings` converts R expressions into character strings, so I could have simply written `sources = c("code.R", "MASS")`.
+The `strings` function converts R expressions into character strings, so I could have simply written `sources = "code.R"`, for example.
 
 Next, I list the commands to generate the datasets.
 
@@ -101,7 +102,7 @@ begin = c("# This is my Makefile", "# Variables...")
 The stages and elements of my workflow are now planned. To put them all together, I use `plan_workflow`, which calls `parallelRemake::write_makefile`.
 
 ```{r}
-plan_workflow(sources, datasets, analyses, summaries, output, begin)
+plan_workflow(sources, packages, datasets, analyses, summaries, output, begin)
 ```
 
 Optionally, I can pass additional arguments to `remake::make` using the `remake_args` argument to `plan_workflow`. For example, `plan_workflow(..., remake_args = list(verbose = FALSE))` is equivalent to `remake::make(..., verbose = F)` for each target. I cannot set `target_names` or `remake_file` this way.
