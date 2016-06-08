@@ -50,7 +50,7 @@ sources = strings(code.R)
 packages = "MASS"
 ```
 
-The `strings` function converts R expressions into character strings, so I could have simply written `sources = "code.R"`, for example.
+The `strings` function converts R expressions into character strings, so I could have simply written `sources = "code.R"`.
 
 Next, I list the commands to generate the datasets.
 
