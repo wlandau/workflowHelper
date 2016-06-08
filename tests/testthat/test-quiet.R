@@ -15,6 +15,6 @@ test_that("Quiet workflow is possible.", {
   )
   plan_workflow(sources, packages, datasets = datasets, remake_args = list(verbose = F))
   out = system("make -j 4", intern = T)
-  expect_equal(out, readLines(paste0(IO, "output-quiet.txt")))
+  expect_equal(out, readLines("test-quiet/output.txt"))
   cleanup(files)
 })

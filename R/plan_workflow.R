@@ -41,6 +41,7 @@ plan_workflow = function(sources, packages = NULL, datasets = NULL, analyses = N
       fields = add_rule(fields, df[i, "save"], df[i, "command"])
   }
   write(as.yaml(fields), remakefile)
-  write_makefile(makefile = makefile, remakefiles = remakefile, begin = begin, 
-    clean = clean, remake_args = remake_args)
+  if(!is.null(makefile)) 
+    write_makefile(makefile = makefile, remakefiles = remakefile, begin = begin, 
+      clean = clean, remake_args = remake_args)
 }
