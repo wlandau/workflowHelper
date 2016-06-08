@@ -17,7 +17,8 @@
 #' @param remakefile Character, name of the \code{remake} file to generate. Should be in the current working directory.
 #' @param begin Character vector of lines to prepend to the Makefile.
 #' @param clean Character vector of extra shell commands for \code{make clean}.
-plan_workflow = function(sources, datasets = NULL, analyses = NULL, summaries = NULL, output = NULL, makefile = "Makefile", remakefile = "remake.yml", begin = NULL, clean = NULL){
+#' @param remake_args Fully-named list of additional arguments to \code{remake::make}.
+plan_workflow = function(sources, datasets = NULL, analyses = NULL, summaries = NULL, output = NULL, makefile = "Makefile", remakefile = "remake.yml", begin = NULL, clean = NULL, remake_args = list()){
   is_source = grepl("\\.[rR]$", sources)
   packages = sources[!is_source]
   sources = sources[is_source]
@@ -35,7 +36,7 @@ plan_workflow = function(sources, datasets = NULL, analyses = NULL, summaries = 
   analyses = parse_analyses(datasets, analyses)
   aggregates = parse_aggregates(aggregates, summaries)
 
-  fields = init_fields(sources, packages, output$save)
+  fields = init_fields(sources, packages, c(output$save, stage_names))
   for(item in stage_names){
     df = get(item)
     fields = add_rule(fields, item, df$save, "depends")
@@ -43,5 +44,6 @@ plan_workflow = function(sources, datasets = NULL, analyses = NULL, summaries = 
       fields = add_rule(fields, df[i, "save"], df[i, "command"])
   }
   write(as.yaml(fields), remakefile)
-  write_makefile(makefile, remakefile, begin, c(clean, "rm -rf .remake"))
+  write_makefile(makefile = makefile, remakefiles = remakefile, begin = begin, 
+    clean = clean, remake_args = remake_args)
 }

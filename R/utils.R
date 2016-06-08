@@ -31,12 +31,12 @@ commands = function(...) {
 expand_grid_df = function(...) 
   Reduce(function(...) merge(..., by = NULL), list(...))
 
-init_fields = function(sources, packages, save){
+init_fields = function(sources, packages, dep){
   list(
     sources = sources,
     packages = packages,
     targets = list(
-      all = list(depends = save)
+      all = list(depends = dep)
     )
   )
 }

@@ -21,5 +21,8 @@ test_that("Example runs as expected", {
     expect_true(all(is.finite(do.call(rbind, x))))
     expect_true(all(is.numeric(do.call(rbind, x))))
   }
+  expect_true(file.exists(".remake"))
+  out = system("make clean 2>&1", intern = T)
+  expect_false(file.exists(".remake"))
   cleanup(files)
 })

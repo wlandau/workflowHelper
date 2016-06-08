@@ -1,0 +1,3 @@
+Rscript -e 'remake::make("poisson100", remake_file = "remake.yml", verbose = FALSE)'
+Rscript -e 'remake::make("normal100", remake_file = "remake.yml", verbose = FALSE)'
+Rscript -e 'remake::make("normal1000", remake_file = "remake.yml", verbose = FALSE)'

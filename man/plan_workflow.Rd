@@ -6,7 +6,7 @@
 \usage{
 plan_workflow(sources, datasets = NULL, analyses = NULL, summaries = NULL,
   output = NULL, makefile = "Makefile", remakefile = "remake.yml",
-  begin = NULL, clean = NULL)
+  begin = NULL, clean = NULL, remake_args = list())
 }
 \arguments{
 \item{sources}{Named character vector, code files and packages to load.
@@ -33,6 +33,8 @@ working directory.}
 \item{begin}{Character vector of lines to prepend to the Makefile.}
 
 \item{clean}{Character vector of extra shell commands for \code{make clean}.}
+
+\item{remake_args}{Fully-named list of additional arguments to \code{remake::make}.}
 }
 \description{
 Main function of the package. Produces a Makefile to run a workflow.

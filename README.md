@@ -23,6 +23,9 @@ R CMD INSTALL ...
 
 where `...` is replaced by the name of the tarball produced by `R CMD build`.
 
+## Windows users need [`Rtools`](https://github.com/stan-dev/rstan/wiki/Install-Rtools-for-Windows).
+
+The example and tests sometimes use `system("make")` and similar commands. So if you're using the Windows operating system, you will need to install the [`Rtools`](https://github.com/stan-dev/rstan/wiki/Install-Rtools-for-Windows) package.
 
 # Example 
 
@@ -101,6 +104,8 @@ The stages and elements of my workflow are now planned. To put them all together
 plan_workflow(sources, datasets, analyses, summaries, output, begin)
 ```
 
+Optionally, I can pass additional arguments to `remake::make` using the `remake_args` argument to `plan_workflow`. For example, `plan_workflow(..., remake_args = list(verbose = FALSE))` is equivalent to `remake::make(..., verbose = F)` for each target.
+
 ## Running the workflow
 
 After running the `workflow.R` script above, I have a [Makefile](https://www.gnu.org/software/make/) in my current working directory. Using this master [Makefile](https://www.gnu.org/software/make/) and a [command line program](http://linuxcommand.org/), I can run or clean up the workflow. Thanks to [GNU make](https://www.gnu.org/software/make/) and [`remake`](https://github.com/richfitz/remake), if I change functions in `code.R` and then run `make` again, only the outdated parts of the workflow will be updated. Here are some specific options for controlling the workflow.
@@ -161,7 +166,6 @@ This should help you go back and debug `mse_plot` in `code.R`, for example, whic
 
 **Do not modify the files inside `.remake`**. Manual changes there are not tracked.
 
-# A note on distributed computing
+# Distributed computing
 
-If you're running `make -j` over multiple nodes of a cluster, read this. [`remake`](https://github.com/richfitz/remake) uses a hidden folder called `.remake` in the current working directory for storing intermediate objects. You need to make sure that all the nodes share the same copy of `.remake` instead of creating their own local copies. That way, unnecessarily redundant rebuilds will be avoided. You could achieve this by using symbolic links, changing all nodes to the same working directory (`plan_workflow(..., begin = "cd $PBS_O_WORKDIR")` for [PBS](https://en.wikipedia.org/wiki/Portable_Batch_System)), or some other method.
-
+If you're running `make -j` over multiple nodes of a cluster or cloud resource, read this. [`remake`](https://github.com/richfitz/remake) uses a hidden folder called `.remake` in the current working directory for storing intermediate objects. You need to make sure that all the nodes share the same copy of `.remake` instead of creating their own local copies. That way, unnecessarily redundant rebuilds will be avoided. You could achieve this by using symbolic links, changing all nodes to the same working directory (`write_makefile(..., begin = "cd $PBS_O_WORKDIR")` for [PBS](https://en.wikipedia.org/wiki/Portable_Batch_System)), or some other method.
