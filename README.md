@@ -1,7 +1,7 @@
 With this package, you can
 
 - deploy massive simulation studies with minimal code. 
-- rerun just the outdated computations when you change your code. Thanks to [`remake`](https://github.com/richfitz/remake), whenever you change a function or other dependency in your custom code, only the necessary pieces of your workflow are updated. This is similar to how [GNU make](https://www.gnu.org/software/make/) works.
+- do minimal computation to keep your project up to date. Thanks to [`remake`](https://github.com/richfitz/remake), whenever you change a function or other dependency in your custom code, only the affected pieces of your workflow are recomputed. This is similar to how [GNU make](https://www.gnu.org/software/make/) works.
 - distribute your workflow over multiple parallel processes (see [`parallelRemake`](https://github.com/wlandau/parallelRemake)).
 
 # Installation
