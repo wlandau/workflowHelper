@@ -1,6 +1,6 @@
 With this package, you can
 
-- deploy massive simulation studies with minimal code. 
+- deploy massive data analysis studies with minimal code. 
 - do minimal computation to keep your project up to date. Thanks to [`remake`](https://github.com/richfitz/remake), whenever you change a function or other dependency in your custom code, only the affected pieces of your workflow are recomputed. This is similar to how [GNU make](https://www.gnu.org/software/make/) works.
 - distribute your workflow over multiple parallel processes (see [`parallelRemake`](https://github.com/wlandau/parallelRemake)).
 
