@@ -1,8 +1,9 @@
-With this package, you can
+This package can help anyone who uses R to analyze multiple datasets in multiple ways. Your workflow will be
 
-- deploy massive data analysis studies with minimal code. 
-- do minimal computation to keep your project up to date. Thanks to [`remake`](https://github.com/richfitz/remake), whenever you change a function or other dependency in your custom code, only the affected pieces of your workflow are recomputed. This is similar to how [GNU make](https://www.gnu.org/software/make/) works.
-- distribute your workflow over multiple parallel processes (see [`parallelRemake`](https://github.com/wlandau/parallelRemake)).
+- **Reproducible**.
+- **Runtime-efficient**. Thanks to [`remake`](https://github.com/richfitz/remake), whenever you change your code, your next job will only recompute the affected tasks.
+- **Smooth**. Just provide the commands to generate datasets, analyze them, etc., and `workflowHelper` puts all the pieces together and manages the files for you.
+- **Parallelizable**. Easily distribute your workflow over multiple parallel processes.
 
 # Installation
 
