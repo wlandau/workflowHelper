@@ -1,5 +1,5 @@
 # library(testthat); library(workflowHelper);
-context("Suppress Makefile")
+context("suppress Makefile")
 source("utils.R")
 
 test_that("Makefile can be suppressed.", {

@@ -41,10 +41,17 @@ init_fields = function(sources, packages, dep){
   )
 }
 
+#' @title Function \code{macro}
+#' @description Get a placeholder macro. These macros help
+#' apply each analysis to each dataset and each summary to each
+#' analysis of each dataset. Macros are not case-sensitive.
+#' @export
+#' @return The chosen macro.
+#' @param arg Character, name of the macro you want.
 macro = function(arg){
   c(
-    dataset = "..DATASET..",
-    analysis = "..ANALYSIS.."
+    dataset = "\\.\\.dataset\\.\\.",   # Not case-sensitive
+    analysis = "\\.\\.analysis\\.\\."  # Not case-sensitive
   )[arg]
 }
 

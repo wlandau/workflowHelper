@@ -1,5 +1,5 @@
 # library(testthat); library(workflowHelper);
-context("Quiet")
+context("quiet")
 source("utils.R")
 
 test_that("Quiet workflow is possible.", {
@@ -15,6 +15,6 @@ test_that("Quiet workflow is possible.", {
   )
   plan_workflow(sources, packages, datasets = datasets, remake_args = list(verbose = F))
   out = system("make -j 4", intern = T)
-  expect_equal(out, readLines("test-quiet/output.txt"))
+  expect_equal(sort(out), sort(readLines("test-quiet/output.txt")))
   cleanup(files)
 })

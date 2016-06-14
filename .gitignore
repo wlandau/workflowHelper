@@ -13,12 +13,8 @@
 *.toc
 *.vrb
 .DS_Store
-.remake
 .Rapp.history
+.remake
 .Rhistory
-example/*.pdf
-Makefile
-Rbuildignore/*.pdf
-Rbuildignore/local/
 .Rproj.user
 fbseq.Rproj

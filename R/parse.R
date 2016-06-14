@@ -24,7 +24,7 @@ parse_analyses = function(datasets = NULL, analyses = NULL){
   analyses = expand_grid_df(data.frame(dataset = datasets$save), analyses)
   analyses$save = paste(datasets$save, analyses$save, sep = "_")
   analyses$command = apply(analyses, 1, function(x)
-    gsub(macro("dataset"), x["dataset"], x["command"]))
+    gsub(macro("dataset"), x["dataset"], x["command"], ignore.case=T))
   analyses
 }
 
@@ -46,7 +46,7 @@ parse_summaries = function(datasets = NULL, analyses = NULL, summaries = NULL){
   summaries$analysis = apply(summaries[,1:2], 1, paste, collapse = "_")
   summaries$command = apply(summaries, 1, function(x){
     for(item in c("dataset", "analysis"))
-      x["command"] = gsub(macro(item), x[item], x["command"])
+      x["command"] = gsub(macro(item), x[item], x["command"], ignore.case=T)
     x["command"]
   })
   summaries

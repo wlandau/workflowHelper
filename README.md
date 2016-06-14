@@ -69,19 +69,19 @@ Similarly, I specify the commands to analyze each dataset.
 
 ```{r}
 analyses = commands(
-  lm = lm_analysis(..DATASET..), # Just apply `lm`
-  glm = glm_analysis(..DATASET..) # Modify dataset, then apply `glm`
+  lm = lm_analysis(..dataset..), # Just apply `lm`
+  glm = glm_analysis(..dataset..) # Modify dataset, then apply `glm`
 )
 ```
 
-The `..DATASET..` wildcard stands for the current dataset being analyzed, which will be an object returned by `poisson_dataset` or `normal_dataset`. For 3 replicates per dataset of each kind of analysis, assign `analyses = reps(analyses, 3)`. The `reps` function works on any character vector of commands.
+The `..dataset..` wildcard stands for the current dataset being analyzed, which will be an object returned by `poisson_dataset` or `normal_dataset`. Wildcards are case-insensitive, so `..DATASET..` and `..dAtAsEt` will also work. For 3 replicates per dataset of each kind of analysis, assign `analyses = reps(analyses, 3)`. The `reps` function works on any character vector of commands.
 
-When I list the methods of summarizing analyses, there is an additional `..ANALYSIS..` wildcard that similarly stands for the appropriate object returned by `lm_analysis` or `glm_analysis`.
+When I list the methods of summarizing analyses, there is an additional `..analysis..` wildcard that similarly stands for the appropriate object returned by `lm_analysis` or `glm_analysis`. Like `..dataset..`, `..analysis..` is case-insensitive, so `..ANALYSIS..` will also work.
 
 ```{r}
 summaries = commands(
-  mse = mse_summary(..DATASET.., ..ANALYSIS..), # mean squared error
-  coef = coef_summary(..ANALYSIS..) # model coefficients
+  mse = mse_summary(..dataset.., ..analysis..), # mean squared error
+  coef = coef_summary(..analysis..) # model coefficients
 )
 ```
 

@@ -2,6 +2,7 @@
 
 export(clean_example_workflow)
 export(commands)
+export(macro)
 export(parse_aggregates)
 export(parse_analyses)
 export(parse_summaries)
