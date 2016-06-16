@@ -4,7 +4,7 @@ source("utils.R")
 
 test_that("Quiet workflow is possible.", {
   files = c("code.R", "Makefile", "remake.yml", "workflow.R")
-  write_example_workflow()
+  write_example_workflowHelper()
   source("workflow.R")
   sources = strings(code.R)
   packages = strings(MASS)
