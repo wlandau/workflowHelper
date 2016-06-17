@@ -1,8 +1,8 @@
-This package can help anyone who uses R to analyze multiple datasets in multiple ways. Your workflow will be
+This package helps to analyze multiple datasets in multiple ways. Your workflow will be
 
-- **Reproducible**.
-- **Runtime-efficient**. Thanks to [`remake`](https://github.com/richfitz/remake), whenever you change your code, your next job will only recompute the affected tasks.
-- **Smooth**. Just provide the commands to generate datasets, analyze an arbitrary dataset, etc., and `workflowHelper` will structure your workflow and manage your files.
+- **Reproducible**. Reproduce any analysis with one call to `plan_workflow()` and another to `make`.
+- **Development-friendly**. Thanks to [`remake`](https://github.com/richfitz/remake), whenever you change your code, your next job will only recompute the affected tasks. This minimizes headache when your workflow is under heavy development.
+- **Quick to set up**. Just provide the commands to generate datasets, analyze an arbitrary dataset, etc., and `workflowHelper` will arrange these commands in a workflow and manage your output.
 - **Parallelizable**. Easily distribute your workflow over multiple parallel processes.
 
 # Installation
