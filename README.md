@@ -124,7 +124,7 @@ After running the `workflow.R` script above, I have a [Makefile](https://www.gnu
 
 ## Use with the [downsize](https://github.com/wlandau/downsize) package
 
-You may want to use the [downsize](https://github.com/wlandau/downsize) package within your custom R source code. That way, you can run a quick scaled-down version of your workflow for debugging and testing before you run the full workload. In the example, just include `downsize` in `packages` inside `workflow.R` replace the top few lines of `code.R` with the following.
+You may want to use the [downsize](https://github.com/wlandau/downsize) package within your custom R source code. That way, you can run a quick scaled-down version of your workflow for debugging and testing before you run the full workload. In the example, just include `downsize` in `packages` inside `workflow.R` and replace the top few lines of `code.R` with the following.
 
 ```{r}
 options(downsize = TRUE)
