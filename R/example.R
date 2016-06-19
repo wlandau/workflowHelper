@@ -3,7 +3,8 @@
 #' produce \code{code.R} and \code{Makefile.R}
 #' @export
 write_example_workflowHelper = function(){
-  for(file in c("code.R", "workflow.R")){
+  dir = system.file("example", package = "workflowHelper")
+  for(file in list.files(dir)){
     path = system.file("example", file, package = "workflowHelper")
     if (!file.exists(path)) stop("File ", file, 
       " is missing from installed package workflowHelper.", call.=FALSE)
