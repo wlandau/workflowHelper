@@ -1,0 +1,11 @@
+```{r}
+head(poisson100)
+```
+
+```{r}
+summary(normal1000_lm)
+```
+
+```{r}
+hist(unlist(mse), col = "black")
+```

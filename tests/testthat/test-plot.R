@@ -3,7 +3,6 @@ context("plot")
 source("utils.R")
 
 test_that("Plotting with YAML \"plot: TRUE\" is as expected.", {
-  files = c("code.R", "Makefile", "plot.pdf", "remake.yml", "workflow.R")
   msg = "[  PLOT ] plot.pdf   |  plot(poisson100) # ==> plot.pdf"
   expect_false(file.exists("plot.pdf"))
   sources = strings(code.R)
@@ -22,6 +21,6 @@ test_that("Plotting with YAML \"plot: TRUE\" is as expected.", {
     out = system("make -j 2 2>&1", intern = T)
     expect_true(msg %in% out)
     expect_true(file.exists("plot.pdf"))
-    cleanup(files)
+    tmp = clean_example_workflowHelper(T)
   }
 })
