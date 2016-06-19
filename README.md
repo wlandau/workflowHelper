@@ -178,7 +178,7 @@ $poisson100_lm
 
 This should help you go back and debug `mse_plot` in `code.R`, for example, which takes `mse` as an argument.
 
-**Do not touch the files inside `.remake/objects` in serious iterations of your workflow**. Manual changes there are not tracked.
+**Do not manually access the files inside `.remake/objects` in serious iterations of your workflow**. Manual changes there are not tracked.
 
 # Distributed computing
 
