@@ -35,11 +35,12 @@ plan_workflow = function(sources, packages = NULL, datasets = NULL, analyses = N
   output = parse_output(output)
 
   fields = init_fields(sources, packages, c(output$save, stage_names))
+  alldepends = c(datasets$save, analyses$save, summaries$save, aggregates$save)
   for(item in stage_names){
     df = get(item)
-    fields = add_target(fields, item, list(depends = df$save))
+    fields = add_target(fields, item, list(depends = df$save), alldepends)
     for(i in 1:nrow(df)) 
-      fields = add_target(fields, df[i, "save"], df[i,])
+      fields = add_target(fields, df[i, "save"], df[i,], alldepends)
   }
   write(as.yaml(fields), remakefile)
   yaml_yesno_truefalse(remakefile)

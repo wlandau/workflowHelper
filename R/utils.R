@@ -1,5 +1,9 @@
-add_target = function(fields, name, target){
+add_target = function(fields, name, target, stage_names){
   out = as.list(target)
+  if(!is.null(out$knitr)) if(out$knitr){ 
+    out$depends = unique(c(out$depends, stage_names[stage_names != "output"]))
+    out = out[names(out) != "command"]
+  }
   keep = !sapply(out, function(x) is.null(x) | identical(x, F)) &
     names(out) %in% c("command", "depends", "knitr", "plot")
   fields$targets[[name]] = out[keep]
