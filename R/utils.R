@@ -1,8 +1,9 @@
-add_target = function(fields, name, target, stage_names){
+add_target = function(fields, name, target, all_depends){
   out = as.list(target)
   if(!is.null(out$knitr)) if(out$knitr){ 
-    out$depends = unique(c(out$depends, stage_names[stage_names != "output"]))
-    out = out[names(out) != "command"]
+    out$depends = unique(c(out$depends, all_depends[all_depends != "output"]))
+    if(nchar(out$command)) out$knitr = list(options = as.list(eval(parse(text = out$command))))
+    out$command = NULL
   }
   keep = !sapply(out, function(x) is.null(x) | identical(x, F)) &
     names(out) %in% c("command", "depends", "knitr", "plot")
@@ -59,7 +60,7 @@ macro = function(arg){
     dataset = "\\.\\.dataset\\.\\.",   
     analysis = "\\.\\.analysis\\.\\.",
     plot = "\\.\\.plot\\.\\.",
-    knitr = "\\.\\.knitr\\.\\."
+    knitr = "\\.\\.(knitr|report)\\.\\."
   )[arg]
 }
 

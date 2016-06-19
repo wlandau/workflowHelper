@@ -27,9 +27,9 @@ summaries = commands(
 
 # Final output.
 output = commands(
-  mse.pdf = ..plot.. <- mse_plot(mse),
   coef.csv = coef_table(coef),
-  report.md = ..knitr..
+  mse.pdf = ..plot.. <- mse_plot(mse),
+  report.md = ..knitr.. <- list(fig.height = 7, fig.align = "right")
 )
 
 begin = c("# This is my Makefile", "# Variables...")
