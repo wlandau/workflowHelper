@@ -32,9 +32,7 @@ coef_summary = function(analysis){
 # Final output
 mse_plot = function(x){
   mse = unlist(x)
-  pdf("mse.pdf")
   hist(mse, col = "black")
-  dev.off()
 }
 
 coef_table = function(x){

@@ -1,6 +1,7 @@
 #' @title Internal function
 #' @description Internal function
 #' @export
+#' @return parsed data frame
 #' @param aggregates Data frame about output files.
 #' @param summaries Data frame of information about summaries to aggregate.
 parse_aggregates = function(aggregates, summaries){
@@ -26,6 +27,22 @@ parse_analyses = function(datasets = NULL, analyses = NULL){
   analyses$command = apply(analyses, 1, function(x)
     gsub(macro("dataset"), x["dataset"], x["command"], ignore.case=T))
   analyses
+}
+
+#' @title Internal function
+#' @description Internal function
+#' @export
+#' @return parsed data frame
+#' @param output Data frame about output files.
+parse_output = function(output){
+  opts = c("plot", "knitr")
+  ddply(output, colnames(output), function(x){
+    for(o in opts){
+      x[[o]] = grepl(macro(o), x$command, ignore.case = T)
+      x$command = remove_assignment_from_command(x$command, macro(o))
+    }
+    x
+  })
 }
 
 #' @title Internal function

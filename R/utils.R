@@ -1,6 +1,8 @@
-add_rule = function(fields, name, value, key = "command"){
-  fields$targets[[name]] = list()
-  fields$targets[[name]][[key]] = value
+add_target = function(fields, name, target){
+  out = as.list(target)
+  keep = !sapply(out, function(x) is.null(x) | identical(x, F)) &
+    names(out) %in% c("command", "depends", "knitr", "plot")
+  fields$targets[[name]] = out[keep]
   fields
 }
 
@@ -50,8 +52,10 @@ init_fields = function(sources, packages, dep){
 #' @param arg Character, name of the macro you want.
 macro = function(arg){
   c(
-    dataset = "\\.\\.dataset\\.\\.",   # Not case-sensitive
-    analysis = "\\.\\.analysis\\.\\."  # Not case-sensitive
+    dataset = "\\.\\.dataset\\.\\.",   
+    analysis = "\\.\\.analysis\\.\\.",
+    plot = "\\.\\.plot\\.\\.",
+    knitr = "\\.\\.knitr\\.\\."
   )[arg]
 }
 
@@ -70,6 +74,21 @@ new_dir = function(path){
   }
   if(substr(path, nchar(path), nchar(path)) != "/") path = paste0(path, "/")
   path
+}
+
+#' @title Function \code{remove_assignment_from_command}
+#' @description Special function to handle command syntax.
+#' Turns "..plot.. <- mse_plot(mse)" into "mse_plot(mse)", etc.
+#' @export
+#' @seealso \code{plan_workflow}
+#' @return parsed command
+#' @param cmd Command to clean
+#' @param x Name of value assigned to by the command.
+remove_assignment_from_command = function(cmd, x){
+  cmd = gsub(x, "", cmd, ignore.case = T)
+  cmd = str_trim(cmd)
+  cmd = gsub("->|<-", "", cmd, ignore.case = T)
+  str_trim(cmd)
 }
 
 #' @title Function \code{reps}

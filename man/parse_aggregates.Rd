@@ -11,6 +11,9 @@ parse_aggregates(aggregates, summaries)
 
 \item{summaries}{Data frame of information about summaries to aggregate.}
 }
+\value{
+parsed data frame
+}
 \description{
 Internal function
 }

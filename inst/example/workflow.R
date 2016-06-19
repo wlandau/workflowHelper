@@ -27,7 +27,7 @@ summaries = commands(
 
 # Final output.
 output = commands(
-  mse.pdf = mse_plot(mse),
+  mse.pdf = ..plot.. <- mse_plot(mse),
   coef.csv = coef_table(coef)
 )
 

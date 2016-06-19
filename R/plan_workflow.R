@@ -32,15 +32,17 @@ plan_workflow = function(sources, packages = NULL, datasets = NULL, analyses = N
   summaries = parse_summaries(datasets, analyses, summaries)
   analyses = parse_analyses(datasets, analyses)
   aggregates = parse_aggregates(aggregates, summaries)
+  output = parse_output(output)
 
   fields = init_fields(sources, packages, c(output$save, stage_names))
   for(item in stage_names){
     df = get(item)
-    fields = add_rule(fields, item, df$save, "depends")
-    for(i in 1:nrow(df))
-      fields = add_rule(fields, df[i, "save"], df[i, "command"])
+    fields = add_target(fields, item, list(depends = df$save))
+    for(i in 1:nrow(df)) 
+      fields = add_target(fields, df[i, "save"], df[i,])
   }
   write(as.yaml(fields), remakefile)
+  yaml_yesno_truefalse(remakefile)
   if(!is.null(makefile)) 
     write_makefile(makefile = makefile, remakefiles = remakefile, begin = begin, 
       clean = clean, remake_args = remake_args)
