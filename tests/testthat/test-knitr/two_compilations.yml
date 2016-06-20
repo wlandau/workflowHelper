@@ -1,0 +1,40 @@
+sources: code.R
+packages: rmarkdown
+targets:
+  all:
+    depends:
+    - report1.html
+    - report1.md
+    - report1.pdf
+    - report2.html
+    - report2.md
+    - report2.pdf
+    - datasets
+    - output
+  datasets:
+    depends: poisson100
+  poisson100:
+    command: poisson_dataset(n = 100)
+  output:
+    depends:
+    - report1.html
+    - report1.md
+    - report1.pdf
+    - report2.html
+    - report2.md
+    - report2.pdf
+  report1.html:
+    command: render("report1.md", quiet = TRUE)
+  report1.md:
+    knitr: TRUE
+    depends: datasets
+  report1.pdf:
+    command: write("report1.html", "report1.pdf")
+  report2.html:
+    command: render("report2.md", quiet = TRUE)
+  report2.md:
+    knitr: TRUE
+    depends: datasets
+  report2.pdf:
+    command: write("report2.html", "report2.pdf")
+

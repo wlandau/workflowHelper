@@ -43,5 +43,26 @@ test_that("Functionality with knitr work as expected.", {
   expect_equal(readLines("remake.yml"), readLines("test-knitr/two_reports.yml"))
   tmp = clean_example_workflowHelper(T)
   cleanup(paste0("report", 1:2, ".Rmd"))
+
+  write_example_workflowHelper()
+  unlink("report.Rmd")  
+  rmd = readLines("test-knitr/report.Rmd")
+  write(rmd, "report1.Rmd")
+  write(rmd, "report2.Rmd")
+  o = commands(
+    report1.md = ..knitr..,
+    report1.html = render("report1.md", quiet = TRUE),
+    report1.pdf = write("report1.html", "report1.pdf"),
+    report2.md = ..knitr..,
+    report2.html = render("report2.md", quiet = TRUE),
+    report2.pdf = write("report2.html", "report2.pdf")
+  )
+  plan_workflow(sources, packages = "rmarkdown", datasets = datasets, output = o)
+  remake::make(verbose = F)
+  remake::make("clean", verbose = F)
+  expect_equal(readLines("remake.yml"), readLines("test-knitr/two_compilations.yml"))
+  tmp = clean_example_workflowHelper(T)
+  cleanup(paste0("report", 1:2, ".Rmd"))
+  cleanup(paste0("report", 1:2, ".html"))
 })
 

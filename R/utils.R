@@ -60,11 +60,14 @@ knitr_depends = function(output, top_depends){
   post_knitr = output$knitr
   k = rep(F, nrow(output))
   if(!all(output$knitr)) repeat{
-    k = unlist(lapply(output$command, function(x) 
-      any(targets %in% parse_command(x)$depends)))
-    post_knitr = post_knitr | k
+    k = unlist(lapply(output$command, function(x){
+      if(!nchar(x)) return(F)
+      any(targets %in% parse_command(x)$depends)
+    }))
+    pk2 = post_knitr | k
+    if(identical(post_knitr, pk2)) break;
+    post_knitr = pk2
     targets = output$save[k]
-    if(all(!k)) break
   }
   setdiff(top_depends, c(output$save[post_knitr], "output"))
 }
