@@ -4,17 +4,19 @@
 \alias{knitr_depends}
 \title{Function \code{knitr_depends}}
 \usage{
-knitr_depends(output, top_depends)
+knitr_depends(output, all_depends)
 }
 \arguments{
-\item{output}{Data frame of output targets}
+\item{output}{Data frame of "output" stage targets}
 
-\item{top_depends}{Dependencies of fake target `all`.}
+\item{all_depends}{Dependencies of fake target `all`.}
 }
 \value{
 knitr dependencies
 }
 \description{
-Resolve dependencies of knitr targets
+Resolve dependencies of knitr targets: 
+i.e., everything except the knitr targets themeslves 
+and everything downstream.
 }
 

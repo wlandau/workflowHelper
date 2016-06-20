@@ -34,9 +34,9 @@ plan_workflow = function(sources, packages = NULL, datasets = NULL, analyses = N
   aggregates = parse_aggregates(aggregates, summaries)
   output = parse_output(output)
 
-  top_depends = c(output$save, stage_names)
-  knitr_depends = knitr_depends(output, top_depends)
-  fields = init_fields(sources, packages, top_depends)
+  all_depends = c(output$save, stage_names)
+  knitr_depends = knitr_depends(output, all_depends)
+  fields = init_fields(sources, packages, all_depends)
   all_depends = c(datasets$save, analyses$save, summaries$save, aggregates$save)
   for(item in stage_names){
     df = get(item)

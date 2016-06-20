@@ -49,27 +49,26 @@ init_fields = function(sources, packages, dep){
 }
 
 #' @title Function \code{knitr_depends}
-#' @description Resolve dependencies of knitr targets
+#' @description Resolve dependencies of knitr targets: 
+#' i.e., everything except the knitr targets themeslves 
+#' and everything downstream. 
 #' @export
 #' @return knitr dependencies
-#' @param output Data frame of output targets
-#' @param top_depends Dependencies of fake target `all`.
-knitr_depends = function(output, top_depends){
-  if(is.null(output)) return()
-  targets = output$save[output$knitr]
-  post_knitr = output$knitr
-  k = rep(F, nrow(output))
-  if(!all(post_knitr)) repeat{
-    k = unlist(lapply(output$command, function(x){
+#' @param output Data frame of "output" stage targets
+#' @param all_depends Dependencies of fake target `all`.
+knitr_depends = function(output, all_depends){
+  stream = current = output$knitr # "stream" will include knitr and everything downstream.
+  if(!all(stream)) repeat{ # Build "stream" by traveling downstream from the knitr targets.
+    downstream = unlist(lapply(output$command, function(x){ # One iteration downstream.
       if(!nchar(x)) return(F)
-      any(targets %in% parse_command(x)$depends)
+      any(output$save[current] %in% parse_command(x)$depends)
     }))
-    pk2 = post_knitr | k
-    if(identical(post_knitr, pk2)) break;
-    post_knitr = pk2
-    targets = output$save[k]
+    longer_stream = stream | downstream
+    if(identical(stream, longer_stream)) break;
+    stream = longer_stream
+    current = downstream
   }
-  setdiff(top_depends, c(output$save[post_knitr], "output"))
+  setdiff(all_depends, c(output$save[stream], "output"))
 }
 
 #' @title Function \code{macro}
