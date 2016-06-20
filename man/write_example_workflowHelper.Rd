@@ -2,7 +2,7 @@
 % Please edit documentation in R/example.R
 \name{write_example_workflowHelper}
 \alias{write_example_workflowHelper}
-\title{Function \code{write_example_workflow}}
+\title{Function \code{write_example_workflowHelper}}
 \usage{
 write_example_workflowHelper()
 }

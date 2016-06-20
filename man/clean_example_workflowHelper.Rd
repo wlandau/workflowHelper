@@ -2,7 +2,7 @@
 % Please edit documentation in R/example.R
 \name{clean_example_workflowHelper}
 \alias{clean_example_workflowHelper}
-\title{Function \code{clean_example}}
+\title{Function \code{clean_example_workflowHelper}}
 \usage{
 clean_example_workflowHelper(intern = F)
 }
