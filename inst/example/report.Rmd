@@ -1,11 +1,20 @@
 ```{r}
+library(workflowHelper)
+coef = read.csv("coef.csv")
+head(coef)
+```
+
+```{r}
+poisson100 = recall("poisson100")
 head(poisson100)
 ```
 
 ```{r}
+normal1000_lm = recall("normal1000_lm")
 summary(normal1000_lm)
 ```
 
 ```{r}
+mse = recall("mse")
 hist(unlist(mse), col = "black")
 ```

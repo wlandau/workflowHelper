@@ -1,10 +1,10 @@
-# library(testthat); library(workflowHelper);
+# library(testthat); library(workflowHelper); library(remake)
 context("knitr")
 source("utils.R")
 
 test_that("Functionality with knitr work as expected.", {
   msg = "[  KNIT ] report.md  |  knitr::knit(\"report.Rmd\", \"report.md\")"
-  rmf1 = "report.md:\n    knitr:\n      options:\n        fig.height: 4.0\n    depends: poisson100\n"
+  rmf1 = "report.md:\n    knitr:\n      options:\n        fig.height: 4.0\n    depends: datasets"
   rmf2 = "report.md:\n    knitr: TRUE"
   sources = strings(code.R)
   datasets = commands(poisson100 = poisson_dataset(n = 100))
@@ -30,4 +30,18 @@ test_that("Functionality with knitr work as expected.", {
     expect_true(grepl(rmfs[i], rmf))
     tmp = clean_example_workflowHelper(T)
   }
+
+  write_example_workflowHelper()
+  unlink("report.Rmd")  
+  rmd = readLines("test-knitr/report.Rmd")
+  write(rmd, "report1.Rmd")
+  write(rmd, "report2.Rmd")
+  o = commands(report1.md = ..knitr.., report2.md = ..report..)
+  plan_workflow(sources, datasets = datasets, output = o)
+  remake::make(verbose = F)
+  remake::make("clean", verbose = F)
+  expect_equal(readLines("remake.yml"), readLines("test-knitr/two_reports.yml"))
+  tmp = clean_example_workflowHelper(T)
+  cleanup(paste0("report", 1:2, ".Rmd"))
 })
+

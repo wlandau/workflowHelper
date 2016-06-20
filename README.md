@@ -95,7 +95,7 @@ output = commands(
 )
 ```
 
-The command names will automatically be treated as files since they have extensions. For example, the first line depends on `coef`, and the file `coef.csv` will be expected. In the second line, the assignment arrow and the `..plot..` wildcard set the `plot` option to `TRUE` for [`remake`](https://github.com/richfitz/remake). This means that the function `mse_plot` only needs to produce the plot in a graphics window and it will automatically be saved to `mse.pdf`. The third line says to use [`knitr`](http://yihui.name/knitr/) to knit `report.Rmd` to `report.md`. Datasets, analyses, summaries, and aggregates of summaries are automatically loaded into the `knitr` session. In other words, all intermediate objects named by `recallable()` (see below) can be used as R objects in the code chunks of `report.Rmd`.
+The command names will automatically be treated as files since they have extensions. For example, the first line depends on `coef`, and the file `coef.csv` will be expected. In the second line, the assignment arrow and the `..plot..` wildcard set the `plot` option to `TRUE` for [`remake`](https://github.com/richfitz/remake). This means that the function `mse_plot` only needs to produce the plot in a graphics window and it will automatically be saved to `mse.pdf`. The third line says to use [`knitr`](http://yihui.name/knitr/) to knit `report.Rmd` to `report.md`. The [`knitr`](http://yihui.name/knitr/) targets depend on everything previous, so any objects listed by `recallable` and any non-report files generated in the `output` stage can be used. To load objects into a [`knitr`](http://yihui.name/knitr/) report, use the `recall` function (described later).
 
 Optionally, I can prepend some lines to the overarching [Makefile](https://www.gnu.org/software/make/) for the workflow. In this way, I can configure my workflow for a [Slurm](https://en.wikipedia.org/wiki/Slurm_Workload_Manager) or [PBS](https://en.wikipedia.org/wiki/Portable_Batch_System) cluster or simply add comments.
 
@@ -176,9 +176,9 @@ $poisson100_lm
 > 
 ```
 
-This should help you go back and debug `mse_plot` in `code.R`, for example, which takes `mse` as an argument.
+Use `recall` inside reports like `report.Rmd` in the example to load objects. The `recall` function should also help you go back and debug `mse_plot` in `code.R`, for example, which takes `mse` as an argument.
 
-**Do not manually access the files inside `.remake/objects` in serious iterations of your workflow**. Manual changes there are not tracked.
+**Except within *.Rmd that are compiled in your reproducible workflow, do not manually access the files inside `.remake/objects` for serious jobs. Manual changes to that cache are not tracked.**
 
 # Distributed computing
 

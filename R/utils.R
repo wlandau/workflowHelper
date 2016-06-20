@@ -1,7 +1,7 @@
-add_target = function(fields, name, target, all_depends){
+add_target = function(fields, name, target, knitr_depends = NULL){
   out = as.list(target)
   if(!is.null(out$knitr)) if(out$knitr){ 
-    out$depends = unique(c(out$depends, all_depends[all_depends != "output"]))
+    out$depends = knitr_depends
     if(nchar(out$command)) out$knitr = list(options = as.list(eval(parse(text = out$command))))
     out$command = NULL
   }
