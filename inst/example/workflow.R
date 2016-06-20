@@ -1,7 +1,7 @@
 library(workflowHelper)
 
 sources = strings(code.R)
-packages = "MASS"
+packages = "rmarkdown"
 
 # Generate the data
 datasets = commands(
@@ -29,7 +29,8 @@ summaries = commands(
 output = commands(
   coef.csv = coef_table(coef),
   mse.pdf = ..plot.. <- mse_plot(mse),
-  report.md = ..knitr.. <- list(fig.height = 7, fig.align = "right")
+  report.md = ..knitr.. <- list(fig.height = 7, fig.align = "right"),
+  report.html = render("report.md")
 )
 
 begin = c("# This is my Makefile", "# Variables...")

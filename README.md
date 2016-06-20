@@ -48,7 +48,7 @@ First, I list the R scripts with my code and the packages it depends on.
 ```{r}
 library(workflowHelper)
 sources = strings(code.R)
-packages = "MASS"
+packages = "rmarkdown"
 ```
 
 The `strings` function converts R expressions into character strings, so I could have simply written `sources = "code.R"`.
@@ -91,11 +91,12 @@ Next, I specify how to generate output at the end.
 output = commands(
   coef.csv = coef_table(coef),
   mse.pdf = ..plot.. <- mse_plot(mse),
-  report.md = ..knitr.. <- list(fig.height = 7, fig.align = "right")
+  report.md = ..knitr.. <- list(fig.height = 7, fig.align = "right"),
+  report.html = render("report.md")
 )
 ```
 
-The command names will automatically be treated as files since they have extensions. For example, the first line depends on `coef`, and the file `coef.csv` will be expected. In the second line, the assignment arrow and the `..plot..` wildcard set the `plot` option to `TRUE` for [`remake`](https://github.com/richfitz/remake). This means that the function `mse_plot` only needs to produce the plot in a graphics window and it will automatically be saved to `mse.pdf`. The third line says to use [`knitr`](http://yihui.name/knitr/) to knit `report.Rmd` to `report.md`. The [`knitr`](http://yihui.name/knitr/) targets depend on everything except other [`knitr`](http://yihui.name/knitr/) targets, so any intermediate R objects and generated output files such as `coef.csv` can be used without worry. To load intermediate objects into a [`knitr`](http://yihui.name/knitr/) report, use the `recall` function (explained later). Also, the `..knitr..` and `..report..` wildcards are synonyms.
+The command names will automatically be treated as files since they have extensions. For example, the first line depends on `coef`, and the file `coef.csv` will be expected. In the second line, the assignment arrow and the `..plot..` wildcard set the `plot` option to `TRUE` for [`remake`](https://github.com/richfitz/remake). This means that the function `mse_plot` only needs to produce the plot in a graphics window and it will automatically be saved to `mse.pdf`. The third line says to use [`knitr`](http://yihui.name/knitr/) to knit `report.Rmd` to `report.md`. The [`knitr`](http://yihui.name/knitr/) targets depend on everything except other [`knitr`](http://yihui.name/knitr/) targets and things downstream from them, so  intermediate R objects and generated output files such as `coef.csv` can be used without worry. To load intermediate objects into a [`knitr`](http://yihui.name/knitr/) report, use the `recall` function (explained later). Also, the `..knitr..` and `..report..` wildcards are synonyms.
 
 Optionally, I can prepend some lines to the overarching [Makefile](https://www.gnu.org/software/make/) for the workflow. In this way, I can configure my workflow for a [Slurm](https://en.wikipedia.org/wiki/Slurm_Workload_Manager) or [PBS](https://en.wikipedia.org/wiki/Portable_Batch_System) cluster or simply add comments.
 
