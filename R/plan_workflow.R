@@ -35,8 +35,7 @@ plan_workflow = function(sources, packages = NULL, datasets = NULL, analyses = N
   output = parse_output(output)
 
   top_depends = c(output$save, stage_names)
-  knitr_targets = output$save[output$knitr]
-  knitr_depends = setdiff(top_depends, c(knitr_targets, "output"))
+  knitr_depends = knitr_depends(output, top_depends)
   fields = init_fields(sources, packages, top_depends)
   all_depends = c(datasets$save, analyses$save, summaries$save, aggregates$save)
   for(item in stage_names){

@@ -2,6 +2,7 @@
 
 export(clean_example_workflowHelper)
 export(commands)
+export(knitr_depends)
 export(macro)
 export(parse_aggregates)
 export(parse_analyses)

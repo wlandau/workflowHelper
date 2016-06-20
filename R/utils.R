@@ -48,6 +48,27 @@ init_fields = function(sources, packages, dep){
   )
 }
 
+#' @title Function \code{knitr_depends}
+#' @description Resolve dependencies of knitr targets
+#' @export
+#' @return knitr dependencies
+#' @param output Data frame of output targets
+#' @param top_depends Dependencies of fake target `all`.
+knitr_depends = function(output, top_depends){
+  if(is.null(output)) return()
+  targets = output$save[output$knitr]
+  post_knitr = output$knitr
+  k = rep(F, nrow(output))
+  if(!all(output$knitr)) repeat{
+    k = unlist(lapply(output$command, function(x) 
+      any(targets %in% parse_command(x)$depends)))
+    post_knitr = post_knitr | k
+    targets = output$save[k]
+    if(all(!k)) break
+  }
+  setdiff(top_depends, c(output$save[post_knitr], "output"))
+}
+
 #' @title Function \code{macro}
 #' @description Get a placeholder macro. These macros help
 #' apply each analysis to each dataset and each summary to each
