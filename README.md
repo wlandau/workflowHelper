@@ -92,7 +92,7 @@ output = commands(
   coef.csv = coef_table(coef),
   mse.pdf = ..plot.. <- mse_plot(mse),
   report.md = ..knitr.. <- list(fig.height = 7, fig.align = "right"),
-  report.html = render("report.md")
+  report.html = render("report.md", quiet = TRUE)
 )
 ```
 

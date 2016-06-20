@@ -59,7 +59,7 @@ knitr_depends = function(output, top_depends){
   targets = output$save[output$knitr]
   post_knitr = output$knitr
   k = rep(F, nrow(output))
-  if(!all(output$knitr)) repeat{
+  if(!all(post_knitr)) repeat{
     k = unlist(lapply(output$command, function(x){
       if(!nchar(x)) return(F)
       any(targets %in% parse_command(x)$depends)
