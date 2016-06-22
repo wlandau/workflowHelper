@@ -1,5 +1,14 @@
-cleanup = function(files){
-  unlink(".remake", recursive = T)
-  unlink("*.yml")
-  for(f in files) unlink(f)
+testdir_down = function(x){
+  dir = paste0("run-test-", x)
+  if(!file.exists(dir)) dir.create(dir)
+  setwd(dir)
+}
+
+testdir_up = function(){
+  d1 = getwd()
+  setwd("..")
+  d2 = getwd()
+  d = gsub(d2, "", d1)
+  d = gsub("[^[:alnum:]|_|-]", "", d)
+  unlink(d, recursive = T)
 }

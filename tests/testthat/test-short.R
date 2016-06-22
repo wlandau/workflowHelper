@@ -3,6 +3,7 @@ context("short")
 source("utils.R")
 
 test_that("Short workflows without output stage can run.", {
+  testdir_down("short-ok")
   sources = strings(code.R)
   datasets = commands(poisson100 = poisson_dataset(n = 100))
   plan_workflow(sources, datasets = datasets)
@@ -21,6 +22,6 @@ test_that("Short workflows without output stage can run.", {
   expect_equal(recallable(), c("poisson100", "poisson100_lm"))
   expect_equal(dim(recall("poisson100")), c(100, 2))
   expect_equal(class(recall("poisson100_lm")), "lm")
-  tmp = clean_example_workflowHelper(T)
+  testdir_up()
 })
 

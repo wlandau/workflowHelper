@@ -3,17 +3,16 @@ context("macros")
 source("utils.R")
 
 test_that("Dataset and analysis macros are not case sensitive.", {
+  testdir_down("macros-case")
   for(i in 1:3){
-    f = paste0("workflow", i, ".R")
-    x = readLines(paste0("test-macros/", f))
-    write(x, f)
-    source(f)
-    g = paste0("remake", i, ".yml")
-    l = readLines(g)
+    source(paste0("../test-macros/workflow", i, ".R"))
+    f = paste0("remake", i, ".yml")
+    l = readLines(f)
     for(p in c("dataset[^sS(]", "analysis[^(]"))
       expect_equal(grep(p, l, ignore.case = T), integer(0))
-    unlink(c(f, g))
+    unlink(f)
   }
+  testdir_up()
 })
 
 test_that("Macros work as expected.", {

@@ -2,8 +2,8 @@ $E \Psi = H \Psi$, $y = \beta_1x_1 + \beta_2^2x_2 + \frac{\beta_3}{2}x_3 + \vare
 
 ```{r}
 library(workflowHelper)
-coef = read.csv("coef.csv")
-head(coef)
+coef_table = recall("coef_table")
+head(coef_table)
 ```
 
 ```{r}

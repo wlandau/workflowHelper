@@ -3,12 +3,13 @@ context("run_example_workflowHelper")
 source("utils.R")
 
 test_that("Example runs as expected", {
+  testdir_down("run_example_workflowHelper")
   initial_files = list.files()
   files = c("code.R", "coef.csv", "figure", "Makefile", "mse.pdf", "remake.yml", 
     "report.md", "report.Rmd", "workflow.R")
   out = run_example_workflowHelper(T)
   expect_true(all(files %in% list.files()))
-  good_recallable = scan("test-run_example_workflowHelper/recallable.txt", 
+  good_recallable = scan("../test-run_example_workflowHelper/recallable.txt", 
     what = "character", quiet = T)
   expect_true(all(sort(recallable()) == sort(good_recallable)))
   for(item in c("coef", "mse")){
@@ -29,4 +30,5 @@ test_that("Example runs as expected", {
   out = clean_example_workflowHelper(T)
   expect_false(file.exists(".remake"))
   expect_equal(list.files(), initial_files)
+  testdir_up()
 })

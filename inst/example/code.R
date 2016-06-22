@@ -28,14 +28,3 @@ mse_summary = function(dataset, analysis){
 coef_summary = function(analysis){
   coef(analysis)
 }
-
-# Final output
-mse_plot = function(x){
-  mse = unlist(x)
-  hist(mse, col = "black")
-}
-
-coef_table = function(x){
-  tab = do.call(rbind, x)
-  write.csv(tab, "coef.csv")
-}

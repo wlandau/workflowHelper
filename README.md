@@ -89,8 +89,10 @@ Next, I specify how to generate output at the end.
 
 ```{r}
 output = commands(
-  coef.csv = coef_table(coef),
-  mse.pdf = ..plot.. <- mse_plot(mse),
+  coef_table = do.call(I("rbind"), coef),
+  coef.csv = write.csv(coef_table, target_name),
+  mse_vector = unlist(mse),
+  mse.pdf = ..plot.. <- hist(mse_vector, col = I("black")),
   report.md = ..knitr.. <- list(fig.height = 7, fig.align = "right"),
   report.html = render("report.md", quiet = TRUE)
 )
@@ -141,14 +143,15 @@ Intermediate objects such as datasets, analyses, and summaries are maintained in
 
 ```{r}
 > recallable()
- [1] "coef"                "mse"                 "normal100"          
- [4] "normal100_glm"       "normal100_glm_coef"  "normal100_glm_mse"  
- [7] "normal100_lm"        "normal100_lm_coef"   "normal100_lm_mse"   
-[10] "normal1000"          "normal1000_glm"      "normal1000_glm_coef"
-[13] "normal1000_glm_mse"  "normal1000_lm"       "normal1000_lm_coef" 
-[16] "normal1000_lm_mse"   "poisson100"          "poisson100_glm"     
-[19] "poisson100_glm_coef" "poisson100_glm_mse"  "poisson100_lm"      
-[22] "poisson100_lm_coef"  "poisson100_lm_mse"  
+ [1] "coef"                "coef_table"          "mse"                
+ [4] "mse_vector"          "normal100"           "normal100_glm"      
+ [7] "normal100_glm_coef"  "normal100_glm_mse"   "normal100_lm"       
+[10] "normal100_lm_coef"   "normal100_lm_mse"    "normal1000"         
+[13] "normal1000_glm"      "normal1000_glm_coef" "normal1000_glm_mse" 
+[16] "normal1000_lm"       "normal1000_lm_coef"  "normal1000_lm_mse"  
+[19] "poisson100"          "poisson100_glm"      "poisson100_glm_coef"
+[22] "poisson100_glm_mse"  "poisson100_lm"       "poisson100_lm_coef" 
+[25] "poisson100_lm_mse"
 > 
 ```
 

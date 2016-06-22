@@ -3,6 +3,7 @@ context("suppress Makefile")
 source("utils.R")
 
 test_that("Makefile can be suppressed.", {
+  testdir_down("suppress_Makefile-ok")
   sources = strings(code.R)
   packages = strings(MASS)
   datasets = commands(
@@ -13,5 +14,5 @@ test_that("Makefile can be suppressed.", {
   plan_workflow(sources, packages, datasets = datasets, makefile = NULL)
   expect_true(file.exists("remake.yml"))
   expect_false(file.exists("Makefile"))
-  cleanup(c("remake.yml", "Makefile"))
+  testdir_up()
 })

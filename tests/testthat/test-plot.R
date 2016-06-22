@@ -3,6 +3,7 @@ context("plot")
 source("utils.R")
 
 test_that("Plotting with YAML \"plot: TRUE\" is as expected.", {
+  testdir_down("plot-ok")
   msg = "[  PLOT ] plot.pdf   |  plot(poisson100) # ==> plot.pdf"
   expect_false(file.exists("plot.pdf"))
   sources = strings(code.R)
@@ -23,4 +24,5 @@ test_that("Plotting with YAML \"plot: TRUE\" is as expected.", {
     expect_true(file.exists("plot.pdf"))
     tmp = clean_example_workflowHelper(T)
   }
+  testdir_up()
 })
