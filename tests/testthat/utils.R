@@ -1,10 +1,10 @@
-testdir_down = function(x){
+testwd = function(x){
   dir = paste0("RUN-", x)
   if(!file.exists(dir)) dir.create(dir)
   setwd(dir)
 }
 
-testdir_up = function(){
+testrm = function(){
   d1 = getwd()
   setwd("..")
   d2 = getwd()

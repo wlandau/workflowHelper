@@ -6,7 +6,7 @@ datasets = commands(poisson100 = poisson_dataset(n = 100))
 rmd = readLines("test-knitr/example-report.Rmd")
 
 test_that("Knitr macros behave as expected.", {
-  testdir_down("knitr-ok")
+  testwd("knitr-ok")
   msg = "[  KNIT ] report.md  |  knitr::knit(\"report.Rmd\", \"report.md\")"
   rmf1 = "report.md:\n    knitr:\n      options:\n        fig.height: 4.0\n    depends: datasets"
   rmf2 = "report.md:\n    knitr: TRUE"
@@ -30,11 +30,11 @@ test_that("Knitr macros behave as expected.", {
     expect_true(grepl(rmfs[i], rmf))
     tmp = clean_example_workflowHelper(T)
   }
-  testdir_up()
+  testrm()
 })
 
 test_that("Knitr md targets work as expected", {
-  testdir_down("knitr-md")
+  testwd("knitr-md")
   write_example_workflowHelper()
   write(rmd, "report1.Rmd")
   write(rmd, "report2.Rmd")
@@ -43,11 +43,11 @@ test_that("Knitr md targets work as expected", {
   remake::make(verbose = F)
   remake::make("clean", verbose = F)
   expect_equal(readLines("remake.yml"), readLines("../test-knitr/two_reports.yml"))
-  testdir_up()
+  testrm()
 })
 
 test_that("Knitr HTML targets work as expected", {
-  testdir_down("knitr-html")
+  testwd("knitr-html")
   write_example_workflowHelper()
   write(rmd, "report1.Rmd")
   write(rmd, "report2.Rmd")
@@ -63,6 +63,6 @@ test_that("Knitr HTML targets work as expected", {
   remake::make(verbose = F)
   remake::make("clean", verbose = F)
   expect_equal(readLines("remake.yml"), readLines("../test-knitr/two_compilations.yml"))
-  testdir_up()
+  testrm()
 })
 

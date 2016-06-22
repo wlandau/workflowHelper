@@ -3,7 +3,7 @@ context("quiet")
 source("utils.R")
 
 test_that("Quiet workflow is possible.", {
-  testdir_down("quiet-ok")
+  testwd("quiet-ok")
   write_example_workflowHelper()
   source("workflow.R")
   sources = strings(code.R)
@@ -16,5 +16,5 @@ test_that("Quiet workflow is possible.", {
   plan_workflow(sources, packages, datasets = datasets, remake_args = list(verbose = F))
   out = system("make -j 4", intern = T)
   expect_equal(sort(out), sort(readLines("../test-quiet/output.txt")))
-  testdir_up()
+  testrm()
 })

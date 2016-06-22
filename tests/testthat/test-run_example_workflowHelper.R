@@ -3,7 +3,7 @@ context("run_example_workflowHelper")
 source("utils.R")
 
 test_that("Example runs as expected", {
-  testdir_down("run_example_workflowHelper")
+  testwd("run_example_workflowHelper")
   initial_files = list.files()
   files = c("code.R", "coef.csv", "figure", "Makefile", "mse.pdf", "remake.yml", 
     "report.md", "report.Rmd", "workflow.R")
@@ -30,5 +30,5 @@ test_that("Example runs as expected", {
   out = clean_example_workflowHelper(T)
   expect_false(file.exists(".remake"))
   expect_equal(list.files(), initial_files)
-  testdir_up()
+  testrm()
 })
