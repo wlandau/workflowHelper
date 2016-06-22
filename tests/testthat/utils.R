@@ -1,5 +1,5 @@
 testdir_down = function(x){
-  dir = paste0("run-test-", x)
+  dir = paste0("RUN-", x)
   if(!file.exists(dir)) dir.create(dir)
   setwd(dir)
 }
