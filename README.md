@@ -107,10 +107,10 @@ Finally, we can generate some reports.
 
 ```{r}
 reports = commands(
-  latex.tex = list(),
-  latex.pdf = texi2pdf("latex.tex", clean = TRUE),
   markdown.md = list(fig.height = 6, fig.align = "right"),
-  markdown.html = render("markdown.md", quiet = TRUE)
+  markdown.html = render("markdown.md", quiet = TRUE, clean = FALSE),
+  latex.tex = TRUE,
+  latex.pdf = texi2pdf("latex.tex", clean = FALSE)
 )
 ```
 
