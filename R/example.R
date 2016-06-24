@@ -29,7 +29,7 @@ setup_example_workflowHelper = function(){
 #' @param intern TRUE/FALSE Argument to system to output to console or not.
 run_example_workflowHelper = function(intern = F){
   setup_example_workflowHelper()
-  system("make -j 64 2>&1", intern = intern)
+  system("make -j 8 2>&1", intern = intern)
 }
 
 #' @title Function \code{clean_example_workflowHelper}
