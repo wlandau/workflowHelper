@@ -1,0 +1,27 @@
+\documentclass{article}
+\begin{document}
+
+$E \Psi = H \Psi$, $y = \beta_1x_1 + \beta_2^2x_2 + \frac{\beta_3}{2}x_3 + \varepsilon$
+
+<<>>=
+library(workflowHelper)
+coef_table = recall("coef_table")
+head(coef_table)
+@
+
+<<>>=
+poisson100 = recall("poisson100")
+head(poisson100)
+@
+
+<<>>=
+normal1000_lm = recall("normal1000_lm")
+summary(normal1000_lm)
+@
+
+<<>>=
+mse = recall("mse")
+hist(unlist(mse), col = "black")
+@
+
+\end{document}

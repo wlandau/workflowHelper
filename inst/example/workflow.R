@@ -1,7 +1,7 @@
 library(workflowHelper)
 
 sources = strings(code.R)
-packages = "rmarkdown"
+packages = strings(rmarkdown, tools)
 
 datasets = commands(
   poisson100 = poisson_dataset(n = 100),
@@ -33,8 +33,10 @@ plots = commands(
 )
 
 reports = commands(
-  report.md = list(fig.height = 7, fig.align = "right"),
-  report.html = render("report.md", quiet = TRUE)
+  latex.tex = list(),
+  latex.pdf = texi2pdf("latex.tex", clean = TRUE),
+  markdown.md = list(fig.height = 6, fig.align = "right"),
+  markdown.html = render("markdown.md", quiet = TRUE)
 )
 
 begin = c("# This is my Makefile", "# Variables...")

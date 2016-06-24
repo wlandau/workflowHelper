@@ -48,7 +48,7 @@ First, I list the R scripts with my code and the packages it depends on.
 ```{r}
 library(workflowHelper)
 sources = strings(code.R)
-packages = "rmarkdown"
+packages = strings(rmarkdown, tools)
 ```
 
 The `strings` function converts R expressions into character strings, so I could have simply written `sources = "code.R"`.
@@ -107,13 +107,16 @@ Finally, we can generate some reports.
 
 ```{r}
 reports = commands(
-  report.md = list(fig.height = 7, fig.align = "right"),
-  report.html = render("report.md", quiet = TRUE)
+  latex.tex = list(),
+  latex.pdf = texi2pdf("latex.tex", clean = TRUE),
+  markdown.md = list(fig.height = 6, fig.align = "right"),
+  markdown.html = render("markdown.md", quiet = TRUE)
 )
 ```
 
-Since `report.md` has a `.md` extension, [`remake`](https://github.com/richfitz/remake) will automatically look for `report.Rmd` and knit it to `report.md` with the `knitr` package. Here,
-either a list of `knitr` global chunk options or `TRUE` If you render `report.md` to another format such as HTML or pdf, be sure to include `rmarkdown` in your packages. To load intermediate objects into a [`knitr`](http://yihui.name/knitr/) report, use the `recall` function (explained later). 
+Since `report.md` has a `.md` extension, [`remake`](https://github.com/richfitz/remake) will automatically look for `report.Rmd` and knit it to `report.md` with the `knitr` package. Similarly,
+[`remake`](https://github.com/richfitz/remake) will try to build `latex.tex` from `latex.Rnw`. In these cases, the command is replaced with 
+either a list of `knitr` global chunk options or `TRUE` If you want to render `markdown.md` to `markdown.html`, be sure to include `rmarkdown` in your packages. Similarly, to compile `latex.tex` to `latex.pdf`, include the `tools` package. To load intermediate objects into a [`knitr`](http://yihui.name/knitr/) report, use the `recall` function (explained later).
 
 Optionally, I can prepend some lines to the overarching [Makefile](https://www.gnu.org/software/make/) for the workflow. In this way, I can configure my workflow for a [Slurm](https://en.wikipedia.org/wiki/Slurm_Workload_Manager) or [PBS](https://en.wikipedia.org/wiki/Portable_Batch_System) cluster or simply add comments.
 

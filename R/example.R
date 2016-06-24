@@ -38,6 +38,6 @@ run_example_workflowHelper = function(intern = F){
 #' @param intern Argument to system, option to capture output.
 clean_example_workflowHelper = function(intern = F){
   system("make clean 2>&1", intern = intern)
-  unlink(c("code.R", "figure", "remake.yml", "report.Rmd", 
+  unlink(c("code.R", "figure", "latex.Rnw", "markdown.Rmd", "remake.yml",  
     "Makefile", "workflow.R"), recursive = T)
 }

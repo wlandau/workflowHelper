@@ -14,7 +14,7 @@ init_fields = function(sources, packages, depends){
 knitr_target = function(row, stages){
   row = as.list(row)
   row$depends = setdiff(names(stages), "reports")
-  if(grepl("*.md$", row$save)){
+  if(grepl("\\.(md|tex)$", row$save)){
     opts = eval(parse(text = row$command))
     row$command = NULL
     row$knitr = TRUE
