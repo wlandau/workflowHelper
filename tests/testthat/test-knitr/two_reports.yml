@@ -3,22 +3,20 @@ packages: ~
 targets:
   all:
     depends:
-    - report1.md
-    - report2.md
     - datasets
-    - output
+    - reports
   datasets:
     depends: poisson100
   poisson100:
     command: poisson_dataset(n = 100)
-  output:
+  reports:
     depends:
     - report1.md
     - report2.md
   report1.md:
-    knitr: TRUE
     depends: datasets
+    knitr: TRUE
   report2.md:
-    knitr: TRUE
     depends: datasets
+    knitr: TRUE
 

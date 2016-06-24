@@ -1,9 +1,3 @@
-#' @title Internal function
-#' @description Internal function
-#' @export
-#' @return parsed data frame
-#' @param aggregates Data frame about output files.
-#' @param summaries Data frame of information about summaries to aggregate.
 parse_aggregates = function(aggregates, summaries){
   ddply(aggregates, colnames(aggregates), function(x){
     pattern = paste0("_", x$save, "$")
@@ -14,12 +8,6 @@ parse_aggregates = function(aggregates, summaries){
   })
 }
 
-#' @title Internal function
-#' @description Internal function
-#' @export
-#' @return A sanatized data frame
-#' @param datasets Data frame of information targets to generate.
-#' @param analyses Data frame of information targets to generate.
 parse_analyses = function(datasets = NULL, analyses = NULL){
   if(is.null(datasets) | is.null(analyses)) return()
   analyses = expand_grid_df(data.frame(dataset = datasets$save), analyses)
@@ -29,29 +17,6 @@ parse_analyses = function(datasets = NULL, analyses = NULL){
   analyses
 }
 
-#' @title Internal function
-#' @description Internal function
-#' @export
-#' @return parsed data frame
-#' @param output Data frame about output files.
-parse_output = function(output){
-  opts = c("plot", "knitr")
-  ddply(output, colnames(output), function(x){
-    for(o in opts){
-      x[[o]] = grepl(macro(o), x$command, ignore.case = T)
-      x$command = remove_assignment_from_command(x$command, macro(o))
-    }
-    x
-  })
-}
-
-#' @title Internal function
-#' @description Internal function
-#' @export
-#' @return A sanatized data frame.
-#' @param datasets Data frame of information targets to generate.
-#' @param analyses Data frame of information targets to generate.
-#' @param summaries Data frame of information targets to generate.
 parse_summaries = function(datasets = NULL, analyses = NULL, summaries = NULL){
   if(is.null(datasets) | is.null(analyses) | is.null(summaries)) return()
   summaries = expand_grid_df(
@@ -67,4 +32,24 @@ parse_summaries = function(datasets = NULL, analyses = NULL, summaries = NULL){
     x["command"]
   })
   summaries
+}
+
+parse_plots = function(plots){
+  if(is.null(plots)) return()
+  plots$plot = TRUE
+  plots
+}
+
+parse_stages = function(datasets, analyses, summaries, aggregates, output, plots, reports){
+  stages = list(datasets = datasets, analyses = analyses, summaries = summaries, 
+     aggregates = summaries, output = output, plots = plots, reports = reports)
+  stages = stages[!sapply(stages, is.null)]
+  if(!length(stages)) stop("no work to be done.")
+  stages = lapply(stages, function(x) 
+    data.frame(save = names(x), command = x, stringsAsFactors = F))
+  stages$summaries = parse_summaries(stages$datasets, stages$analyses, stages$summaries)
+  stages$analyses = parse_analyses(stages$datasets, stages$analyses)
+  stages$aggregates = parse_aggregates(stages$aggregates, stages$summaries)
+  stages$plots = parse_plots(stages$plots)
+  stages
 }

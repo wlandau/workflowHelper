@@ -1,7 +1,8 @@
-#' @import storr
-#' @import remake
+#' @importFrom plyr ddply dlply
 #' @import parallelRemake
-#' @importFrom plyr ddply
+#' @import remake
+#' @import rmarkdown
+#' @import storr
 #' @importFrom stringr str_trim
 #' @importFrom yaml as.yaml
 NULL

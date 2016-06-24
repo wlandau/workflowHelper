@@ -8,24 +8,19 @@ rmd = readLines("test-knitr/example-report.Rmd")
 test_that("Knitr macros behave as expected.", {
   testwd("knitr-ok")
   msg = "[  KNIT ] report.md  |  knitr::knit(\"report.Rmd\", \"report.md\")"
-  rmf1 = "report.md:\n    knitr:\n      options:\n        fig.height: 4.0\n    depends: datasets"
-  rmf2 = "report.md:\n    knitr: TRUE"
+  rmf1 = "report.md:\n    depends: datasets\n    knitr:\n      options:\n        fig.height: 4.0"
+  rmf2 = "report.md:\n    depends: datasets\n    knitr: TRUE"
 
-  outputs = list(
-    commands(report.md = ..knitr.. <- list(fig.height =  4)),
-    commands(report.md = ..knitr.. -> list(fig.height =  4)),
-    commands(report.md =  list(fig.height =  4) <- ..knitr..),
-    commands(report.md =  list(fig.height =  4) -> ..knitr..),
-    commands(report.md = ..knitr..),
-    commands(report.md = ..KNITR..),
-    commands(report.md = ..report..),
-    commands(report.md = ..rEpOrT..)
+  reports = list(
+    commands(report.md = list(fig.height =  4)),
+    commands(report.md = list()),
+    commands(report.md = TRUE)
   )
-  rmfs = c(rep(rmf1, 4), rep(rmf2, 4))
+  rmfs = c(rmf1, rep(rmf2, 5))
 
-  for(i in 1:length(outputs)){
+  for(i in 1:length(reports)){
     write_example_workflowHelper()
-    plan_workflow(sources, datasets = datasets, output = unlist(outputs[i]))
+    plan_workflow(sources, datasets = datasets, reports = unlist(reports[i]))
     rmf = paste(readLines("remake.yml"), collapse = "\n")
     expect_true(grepl(rmfs[i], rmf))
     tmp = clean_example_workflowHelper(T)
@@ -38,8 +33,8 @@ test_that("Knitr md targets work as expected", {
   write_example_workflowHelper()
   write(rmd, "report1.Rmd")
   write(rmd, "report2.Rmd")
-  o = commands(report1.md = ..knitr.., report2.md = ..report..)
-  plan_workflow(sources, datasets = datasets, output = o)
+  o = commands(report1.md = TRUE, report2.md = TRUE)
+  plan_workflow(sources, datasets = datasets, reports = o)
   remake::make(verbose = F)
   remake::make("clean", verbose = F)
   expect_equal(readLines("remake.yml"), readLines("../test-knitr/two_reports.yml"))
@@ -52,14 +47,14 @@ test_that("Knitr HTML targets work as expected", {
   write(rmd, "report1.Rmd")
   write(rmd, "report2.Rmd")
   o = commands(
-    report1.md = ..knitr..,
+    report1.md = TRUE,
     report1.html = render("report1.md", quiet = TRUE),
     report1.pdf = write("report1.html", "report1.pdf"),
-    report2.md = ..knitr..,
+    report2.md = TRUE,
     report2.html = render("report2.md", quiet = TRUE),
     report2.pdf = write("report2.html", "report2.pdf")
   )
-  plan_workflow(sources, packages = "rmarkdown", datasets = datasets, output = o)
+  plan_workflow(sources, packages = "rmarkdown", datasets = datasets, reports = o)
   remake::make(verbose = F)
   remake::make("clean", verbose = F)
   expect_equal(readLines("remake.yml"), readLines("../test-knitr/two_compilations.yml"))

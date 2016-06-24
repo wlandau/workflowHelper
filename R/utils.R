@@ -1,89 +1,44 @@
-add_target = function(fields, name, target, knitr_depends = NULL){
-  out = as.list(target)
-  if(!is.null(out$knitr)) if(out$knitr){ 
-    out$depends = knitr_depends
-    if(nchar(out$command)) out$knitr = list(options = as.list(eval(parse(text = out$command))))
-    out$command = NULL
-  }
-  keep = !sapply(out, function(x) is.null(x) | identical(x, F)) &
-    names(out) %in% c("command", "depends", "knitr", "plot")
-  fields$targets[[name]] = out[keep]
-  fields
-}
-
-#' @title Function \code{commands}
-#' @description Turn a collection of R expressions into 
-#' a named character vector of R commands readable by \code{plan_workflow}. 
-#' These commands are to generate datasets, analyze
-#' datasets, etc. You must specify the names of the fields.
-#' For example, write \code{commands(x = data(y), z = 3)} instead of 
-#' \code{commands(x, z)} or \code{commands(data(y), 3)}
-#' @export
-#' @seealso \code{plan_workflow}
-#' @return the \code{datasets}, \code{analyses}, \code{summaries}, \code{aggregates},
-#' or \code{output} argument to \code{plan_workflow}
-#' @param ... list of 
-commands = function(...) {
-  args = structure(as.list(match.call()[-1]), class = "uneval")
-  if(!length(args)) return()
-  keys = names(args)
-  out = as.character(args)
-  names(out) = keys
-  if(is.null(keys) | any(!nchar(keys)) | any(!nchar(out))) 
-    stop("All commands and their names/keys must be given. For example, write commands(x = data(y), z = 3) instead of commands(x, z) or commands(data(y), 3).")
-  if(anyDuplicated(keys)) stop("Commands must be given unique names. No duplicates allowed.")
-  out
-}
-
 expand_grid_df = function(...) 
   Reduce(function(...) merge(..., by = NULL), list(...))
 
-init_fields = function(sources, packages, dep){
+init_fields = function(sources, packages, depends){
   list(
     sources = sources,
     packages = packages,
     targets = list(
-      all = list(depends = dep)
+      all = list(depends = depends)
     )
   )
 }
 
-#' @title Function \code{knitr_depends}
-#' @description Resolve dependencies of knitr targets: 
-#' i.e., everything except the knitr targets themeslves 
-#' and everything downstream. 
-#' @export
-#' @return knitr dependencies
-#' @param output Data frame of "output" stage targets
-#' @param all_depends Dependencies of fake target `all`.
-knitr_depends = function(output, all_depends){
-  stream = current = output$knitr # "stream" will include knitr and everything downstream.
-  if(!all(stream)) repeat{ # Build "stream" by traveling downstream from the knitr targets.
-    downstream = unlist(lapply(output$command, function(x){ # One iteration downstream.
-      if(!nchar(x)) return(F)
-      any(output$save[current] %in% parse_command(x)$depends)
-    }))
-    longer_stream = stream | downstream
-    if(identical(stream, longer_stream)) break;
-    stream = longer_stream
-    current = downstream
+knitr_target = function(row, stages){
+  if(grepl("*.md$", row$save)){
+    row = as.list(row)
+    row$depends = setdiff(names(stages), "reports")
+    opts = eval(parse(text = row$command))
+    row$command = NULL
+    row$knitr = TRUE
+    if(is.list(opts)) if(length(opts)) row$knitr = list(options = opts)
   }
-  setdiff(all_depends, c(output$save[stream], "output"))
+  row
 }
 
-#' @title Function \code{macro}
-#' @description Get a placeholder macro. These macros help
-#' apply each analysis to each dataset and each summary to each
-#' analysis of each dataset. Macros are not case-sensitive.
-#' @export
-#' @return The chosen macro.
-#' @param arg Character, name of the macro you want.
+list_targets = function(dataframe, stages, reports = F){
+  out = c()
+  for(i in 1:nrow(dataframe)){
+    row = dataframe[i,]
+    if(reports) row = knitr_target(row, stages)
+    keep = !sapply(row, function(x) is.null(x) | identical(x, F)) &
+      names(row) %in% c("command", "depends", "plot", "knitr")
+    out[[dataframe$save[i]]] = row[keep]
+  }
+  out
+}
+
 macro = function(arg){
   c(
     dataset = "\\.\\.dataset\\.\\.",   
-    analysis = "\\.\\.analysis\\.\\.",
-    plot = "\\.\\.plot\\.\\.",
-    knitr = "\\.\\.(knitr|report)\\.\\."
+    analysis = "\\.\\.analysis\\.\\."
   )[arg]
 }
 
@@ -102,55 +57,4 @@ new_dir = function(path){
   }
   if(substr(path, nchar(path), nchar(path)) != "/") path = paste0(path, "/")
   path
-}
-
-#' @title Function \code{remove_assignment_from_command}
-#' @description Special function to handle command syntax.
-#' Turns "..plot.. <- mse_plot(mse)" into "mse_plot(mse)", etc.
-#' @export
-#' @seealso \code{plan_workflow}
-#' @return parsed command
-#' @param cmd Command to clean
-#' @param x Name of value assigned to by the command.
-remove_assignment_from_command = function(cmd, x){
-  cmd = gsub(x, "", cmd, ignore.case = T)
-  cmd = str_trim(cmd)
-  cmd = gsub("->|<-", "", cmd, ignore.case = T)
-  str_trim(cmd)
-}
-
-#' @title Function \code{reps}
-#' @description Replicate commands. For example, if
-#' \code{x <- commands(data1 = rnorm(5), data2 = rpois(5,1))}, then
-#' \code{reps(x, 2)} is
-#' @export
-#' @seealso \code{commands}
-#' @return the \code{datasets}, \code{analyses}, \code{summaries}, \code{aggregates},
-#' or \code{output} argument to \code{plan_workflow}
-#' @param x Character vector of commands, possibly returned from the
-#' \code{commands} function or \code{strings} function.
-#' @param reps Number of replicates.
-reps = function(x, reps = 2) {
-  reps = floor(reps)
-  if(reps < 2 | !length(x)) return(x)
-  n = names(x)
-  l = length(n)
-  x = rep(x, each = reps)
-  n = rep(n, each = reps)
-  n = paste0(n, "_rep", rep(1:reps, times = l))
-  names(x) = n
-  x
-}
-
-#' @title Function \code{strings}
-#' @description Turns expressions into character strings
-#' @export
-#' @return a named character vector
-#' @param ... list of expressions to turn into character strings
-strings = function(...) {
-  args = structure(as.list(match.call()[-1]), class = "uneval")
-  keys = names(args)
-  out = as.character(args)
-  names(out) = keys
-  out
 }

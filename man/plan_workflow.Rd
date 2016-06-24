@@ -5,26 +5,26 @@
 \title{Function \code{plan_workflow}}
 \usage{
 plan_workflow(sources, packages = NULL, datasets = NULL, analyses = NULL,
-  summaries = NULL, output = NULL, makefile = "Makefile",
-  remakefile = "remake.yml", begin = NULL, clean = NULL,
-  remake_args = list())
+  summaries = NULL, output = NULL, plots = NULL, reports = NULL,
+  makefile = "Makefile", remakefile = "remake.yml", begin = NULL,
+  clean = NULL, remake_args = list())
 }
 \arguments{
 \item{sources}{Character vector of code files to load or folders containing code.}
 
 \item{packages}{Character vector of packages to load.}
 
-\item{datasets}{Named character vector of commands to make targets.
-Names stand for RDS target files without their extensions.}
+\item{datasets}{Named character vector of commands to make datasets.}
 
-\item{analyses}{Named character vector of commands to make targets.
-Names stand for RDS target files without their extensions.}
+\item{analyses}{Named character vector of commands to make analyses.}
 
-\item{summaries}{Named character vector of commands to make targets.
-Names stand for RDS target files without their extensions.}
+\item{summaries}{Named character vector of commands to make summaries.}
 
-\item{output}{Named character vector of commands to make targets.
-Names stand for files (possible non-RDS files) WITH their extensions.}
+\item{output}{Named character vector of commands to make output targets.}
+
+\item{plots}{Named character vector of commands to make plots.}
+
+\item{reports}{Named character vector of instructions to make reports.}
 
 \item{makefile}{Character, name of the Makefile. Should be in the current
 working directory. Set to \code{NULL} to suppress the writing of the Makefile.}

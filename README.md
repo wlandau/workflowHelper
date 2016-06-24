@@ -85,20 +85,34 @@ summaries = commands(
 )
 ```
 
-Next, I specify how to generate output at the end.
+Next, I specify how to produce general output from the summaries. Since `coef.csv` has a file extension, it will automatically be treated as a file target.
 
 ```{r}
 output = commands(
   coef_table = do.call(I("rbind"), coef),
   coef.csv = write.csv(coef_table, target_name),
-  mse_vector = unlist(mse),
-  mse.pdf = ..plot.. <- hist(mse_vector, col = I("black")),
-  report.md = ..knitr.. <- list(fig.height = 7, fig.align = "right"),
+  mse_vector = unlist(mse)
+)
+```
+
+Now, we're ready to specify plots. Here, the `plot: TRUE` option is set in `remake.yml`. (More on that soon.)
+
+```{r}
+plots = commands(
+  mse.pdf = hist(mse_vector, col = I("black"))
+)
+```
+
+Finally, we can generate some reports.
+
+```{r}
+reports = commands(
+  report.md = list(fig.height = 7, fig.align = "right"),
   report.html = render("report.md", quiet = TRUE)
 )
 ```
 
-The command names will automatically be treated as files since they have extensions. For example, the first line depends on `coef`, and the file `coef.csv` will be expected. In the second line, the assignment arrow and the `..plot..` wildcard set the `plot` option to `TRUE` for [`remake`](https://github.com/richfitz/remake). This means that the function `mse_plot` only needs to produce the plot in a graphics window and it will automatically be saved to `mse.pdf`. The third line says to use [`knitr`](http://yihui.name/knitr/) to knit `report.Rmd` to `report.md`. The [`knitr`](http://yihui.name/knitr/) targets depend on everything except other [`knitr`](http://yihui.name/knitr/) targets and things downstream from them, so  intermediate R objects and generated output files such as `coef.csv` can be used without worry. To load intermediate objects into a [`knitr`](http://yihui.name/knitr/) report, use the `recall` function (explained later). Also, the `..knitr..` and `..report..` wildcards are synonyms.
+Since `report.md` has a `.md` extension, [`remake`](https://github.com/richfitz/remake) will automatically look for `report.Rmd` and knit it to `report.md` with the `knitr` package. If you render `report.md` to another format such as HTML or pdf, be sure to include `rmarkdown` in your packages. To load intermediate objects into a [`knitr`](http://yihui.name/knitr/) report, use the `recall` function (explained later). 
 
 Optionally, I can prepend some lines to the overarching [Makefile](https://www.gnu.org/software/make/) for the workflow. In this way, I can configure my workflow for a [Slurm](https://en.wikipedia.org/wiki/Slurm_Workload_Manager) or [PBS](https://en.wikipedia.org/wiki/Portable_Batch_System) cluster or simply add comments.
 
@@ -116,7 +130,7 @@ Optionally, I can pass additional arguments to `remake::make` using the `remake_
 
 ## Running the workflow
 
-After running the `workflow.R` script above, I have a [`remake`](https://github.com/richfitz/remake)/(YAML)[http://yaml.org/] file in my current working directory. To run the whole workflow in an R session with no parallel computing, simply open an R session and enter the following.
+After running the `workflow.R` script above, I have a [`remake`](https://github.com/richfitz/remake)/[YAML](http://yaml.org/) file in my current working directory. To run the whole workflow in an R session with no parallel computing, simply open an R session and enter the following.
 
 ```{r}
 library(remake)
