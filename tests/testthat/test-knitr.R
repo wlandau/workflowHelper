@@ -35,9 +35,9 @@ test_that("Knitr md targets work as expected", {
   write(rmd, "report2.Rmd")
   o = commands(report1.md = TRUE, report2.md = TRUE)
   plan_workflow(sources, datasets = datasets, reports = o)
+  expect_equal(readLines("remake.yml"), readLines("../test-knitr/two_reports.yml"))
   remake::make(verbose = F)
   remake::make("clean", verbose = F)
-  expect_equal(readLines("remake.yml"), readLines("../test-knitr/two_reports.yml"))
   testrm()
 })
 
@@ -55,9 +55,9 @@ test_that("Knitr HTML targets work as expected", {
     report2.pdf = write("report2.html", "report2.pdf")
   )
   plan_workflow(sources, packages = "rmarkdown", datasets = datasets, reports = o)
+  expect_equal(readLines("remake.yml"), readLines("../test-knitr/two_compilations.yml"))
   remake::make(verbose = F)
   remake::make("clean", verbose = F)
-  expect_equal(readLines("remake.yml"), readLines("../test-knitr/two_compilations.yml"))
   testrm()
 })
 

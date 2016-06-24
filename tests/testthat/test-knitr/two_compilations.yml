@@ -22,13 +22,17 @@ targets:
     knitr: TRUE
   report1.html:
     command: render("report1.md", quiet = TRUE)
+    depends: datasets
   report1.pdf:
     command: write("report1.html", "report1.pdf")
+    depends: datasets
   report2.md:
     depends: datasets
     knitr: TRUE
   report2.html:
     command: render("report2.md", quiet = TRUE)
+    depends: datasets
   report2.pdf:
     command: write("report2.html", "report2.pdf")
+    depends: datasets
 

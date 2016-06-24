@@ -12,9 +12,9 @@ init_fields = function(sources, packages, depends){
 }
 
 knitr_target = function(row, stages){
+  row = as.list(row)
+  row$depends = setdiff(names(stages), "reports")
   if(grepl("*.md$", row$save)){
-    row = as.list(row)
-    row$depends = setdiff(names(stages), "reports")
     opts = eval(parse(text = row$command))
     row$command = NULL
     row$knitr = TRUE
@@ -23,11 +23,11 @@ knitr_target = function(row, stages){
   row
 }
 
-list_targets = function(dataframe, stages, reports = F){
+list_targets = function(dataframe, stage, stages){
   out = c()
   for(i in 1:nrow(dataframe)){
     row = dataframe[i,]
-    if(reports) row = knitr_target(row, stages)
+    if(stage == "reports") row = knitr_target(row, stages)
     keep = !sapply(row, function(x) is.null(x) | identical(x, F)) &
       names(row) %in% c("command", "depends", "plot", "knitr")
     out[[dataframe$save[i]]] = row[keep]
