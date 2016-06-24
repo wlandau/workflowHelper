@@ -35,8 +35,8 @@ plots = commands(
 reports = commands(
   markdown.md = list(fig.height = 6, fig.align = "right"),
   markdown.html = render("markdown.md", quiet = TRUE, clean = FALSE),
-  latex.tex = TRUE,
-  latex.pdf = texi2pdf("latex.tex", clean = FALSE)
+  latex.tex = TRUE
+#  latex.pdf = texi2pdf("latex.tex", clean = FALSE) # Uncomment to compile pdf.
 )
 
 begin = c("# This is my Makefile", "# Variables...")
