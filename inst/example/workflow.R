@@ -1,7 +1,8 @@
 library(workflowHelper)
 
 sources = strings(code.R)
-packages = strings(rmarkdown, tools)
+packages = strings(MASS)
+# packages = strings(MASS, rmarkdown, tools) # Uncomment before building pdf/html.
 
 datasets = commands(
   poisson100 = poisson_dataset(n = 100),
@@ -34,9 +35,9 @@ plots = commands(
 
 reports = commands(
   markdown.md = list(fig.height = 6, fig.align = "right"),
-  markdown.html = render("markdown.md", quiet = TRUE, clean = FALSE),
   latex.tex = TRUE
-#  latex.pdf = texi2pdf("latex.tex", clean = FALSE) # Uncomment to compile pdf.
+#  markdown.html = render("markdown.md", quiet = TRUE, clean = FALSE),
+#  latex.pdf = texi2pdf("latex.tex", clean = FALSE)
 )
 
 begin = c("# This is my Makefile", "# Variables...")

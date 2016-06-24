@@ -24,7 +24,7 @@ test_that("Example runs as expected", {
     expect_true(all(is.finite(do.call(rbind, x))))
     expect_true(all(is.numeric(do.call(rbind, x))))
   }
-  for(f in c("latex.tex", "markdown.md", "markdown.html"))
+  for(f in c("latex.tex", "markdown.md"))
     expect_true(file.exists(f))
   expect_true(file.exists(".remake"))
   expect_true(length(readLines("markdown.md")) > 40)

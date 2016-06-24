@@ -40,24 +40,3 @@ test_that("Knitr md targets work as expected", {
   remake::make("clean", verbose = F)
   testrm()
 })
-
-test_that("Knitr HTML targets work as expected", {
-  testwd("knitr-html")
-  write_example_workflowHelper()
-  write(rmd, "report1.Rmd")
-  write(rmd, "report2.Rmd")
-  o = commands(
-    report1.md = TRUE,
-    report1.html = render("report1.md", quiet = TRUE),
-    report1.pdf = write("report1.html", "report1.pdf"),
-    report2.md = TRUE,
-    report2.html = render("report2.md", quiet = TRUE),
-    report2.pdf = write("report2.html", "report2.pdf")
-  )
-  plan_workflow(sources, packages = "rmarkdown", datasets = datasets, reports = o)
-  expect_equal(readLines("remake.yml"), readLines("../test-knitr/two_compilations.yml"))
-  remake::make(verbose = F)
-  remake::make("clean", verbose = F)
-  testrm()
-})
-

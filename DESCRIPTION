@@ -18,9 +18,8 @@ Imports:
     storr,
     yaml
 Suggests: 
-    rmarkdown,
-    testthat,
-    tools
+    MASS,
+    testthat
 Remotes: richfitz/remake,
     wlandau/parallelRemake
 RoxygenNote: 5.0.1
