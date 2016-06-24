@@ -39,5 +39,5 @@ run_example_workflowHelper = function(intern = F){
 clean_example_workflowHelper = function(intern = F){
   system("make clean 2>&1", intern = intern)
   unlink(c("code.R", "figure", "latex.Rnw", "markdown.Rmd", "remake.yml",  
-    "Makefile", "workflow.R", "latex.aux", "latex.log", "markdown.utf8.md"), recursive = T)
+    "Makefile", "workflow.R"), recursive = T)
 }

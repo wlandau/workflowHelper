@@ -30,6 +30,6 @@ test_that("Example runs as expected", {
   expect_true(length(readLines("markdown.md")) > 40)
   out = clean_example_workflowHelper(T)
   expect_false(file.exists(".remake"))
-  expect_equal(list.files(), initial_files)
+  expect_false(all(files %in% list.files()))
   testrm()
 })
