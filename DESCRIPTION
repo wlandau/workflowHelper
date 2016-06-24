@@ -14,11 +14,14 @@ Depends:
 Imports:
     plyr,
     remake,
-    rmarkdown,
     stringr,
     storr,
     yaml
+Suggests: 
+    rmarkdown,
+    testthat,
+    tools
 Remotes: richfitz/remake,
     wlandau/parallelRemake
 RoxygenNote: 5.0.1
-Suggests: testthat
+
