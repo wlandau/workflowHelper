@@ -112,7 +112,8 @@ reports = commands(
 )
 ```
 
-Since `report.md` has a `.md` extension, [`remake`](https://github.com/richfitz/remake) will automatically look for `report.Rmd` and knit it to `report.md` with the `knitr` package. If you render `report.md` to another format such as HTML or pdf, be sure to include `rmarkdown` in your packages. To load intermediate objects into a [`knitr`](http://yihui.name/knitr/) report, use the `recall` function (explained later). 
+Since `report.md` has a `.md` extension, [`remake`](https://github.com/richfitz/remake) will automatically look for `report.Rmd` and knit it to `report.md` with the `knitr` package. Here,
+either a list of `knitr` global chunk options or `TRUE` If you render `report.md` to another format such as HTML or pdf, be sure to include `rmarkdown` in your packages. To load intermediate objects into a [`knitr`](http://yihui.name/knitr/) report, use the `recall` function (explained later). 
 
 Optionally, I can prepend some lines to the overarching [Makefile](https://www.gnu.org/software/make/) for the workflow. In this way, I can configure my workflow for a [Slurm](https://en.wikipedia.org/wiki/Slurm_Workload_Manager) or [PBS](https://en.wikipedia.org/wiki/Portable_Batch_System) cluster or simply add comments.
 
