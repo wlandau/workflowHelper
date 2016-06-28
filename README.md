@@ -213,7 +213,8 @@ If you're running `make -j` over multiple nodes of a cluster or cloud resource, 
 You may want to use the [downsize](https://github.com/wlandau/downsize) package within your custom R source code. That way, you can run a quick scaled-down version of your workflow for debugging and testing before you run the full workload. In the example, just include `downsize` in `packages` inside `workflow.R` and replace the top few lines of `code.R` with the following.
 
 ```{r}
-options(downsize = TRUE)
+library(downsize)
+scale_down()
 
 poisson_dataset = function(n = 100){
   ds(data.frame(x = rpois(n, 1), y = rpois(n, 5)), nrow = 10)
@@ -224,4 +225,4 @@ normal_dataset = function(n = 100){
 }
 ```
 
-This sets the `downsize` option and use the `ds` function to shrink the datasets. For the full scaled-up workflow, just replace the first line with `options(downsize = FALSE)`. Unfortunately, [`remake`](https://github.com/richfitz/remake) does not rebuild things when options are changed, so you'll have to run `make clean` whenever you change the `downsize` option.
+The call `scale_down()` sets the `downsize` option to `TRUE`, which is a signal to the `ds` function. The command `ds(A, ...)` says "Downsize A to a smaller object when `getOption("downsize")` is `TRUE`". For the full scaled-up workflow, just delete the first line or replace it with `scale_up()`. Unfortunately, [`remake`](https://github.com/richfitz/remake) does not rebuild things when options are changed, so you'll have to run `make clean` whenever you change the `downsize` option.
