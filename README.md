@@ -225,4 +225,4 @@ normal_dataset = function(n = 100){
 }
 ```
 
-The call `scale_down()` sets the `downsize` option to `TRUE`, which is a signal to the `ds` function. The command `ds(A, ...)` says "Downsize A to a smaller object when `getOption("downsize")` is `TRUE`". For the full scaled-up workflow, just delete the first line or replace it with `scale_up()`. Unfortunately, [`remake`](https://github.com/richfitz/remake) does not rebuild things when options are changed, so you'll have to run `make clean` whenever you change the `downsize` option.
+The call `scale_down()` sets the `downsize` option to `TRUE`, which is a signal to the `ds` function. The command `ds(A, ...)` says "Downsize A to a smaller object when `getOption("downsize")` is `TRUE`". For the full scaled-up workflow, just delete the first two lines or replace `scale_down()` with `scale_up()`. Unfortunately, [`remake`](https://github.com/richfitz/remake) does not rebuild things when options are changed, so you'll have to run `make clean` whenever you change the `downsize` option.
