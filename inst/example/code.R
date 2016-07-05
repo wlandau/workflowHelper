@@ -15,15 +15,15 @@ linear_analysis = function(dataset){
 }
 
 quadratic_analysis = function(dataset){
-  lm(y ~ x + x^2, data = dataset)
+  lm(y ~ x + I(x^2), data = dataset)
 }
 
 # Compute summaries
 mse_summary = function(dataset, analysis){
-  pred = predict(analysis)
-  mean((pred - dataset$y)^2)
+  predictions = predict(analysis)
+  mean((predictions - dataset$y)^2)
 }
 
 coefficients_summary = function(analysis){
-  coefficients(analysis)
+  out = c(coefficients(analysis), "I(x^2)" = 0)[1:3]
 }
