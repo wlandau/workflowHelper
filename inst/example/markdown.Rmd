@@ -7,6 +7,11 @@ head(coef_table)
 ```
 
 ```{r}
+coef_file = read.csv("coef.csv")
+head(coef_file)
+```
+
+```{r}
 poisson32 = recall("poisson32")
 head(poisson32)
 ```
