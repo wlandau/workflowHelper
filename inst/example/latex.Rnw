@@ -10,13 +10,13 @@ head(coef_table)
 @
 
 <<>>=
-poisson100 = recall("poisson100")
-head(poisson100)
+poisson32 = recall("poisson32")
+head(poisson32)
 @
 
 <<>>=
-normal1000_lm = recall("normal1000_lm")
-summary(normal1000_lm)
+normal16_linear = recall("normal16_linear")
+summary(normal16_linear)
 @
 
 <<>>=

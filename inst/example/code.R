@@ -1,22 +1,21 @@
 # Code for each component of the example analysis
 
 # Generate datasets
-poisson_dataset = function(n = 100){
-  data.frame(x = rpois(n, 1), y = rpois(n, 5))
-}
-
 normal_dataset = function(n = 100){
   data.frame(x = rnorm(n, 1), y = rnorm(n, 5))
 }
 
-# Analyze each dataset
-lm_analysis = function(dataset){
-  out = lm(y ~ x, data = dataset)
+poisson_dataset = function(n = 100){
+  data.frame(x = rpois(n, 1), y = rpois(n, 5))
 }
 
-glm_analysis = function(dataset){
-  dataset$y = dataset$y + 1 # force a difference between glm and lm
-  glm(y ~ x, data = dataset)
+# Analyze each dataset
+linear_analysis = function(dataset){
+  lm(y ~ x, data = dataset)
+}
+
+quadratic_analysis = function(dataset){
+  lm(y ~ x + x^2, data = dataset)
 }
 
 # Compute summaries
@@ -25,6 +24,6 @@ mse_summary = function(dataset, analysis){
   mean((pred - dataset$y)^2)
 }
 
-coef_summary = function(analysis){
-  coef(analysis)
+coefficients_summary = function(analysis){
+  coefficients(analysis)
 }

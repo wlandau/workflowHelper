@@ -5,22 +5,22 @@ packages = strings(MASS)
 # packages = strings(MASS, rmarkdown, tools) # Uncomment before building pdf/html.
 
 datasets = commands(
-  poisson100 = poisson_dataset(n = 100),
-  normal100 = normal_dataset(n = 100),
-  normal1000 = normal_dataset(n = 1000) 
+  normal16 = normal_dataset(n = 16),
+  poisson32 = poisson_dataset(n = 32),
+  poisson64 = poisson_dataset(n = 64)
 )
 
 # For 4 replicates of each kind of dataset, 
 # assign datasets = reps(datasets, 4)
 
 analyses = commands(
-  lm = lm_analysis(..dataset..),
-  glm = glm_analysis(..dataset..)
+  linear = linear_analysis(..dataset..),
+  quadratic = quadratic_analysis(..dataset..)
 )
 
 summaries = commands(
   mse = mse_summary(..dataset.., ..analysis..),
-  coef = coef_summary(..analysis..)
+  coef = coefficients_summary(..analysis..)
 )
 
 output = commands(

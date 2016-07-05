@@ -17,7 +17,7 @@ test_that("Example runs as expected", {
     expect_true(is.list(x))
     expect_equal(length(x), 6)
     expect_equal(length(names(x)), 6)
-    expect_equal(min(nchar(names(x))), 12)
+    expect_equal(min(nchar(names(x))), 15)
     u = sapply(x, length)
     expect_true(all(u >= 1))
     expect_equal(length(unique(u)), 1)

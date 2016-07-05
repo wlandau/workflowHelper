@@ -14,14 +14,14 @@ test_that("Short workflows without output stage can run.", {
   expect_equal(dim(recall("poisson100")), c(100, 2))
   tmp = clean_example_workflowHelper(T)
 
-  analyses = commands(lm = lm_analysis(..dataset..))
+  analyses = commands(linear = linear_analysis(..dataset..))
   plan_workflow(sources, datasets = datasets, analyses = analyses)
   path = system.file("example", "code.R", package = "workflowHelper")
   write(readLines(path), "code.R")
   remake::make(verbose = F)
-  expect_equal(recallable(), c("poisson100", "poisson100_lm"))
+  expect_equal(recallable(), c("poisson100", "poisson100_linear"))
   expect_equal(dim(recall("poisson100")), c(100, 2))
-  expect_equal(class(recall("poisson100_lm")), "lm")
+  expect_equal(class(recall("poisson100_linear")), "lm")
   testrm()
 })
 

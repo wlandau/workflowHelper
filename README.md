@@ -39,7 +39,7 @@ Suppose I want to
 3. Compute summary statistics of each analysis of each dataset (model coefficients and mean squared error) and aggregate the summaries together.
 4. Generate some tables, figures, and reports using those aggregated summaries.
 
-I keep the functions to generate data, analyze data, etc. in `code.R`, and I have a sketch of the whole workflow in `workflow.R`. The [`knitr`](http://yihui.name/knitr/) report to be compiled is `report.Rmd`. You can generate these files with the `write_example_workflowHelper` function. Typically, in your own workflows, you will write similar R scripts and `*.Rmd` files by hand.
+I keep the functions to generate data, analyze data, etc. in `code.R`, and I have a sketch of the whole workflow in `workflow.R`. The [`knitr`](http://yihui.name/knitr/) report to be compiled is `report.Rmd`. You can generate these files with the `write_example_workflowHelper` function. Typically, in your own workflows, you will write similar R scripts and source files for final reports by hand.
 
 ## A walk through `workflow.R`
 
@@ -58,31 +58,31 @@ Next, I list the commands to generate the datasets.
 
 ```{r}
 datasets = commands(
-  poisson100 = poisson_dataset(n = 100),
-  normal100 = normal_dataset(n = 100),
-  normal1000 = normal_dataset(n = 1000)
+  normal16 = normal_dataset(n = 16),
+  poisson32 = poisson_dataset(n = 32),
+  poisson64 = poisson_dataset(n = 64)
 )
 ```
 
-Be sure to give a name to each command (for example, `poisson_dataset(n = 100)` has the name `poisson100`). The `command` function checks for names and returns a named character vector, so I could have simply written `datasets = c(poisson100 = "poisson_dataset(n = 100)", normal100 = "normal_dataset(n = 100)", normal1000 = "normal_dataset(n = 1000)")`. For 4 replicates of each kind of dataset, assign `datasets = reps(datasets, 4)`.
+Be sure to give a unique name to each command (for example, `poisson_dataset(n = 32)` has the unique name `poisson32`). The `commands` function checks for names and returns a named character vector, so I could have simply written `datasets = c(normal16 = "normal_dataset(n = 16)", poisson32 = "poisson_dataset(n = 32)", poisson64 = "poisson_dataset(n = 64)")`. For 4 replicates of each kind of dataset, assign `datasets = reps(datasets, 4)`.
 
 Similarly, I specify the commands to analyze each dataset.
 
 ```{r}
 analyses = commands(
-  lm = lm_analysis(..dataset..), # Just apply `lm`
-  glm = glm_analysis(..dataset..) # Modify dataset, then apply `glm`
+  linear = linear_analysis(..dataset..),
+  quadratic = quadratic_analysis(..dataset..)
 )
 ```
 
-The `..dataset..` wildcard stands for the current dataset being analyzed, which will be an object returned by `poisson_dataset` or `normal_dataset`. Wildcards are case-insensitive, so `..DATASET..` and `..dAtAsEt` will also work. For 3 replicates per dataset of each kind of analysis, assign `analyses = reps(analyses, 3)`. The `reps` function works on any character vector of commands.
+The `..dataset..` wildcard stands for the current dataset being analyzed, which will be an object returned by `normal_dataset` or `poisson_dataset`. Wildcards are case-insensitive, so `..DATASET..` and `..dAtAsEt` will also work. For 3 replicates per dataset of each kind of analysis, assign `analyses = reps(analyses, 3)`. The `reps` function works on any character vector of commands.
 
 When I list the methods of summarizing analyses, there is an additional `..analysis..` wildcard that similarly stands for the appropriate object returned by `lm_analysis` or `glm_analysis`. Like `..dataset..`, `..analysis..` is case-insensitive, so `..ANALYSIS..` will also work.
 
 ```{r}
 summaries = commands(
-  mse = mse_summary(..dataset.., ..analysis..), # mean squared error
-  coef = coef_summary(..analysis..) # model coefficients
+  mse = mse_summary(..dataset.., ..analysis..),
+  coef = coefficients_summary(..analysis..)
 )
 ```
 
@@ -163,15 +163,19 @@ Intermediate objects such as datasets, analyses, and summaries are maintained in
 
 ```{r}
 > recallable()
- [1] "coef"                "coef_table"          "mse"                
- [4] "mse_vector"          "normal100"           "normal100_glm"      
- [7] "normal100_glm_coef"  "normal100_glm_mse"   "normal100_lm"       
-[10] "normal100_lm_coef"   "normal100_lm_mse"    "normal1000"         
-[13] "normal1000_glm"      "normal1000_glm_coef" "normal1000_glm_mse" 
-[16] "normal1000_lm"       "normal1000_lm_coef"  "normal1000_lm_mse"  
-[19] "poisson100"          "poisson100_glm"      "poisson100_glm_coef"
-[22] "poisson100_glm_mse"  "poisson100_lm"       "poisson100_lm_coef" 
-[25] "poisson100_lm_mse"
+ [1] "coef"                     "coef_table"              
+ [3] "mse"                      "mse_vector"              
+ [5] "normal16"                 "normal16_linear"         
+ [7] "normal16_linear_coef"     "normal16_linear_mse"     
+ [9] "normal16_quadratic"       "normal16_quadratic_coef" 
+[11] "normal16_quadratic_mse"   "poisson32"               
+[13] "poisson32_linear"         "poisson32_linear_coef"   
+[15] "poisson32_linear_mse"     "poisson32_quadratic"     
+[17] "poisson32_quadratic_coef" "poisson32_quadratic_mse" 
+[19] "poisson64"                "poisson64_linear"        
+[21] "poisson64_linear_coef"    "poisson64_linear_mse"    
+[23] "poisson64_quadratic"      "poisson64_quadratic_coef"
+[25] "poisson64_quadratic_mse" 
 > 
 ```
 
@@ -179,30 +183,30 @@ Then if I want to load `mse`, the list of summaries generated by `mse_summary` i
 
 ```{r}
 > recall("mse")
-$normal100_glm
-[1] 1.874037
+$normal16_linear
+[1] 0.6394384
 
-$normal100_lm
-[1] 0.8740369
+$normal16_quadratic
+[1] 0.6394384
 
-$normal1000_glm
-[1] 2.033148
+$poisson32_linear
+[1] 4.991832
 
-$normal1000_lm
-[1] 1.033148
+$poisson32_quadratic
+[1] 4.991832
 
-$poisson100_glm
-[1] 6.038514
+$poisson64_linear
+[1] 3.613922
 
-$poisson100_lm
-[1] 5.038514
+$poisson64_quadratic
+[1] 3.613922
 
 > 
 ```
 
 Use `recall` inside reports like `report.Rmd` in the example to load objects. The `recall` function should also help you go back and debug `mse_plot` in `code.R`, for example, which takes `mse` as an argument.
 
-**Except within *.Rmd that are compiled in your reproducible workflow, do not manually access the files inside `.remake/objects` for serious jobs. Manual changes to that cache are not tracked.**
+**Except within *.Rnw/*.Rmd reports that are compiled in your reproducible workflow, do not manually access the files inside `.remake/objects` for serious jobs. Manual changes to that cache are not tracked.**
 
 # Distributed computing
 
@@ -216,12 +220,12 @@ You may want to use the [downsize](https://github.com/wlandau/downsize) package 
 library(downsize)
 scale_down()
 
-poisson_dataset = function(n = 100){
-  ds(data.frame(x = rpois(n, 1), y = rpois(n, 5)), nrow = 10)
-}
-
 normal_dataset = function(n = 100){
   ds(data.frame(x = rnorm(n, 1), y = rnorm(n, 5)), nrow = 10)
+}
+
+poisson_dataset = function(n = 100){
+  ds(data.frame(x = rpois(n, 1), y = rpois(n, 5)), nrow = 10)
 }
 ```
 
