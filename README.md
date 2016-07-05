@@ -220,12 +220,12 @@ You may want to use the [downsize](https://github.com/wlandau/downsize) package 
 library(downsize)
 scale_down()
 
-normal_dataset = function(n = 100){
-  ds(data.frame(x = rnorm(n, 1), y = rnorm(n, 5)), nrow = 10)
+normal_dataset = function(n = 16){
+  ds(data.frame(x = rnorm(n, 1), y = rnorm(n, 5)), nrow = 4)
 }
 
-poisson_dataset = function(n = 100){
-  ds(data.frame(x = rpois(n, 1), y = rpois(n, 5)), nrow = 10)
+poisson_dataset = function(n = 16){
+  ds(data.frame(x = rpois(n, 1), y = rpois(n, 5)), nrow = 4)
 }
 ```
 

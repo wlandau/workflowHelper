@@ -1,11 +1,11 @@
 # Code for each component of the example analysis
 
 # Generate datasets
-normal_dataset = function(n = 100){
+normal_dataset = function(n = 16){
   data.frame(x = rnorm(n, 1), y = rnorm(n, 5))
 }
 
-poisson_dataset = function(n = 100){
+poisson_dataset = function(n = 16){
   data.frame(x = rpois(n, 1), y = rpois(n, 5))
 }
 
