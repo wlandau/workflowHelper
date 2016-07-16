@@ -34,8 +34,8 @@ plots = commands(
 )
 
 reports = commands(
-  markdown.md = list(fig.height = 6, fig.align = "right"),
-  latex.tex = TRUE
+  markdown.md = list("poisson32", "coef_table", "coef.csv"), # dependencies
+  latex.tex = TRUE # no dependencies here
 #  markdown.html = render("markdown.md", quiet = TRUE, clean = FALSE),
 #  latex.pdf = texi2pdf("latex.tex", clean = FALSE)
 )

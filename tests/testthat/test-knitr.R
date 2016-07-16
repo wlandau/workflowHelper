@@ -8,21 +8,20 @@ rmd = readLines("test-knitr/example-report.Rmd")
 test_that("Knitr macros behave as expected.", {
   testwd("knitr-ok")
   msg = "[  KNIT ] report.md  |  knitr::knit(\"report.Rmd\", \"report.md\")"
-  rmf1 = "report.md:\n    depends: datasets\n    knitr:\n      options:\n        fig.height: 4.0"
-  rmf2 = "report.md:\n    depends: datasets\n    knitr: TRUE"
 
   reports = list(
-    commands(report.md = list(fig.height =  4)),
+    commands(report.md = "poisson100"),
+    commands(report.md = c("poisson100")),
+    commands(report.md = list("poisson100")),
+    commands(report.md = c()),
     commands(report.md = list()),
     commands(report.md = TRUE)
   )
-  rmfs = c(rmf1, rep(rmf2, 5))
 
   for(i in 1:length(reports)){
     write_example_workflowHelper()
     plan_workflow(sources, datasets = datasets, reports = unlist(reports[i]))
-    rmf = paste(readLines("remake.yml"), collapse = "\n")
-    expect_true(grepl(rmfs[i], rmf))
+    expect_equal(readLines("remake.yml"), readLines(paste0("../test-knitr/remake", i, ".yml")))
     tmp = clean_example_workflowHelper(T)
   }
   testrm()

@@ -1,32 +1,10 @@
 \documentclass{article}
 \begin{document}
 
-$E \Psi = H \Psi$, $y = \beta_1x_1 + \beta_2^2x_2 + \frac{\beta_3}{2}x_3 + \varepsilon$
+$\sqrt{2 \pi r}$
 
 <<>>=
-library(workflowHelper)
-coef_table = recall("coef_table")
-head(coef_table)
-@
-
-<<>>=
-coef_file = read.csv("coef.csv")
-head(coef_file)
-@
-
-<<>>=
-poisson32 = recall("poisson32")
-head(poisson32)
-@
-
-<<>>=
-normal16_linear = recall("normal16_linear")
-summary(normal16_linear)
-@
-
-<<>>=
-mse = recall("mse")
-hist(unlist(mse), col = "black")
+1 + 1
 @
 
 \end{document}

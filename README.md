@@ -112,16 +112,19 @@ Finally, we can generate some reports.
 
 ```{r}
 reports = commands(
-  markdown.md = list(fig.height = 6, fig.align = "right"),
-  latex.tex = TRUE
+  markdown.md = list("poisson32", "coef_table", "coef.csv"), # dependencies
+  latex.tex = TRUE # no dependencies here
 #  markdown.html = render("markdown.md", quiet = TRUE, clean = FALSE),
 #  latex.pdf = texi2pdf("latex.tex", clean = FALSE)
 )
 ```
 
-Since `report.md` has a `.md` extension, [`remake`](https://github.com/richfitz/remake) will automatically look for `report.Rmd` and knit it to `report.md` with the `knitr` package. Similarly,
-[`remake`](https://github.com/richfitz/remake) will try to build `latex.tex` from `latex.Rnw`. In these cases, the command is replaced with 
-either a list of `knitr` global chunk options or `TRUE` If you want to render `markdown.md` to `markdown.html`, be sure to include `rmarkdown` in your packages. Similarly, to compile `latex.tex` to `latex.pdf`, include the `tools` package. I commented out the lines to build `markdown.html` and `latex.pdf` in order to increase portability, but you may uncomment them if your copy of R
+Since `report.md` has a `.md` extension, [`remake`](https://github.com/richfitz/remake) will automatically look for `report.Rmd` and knit it to `report.md` with the `knitr` package. Similarly, [`remake`](https://github.com/richfitz/remake) will try to build `latex.tex` from `latex.Rnw`. In each case, the command is replaced with a character vector or list of characters denoting the dependencies of the report. These could be external files or
+cached intermediate [`remake`](https://github.com/richfitz/remake) objects such as
+datasets or analyses. In the latter case, objects are automatically loaded into R code
+chunks as described in the [`remake`](https://github.com/richfitz/remake) documentation.
+
+If you want to render `markdown.md` to `markdown.html`, be sure to include `rmarkdown` in your packages. Similarly, to compile `latex.tex` to `latex.pdf`, include the `tools` package. I commented out the lines to build `markdown.html` and `latex.pdf` in order to increase portability, but you may uncomment them if your copy of R
 is connected to copies of [LaTeX](https://www.latex-project.org/) and [Pandoc](http://pandoc.org/). To load intermediate objects into the code chunks of a [`knitr`](http://yihui.name/knitr/) report, use the `recall` function (explained later).
 
 Optionally, I can prepend some lines to the overarching [Makefile](https://www.gnu.org/software/make/) for the workflow.

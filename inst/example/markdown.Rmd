@@ -1,27 +1,14 @@
 $E \Psi = H \Psi$, $y = \beta_1x_1 + \beta_2^2x_2 + \frac{\beta_3}{2}x_3 + \varepsilon$
 
 ```{r}
-library(workflowHelper)
-coef_table = recall("coef_table")
+head(poisson32)
+```
+
+```{r}
 head(coef_table)
 ```
 
 ```{r}
 coef_file = read.csv("coef.csv")
 head(coef_file)
-```
-
-```{r}
-poisson32 = recall("poisson32")
-head(poisson32)
-```
-
-```{r}
-normal16_linear = recall("normal16_linear")
-summary(normal16_linear)
-```
-
-```{r}
-mse = recall("mse")
-hist(unlist(mse), col = "black")
 ```

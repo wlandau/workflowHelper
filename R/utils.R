@@ -15,10 +15,13 @@ knitr_target = function(row, stages){
   row = as.list(row)
   row$depends = setdiff(names(stages), "reports")
   if(grepl("\\.(md|tex)$", row$save)){
-    opts = eval(parse(text = row$command))
+    tryCatch(dep <- eval(parse(text = row$command)),
+      error = function(e) assign("dep", row$command, envir = parent.env(environment())))
     row$command = NULL
     row$knitr = TRUE
-    if(is.list(opts)) if(length(opts)) row$knitr = list(options = opts)
+    if(length(dep))
+      if(is.list(dep) | is.character(dep)) 
+        row$depends = c(row$depends, unlist(dep))
   }
   row
 }

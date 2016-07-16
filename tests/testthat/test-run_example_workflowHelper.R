@@ -5,7 +5,7 @@ source("utils.R")
 test_that("Example runs as expected", {
   testwd("run_example_workflowHelper")
   initial_files = list.files()
-  files = c("code.R", "coef.csv", "figure", "latex.Rnw", "Makefile", 
+  files = c("code.R", "coef.csv", "latex.Rnw", "Makefile", 
     "markdown.Rmd", "mse.pdf", "remake.yml", "workflow.R")
   out = run_example_workflowHelper(T)
   expect_true(all(files %in% list.files()))

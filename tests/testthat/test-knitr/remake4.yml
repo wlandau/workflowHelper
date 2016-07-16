@@ -1,0 +1,17 @@
+sources: code.R
+packages: ~
+targets:
+  all:
+    depends:
+    - datasets
+    - reports
+  datasets:
+    depends: poisson100
+  poisson100:
+    command: poisson_dataset(n = 100)
+  reports:
+    depends: report.md
+  report.md:
+    depends: datasets
+    knitr: TRUE
+
