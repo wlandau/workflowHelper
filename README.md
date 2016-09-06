@@ -1,3 +1,10 @@
+# Try [`remakeGenerator`](https://github.com/wlandau/remakeGenerator)
+
+[`remakeGenerator`](https://github.com/wlandau/remakeGenerator) will be the successor to `workflowHelper`.
+[`remakeGenerator`](https://github.com/wlandau/remakeGenerator) is internally cleaner and more flexible and extensible than `workflowHelper`, and it is better suited to adapt with future updates to [`remake`](https://github.com/richfitz/remake). [`remakeGenerator`](https://github.com/wlandau/remakeGenerator) is tested and available for use.
+
+# `workflowHelper`
+
 This package helps to analyze multiple datasets in multiple ways. Your workflow will be
 
 - **Reproducible**. Reproduce any analysis with one call to `plan_workflow()` and another to `make`.
